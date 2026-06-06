@@ -6,54 +6,59 @@
 <title>The Perfect Fantasy Baseball Draft</title>
 <style>
   :root{
-    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2a313c;
-    --text:#e6edf3; --muted:#8b949e; --accent:#f7b733; --accent2:#4fc3f7;
-    --good:#3fb950; --warn:#d29922; --bad:#f85149; --chip:#21262d;
+    --bg:#f4f6f8; --panel:#ffffff; --panel2:#f1f3f6; --border:#e4e8ec;
+    --text:#16202b; --muted:#6b7686; --accent:#e0162b; --accent2:#2563eb;
+    --good:#1a9c4e; --warn:#bf7a00; --bad:#dc3545; --chip:#eef1f5;
+    --hover:#f5f8fc; --mine:#eaf2ff;
+    --good-bg:#e6f5ec; --bad-bg:#fdebed; --warn-bg:#fbf3e3;
+    --shadow:0 1px 2px rgba(20,30,45,.05),0 8px 24px rgba(20,30,45,.05);
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
-       background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+       background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
-  header{background:linear-gradient(135deg,#1a2332,#0d1117);border-bottom:1px solid var(--border);
-         padding:16px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  header h1{font-size:19px;margin:0;letter-spacing:.5px}
+  header{background:var(--panel);border-bottom:1px solid var(--border);
+         padding:13px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .brandmark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--accent),#ff5b4e);
+             display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;box-shadow:var(--shadow)}
+  header h1{font-size:17px;margin:0;letter-spacing:-.3px;font-weight:800;line-height:1.1}
   header h1 .baseball{color:var(--accent)}
-  header .sub{color:var(--muted);font-size:12px}
+  header .sub{color:var(--muted);font-size:11px;letter-spacing:.2px}
   .spacer{flex:1}
-  .datepick{background:var(--panel2);color:var(--text);border:1px solid var(--border);
+  .datepick{background:var(--panel);color:var(--text);border:1px solid var(--border);
             border-radius:8px;padding:7px 10px;font-size:13px}
-  nav{display:flex;gap:4px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border);
+  nav{display:flex;gap:2px;padding:0 12px;background:var(--panel);border-bottom:1px solid var(--border);
       overflow-x:auto;position:sticky;top:0;z-index:20}
-  nav button{background:none;border:none;color:var(--muted);padding:13px 16px;font-size:13.5px;
+  nav button{background:none;border:none;color:var(--muted);padding:13px 14px;font-size:13.5px;
              cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600}
   nav button:hover{color:var(--text)}
   nav button.active{color:var(--accent);border-bottom-color:var(--accent)}
-  main{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+  main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
   .view{display:none;animation:fade .25s ease}
   .view.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   h2.sec{font-size:16px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
   h2.sec .pill{font-size:11px;background:var(--chip);color:var(--muted);padding:2px 8px;border-radius:20px;font-weight:600}
   .grid{display:grid;gap:14px}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
   .muted{color:var(--muted)}
   .row{display:flex;align-items:center;gap:10px}
   .chip{display:inline-block;background:var(--chip);border:1px solid var(--border);border-radius:20px;
         padding:2px 9px;font-size:11.5px;color:var(--muted)}
-  .chip.L{color:#79c0ff;border-color:#1f6feb55}
-  .chip.R{color:#ffa657;border-color:#bb800955}
+  .chip.L{color:#2563eb;border-color:#2563eb44}
+  .chip.R{color:#c2410c;border-color:#c2410c44}
   .tag-good{color:var(--good)} .tag-warn{color:var(--warn)} .tag-bad{color:var(--bad)}
   input.search{width:100%;background:var(--panel2);border:1px solid var(--border);border-radius:9px;
                color:var(--text);padding:11px 13px;font-size:14px}
-  button.btn{background:var(--accent);color:#1a1a1a;border:none;border-radius:8px;padding:9px 15px;
+  button.btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 15px;
              font-weight:700;cursor:pointer;font-size:13px}
   button.btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
   button.btn:hover{filter:brightness(1.08)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
   th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
-  tr:hover td{background:#1b212b}
+  tr:hover td{background:var(--hover)}
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .loading{color:var(--muted);padding:30px;text-align:center}
   .spin{display:inline-block;width:15px;height:15px;border:2px solid var(--border);
@@ -99,12 +104,13 @@
   .resultlist{position:absolute;z-index:30;background:var(--panel2);border:1px solid var(--border);
               border-radius:10px;width:100%;max-height:300px;overflow:auto;margin-top:4px;box-shadow:0 8px 24px #0008}
   .resultlist div{padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--border)}
-  .resultlist div:hover{background:var(--accent);color:#1a1a1a}
+  .resultlist div:hover{background:var(--accent2);color:#fff}
   .pos-rel{position:relative}
   .rec{font-weight:800;font-size:13px;padding:3px 9px;border-radius:6px}
-  .rec.START{background:#163a23;color:var(--good)}
-  .rec.SIT{background:#3a1d1d;color:var(--bad)}
-  .rec.STREAM{background:#3a3415;color:var(--warn)}
+  .rec.START{background:var(--good-bg);color:var(--good)}
+  .rec.SIT{background:var(--bad-bg);color:var(--bad)}
+  .rec.STREAM{background:var(--warn-bg);color:var(--warn)}
+  .rec.GRAB{background:var(--warn-bg);color:var(--warn)}
   .rosterbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .pchip{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;
          font-size:12.5px;display:flex;align-items:center;gap:7px}
@@ -123,11 +129,11 @@
   .kpi-link{cursor:pointer;position:relative}
   .kpi-link:hover{border-color:var(--accent2)}
   .kpi-link .arrow{position:absolute;top:8px;right:10px;color:var(--muted);font-size:13px}
-  .err{background:#3a1d1d;border:1px solid #f8514955;color:#ffb4ae;padding:10px 14px;border-radius:9px;font-size:12.5px}
+  .err{background:var(--bad-bg);border:1px solid #dc354555;color:#b02a37;padding:10px 14px;border-radius:9px;font-size:12.5px}
   footer{color:var(--muted);font-size:11.5px;text-align:center;padding:24px;border-top:1px solid var(--border)}
   .seg{display:inline-flex;background:var(--panel2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
   .seg button{background:none;border:none;color:var(--muted);padding:9px 14px;cursor:pointer;font-size:12.5px;font-weight:600;min-height:38px}
-  .seg button.on{background:var(--accent);color:#1a1a1a}
+  .seg button.on{background:var(--accent);color:#fff}
 
   /* --- nav icon/label --- */
   nav button{display:flex;align-items:center;gap:6px}
@@ -189,13 +195,28 @@
     main{max-width:100%;padding:16px 12px 86px}
     nav{position:fixed;left:0;right:0;bottom:0;top:auto;justify-content:space-around;gap:0;padding:0;
         border-top:1px solid var(--border);border-bottom:none;overflow:visible;
-        background:rgba(22,27,34,.97);backdrop-filter:blur(8px);box-shadow:0 -4px 18px #0006}
+        background:rgba(255,255,255,.97);backdrop-filter:blur(8px);box-shadow:0 -2px 16px rgba(20,30,45,.08)}
     nav button{flex:1;flex-direction:column;gap:2px;padding:8px 1px 7px;border-bottom:none;
                border-top:2px solid transparent;min-height:54px;font-weight:600}
-    nav button.active{color:var(--accent);border-bottom-color:transparent;border-top-color:var(--accent);background:#ffffff08}
+    nav button.active{color:var(--accent);border-bottom-color:transparent;border-top-color:var(--accent);background:rgba(224,22,43,.06)}
     nav button .ic{font-size:19px}
     nav button .lb{font-size:10px;letter-spacing:-.2px}
-    table{min-width:520px}
+    table:not(.rtable):not(.fit){min-width:520px}
+    table.fit{min-width:0;font-size:12px}
+    table.fit th,table.fit td{padding:7px 5px}
+    /* 響應式：寬表在手機變成每列一張卡片 */
+    table.rtable{min-width:0;font-size:13px}
+    .rtable thead{display:none}
+    .rtable,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
+    .rtable tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:8px}
+    .rtable tr:hover td{background:none}
+    .rtable td{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0;border:none;text-align:right}
+    .rtable td::before{content:attr(data-l);color:var(--muted);font-size:11px;font-weight:600;text-align:left;white-space:nowrap}
+    .rtable td:first-child{justify-content:flex-start;font-size:14px;border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:4px}
+    .rtable td:first-child::before{display:none}
+    .rtable td:empty{display:none}
+    .rtable td.long{flex-direction:column;align-items:stretch;text-align:left;gap:2px}
+    .rtable .meter{flex:1;max-width:120px}
     #h2hTable{min-width:0}
     #h2hTable th,#h2hTable td{padding:8px 6px}
     .statbox{grid-template-columns:repeat(2,1fr);gap:8px}
@@ -216,8 +237,11 @@
 </head>
 <body>
 <header>
-  <h1>⚾ <span>The Perfect</span> Fantasy Baseball Draft</h1>
-  <span class="sub">即時 MLB 進階數據決策台 · 資料來源 MLB StatsAPI</span>
+  <div class="brandmark">⚾</div>
+  <div>
+    <h1>The Perfect <span class="baseball">Fantasy</span> Baseball Draft</h1>
+    <span class="sub">即時 MLB 進階數據決策台</span>
+  </div>
   <span class="spacer"></span>
   <span class="updated" id="updated"></span>
   <label class="sub" style="display:flex;align-items:center;gap:6px">日期 <input type="date" id="globalDate" class="datepick"></label>
@@ -277,6 +301,14 @@
       </div>
       <p class="muted" style="font-size:12.5px;margin-top:8px">交叉比對今日先發投手 vs 對手打線整體強弱（OPS），找出最適合臨時 stream（撿來先發）的投手。可一鍵收藏到觀察名單。</p>
       <div id="streamResult"></div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">🏆 MLB 戰績排名</h2>
+        <button class="btn ghost" id="standBtn">載入戰績</button>
+      </div>
+      <div id="standResult"></div>
     </div>
   </section>
 
@@ -500,6 +532,31 @@ async function getPlayerIndex(){
   }));
   return PLAYER_INDEX;
 }
+// ---------- 模糊搜尋 ----------
+function fzNorm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+function fzLev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>3)return 9;
+  const d=Array.from({length:m+1},(_,i)=>{const r=new Array(n+1).fill(0);r[0]=i;return r;});
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];}
+function fuzzyScore(q,name){ // 越小越相關；null=不符
+  q=fzNorm(q);const n=fzNorm(name);if(!q)return null;
+  const idx=n.indexOf(q);
+  if(idx===0)return 0;
+  if(idx>0)return 1;
+  const words=n.split(/\s+/);
+  if(words.some(w=>w.startsWith(q)))return 2;
+  let i=0;for(const c of n){if(c===q[i])i++;if(i===q.length)break;}
+  if(i===q.length)return 3;            // 子序列（漏字也找得到）
+  const maxd=q.length<=4?1:2;
+  if(words.some(w=>fzLev(q,w)<=maxd))return 4;   // 單字編輯距離（拼錯）
+  if(fzLev(q,n)<=maxd+1)return 5;
+  return null;
+}
+function fuzzyRank(list,q,nameKey='fullName',limit=12){
+  return list.map(p=>({p,s:fuzzyScore(q,p[nameKey])})).filter(x=>x.s!=null)
+    .sort((a,b)=>a.s-b.s||a.p[nameKey].length-b.p[nameKey].length).slice(0,limit).map(x=>x.p);
+}
 function attachSearch(inputSel,listSel,onPick){
   const inp=$(inputSel),list=$(listSel);
   let t;
@@ -509,7 +566,7 @@ function attachSearch(inputSel,listSel,onPick){
     if(q.length<2){list.style.display='none';return;}
     t=setTimeout(async()=>{
       const idx=await getPlayerIndex();
-      const hits=idx.filter(p=>p.fullName.toLowerCase().includes(q)).slice(0,12);
+      const hits=fuzzyRank(idx,q);
       list.innerHTML=hits.map(p=>`<div data-id="${p.id}"><span class="tcell">${playerPhoto(p.id,26)}${teamLogo(p.teamId,16)}<span>${p.fullName}</span></span> <span class="muted">· ${p.pos||'?'} · ${p.teamName||'FA'}</span></div>`).join('')||'<div class="muted">查無球員</div>';
       list.style.display='block';
       list.querySelectorAll('div[data-id]').forEach(el=>el.onclick=()=>{
@@ -620,12 +677,12 @@ async function renderDash(){
     if(m.rec==='START')start++;if(m.rec==='SIT')sit++;
     return `<tr>
       <td><span class="tcell">${playerPhoto(m.id,32)}${teamLogo(m.teamId,18)}<b>${m.name}</b></span><br><span class="muted" style="font-size:11px">${m.pos} · ${m.teamName}</span></td>
-      <td>${m.hasGame?`vs ${m.oppPitcher?m.oppPitcher:'<span class=muted>未定先發</span>'} ${m.oppHand?`<span class="chip ${m.oppHand}">${m.oppHand}HP</span>`:''}`:'<span class="muted">今日無賽</span>'}</td>
-      <td class="num">${m.hasGame?m.score+'%':'–'}${m.hasGame&&m.confidence?`<div class="chip" style="margin-top:3px">信心${m.confidence}</div>`:''}</td>
-      <td>${m.hasGame?`<span class="rec ${m.rec} clickable" title="點看詳細依據" onclick="openMatchupDetail(${m.id})">${recLabel(m.rec)} ⓘ</span>`:'<span class="chip">OFF</span>'}</td>
+      <td data-l="今日對戰">${m.hasGame?`vs ${m.oppPitcher?m.oppPitcher:'<span class=muted>未定先發</span>'} ${m.oppHand?`<span class="chip ${m.oppHand}">${m.oppHand}HP</span>`:''}`:'<span class="muted">今日無賽</span>'}</td>
+      <td class="num" data-l="對戰分數">${m.hasGame?m.score+'%':'–'}${m.hasGame&&m.confidence?` <span class="chip">信心${m.confidence}</span>`:''}</td>
+      <td data-l="建議">${m.hasGame?`<span class="rec ${m.rec} clickable" title="點看詳細依據" onclick="openMatchupDetail(${m.id})">${recLabel(m.rec)} ⓘ</span>`:'<span class="chip">OFF</span>'}</td>
     </tr>`;
   }).join('');
-  box.innerHTML=`<table><thead><tr><th>球員</th><th>今日對戰</th><th class="num">對戰分數</th><th>建議</th></tr></thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 4px 0">💡 點「建議」欄可展開該球員的完整計算依據與對手投手數據。</div>`;
+  box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>今日對戰</th><th class="num">對戰分數</th><th>建議</th></tr></thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 4px 0">💡 點「建議」欄可展開該球員的完整計算依據與對手投手數據。</div>`;
   // 今日精選
   const played=ms.filter(m=>m.hasGame&&m.oppPitcher);
   if(played.length>=1){
@@ -739,13 +796,13 @@ async function renderMatchupCards(){
   const ms=(await buildMatchups(GDATE)).filter(m=>m.hasGame&&m.isHitter);
   if(!ms.length){box.innerHTML='<div class="muted" style="padding:14px">你的打者今天沒有比賽，或對手先發尚未公布。</div>';return;}
   ms.sort((a,b)=>b.score-a.score);
-  box.innerHTML='<table><thead><tr><th>打者</th><th>對手先發</th><th class="num">投手 ERA / 對打 OPS</th><th class="num">對戰分數</th><th>建議</th></tr></thead><tbody>'+
+  box.innerHTML='<table class="rtable"><thead><tr><th>打者</th><th>對手先發</th><th class="num">投手 ERA / 對打 OPS</th><th class="num">對戰分數</th><th>建議</th></tr></thead><tbody>'+
     ms.map(m=>`<tr>
-      <td><span class="tcell">${playerPhoto(m.id,32)}${teamLogo(m.teamId,18)}<b>${m.name}</b> <span class="chip ${m.bat}">${m.bat||'?'}打</span></span><br><span class="muted" style="font-size:11px">${m.teamName}</span></td>
-      <td>${m.oppPitcher?`${m.oppPitcher} <span class="chip ${m.oppHand}">${m.oppHand||'?'}投</span>`:'<span class="muted">未定</span>'}</td>
-      <td class="num">${m.oppPitcher?`${fmt(m.pitERA,2)} / ${fmt(m.pitOPSagainst)}`:'–'}</td>
-      <td class="num"><b>${m.score}%</b><div class="meter"><span style="width:${m.score}%"></span></div></td>
-      <td><span class="rec ${m.rec} clickable" title="點看詳細依據" onclick="openMatchupDetail(${m.id})">${recLabel(m.rec)} ⓘ</span></td>
+      <td><span class="tcell">${playerPhoto(m.id,32)}${teamLogo(m.teamId,18)}<b>${m.name}</b> <span class="chip ${m.bat}">${m.bat||'?'}打</span></span></td>
+      <td data-l="對手先發">${m.oppPitcher?`${m.oppPitcher} <span class="chip ${m.oppHand}">${m.oppHand||'?'}投</span>`:'<span class="muted">未定</span>'}</td>
+      <td class="num" data-l="ERA / 對打OPS">${m.oppPitcher?`${fmt(m.pitERA,2)} / ${fmt(m.pitOPSagainst)}`:'–'}</td>
+      <td class="num" data-l="對戰分數"><b>${m.score}%</b><div class="meter"><span style="width:${m.score}%"></span></div></td>
+      <td data-l="建議"><span class="rec ${m.rec} clickable" title="點看詳細依據" onclick="openMatchupDetail(${m.id})">${recLabel(m.rec)} ⓘ</span></td>
     </tr>`).join('')+'</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 14px">💡 點「建議」可看每位打者對戰分數的完整計算依據。</div>';
 }
 
@@ -960,6 +1017,26 @@ function barChart(rows,aName,bName){
   svg+=`</svg>`;
   return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--accent2);vertical-align:0"></span> ${aName}（上）</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#6b7684;vertical-align:0"></span> ${bName}（下）</span><span class="muted">綠色＝該項較佳</span></div>`+svg;
 }
+function radarChart(rows,aName,bName){
+  const n=rows.length,cx=150,cy=145,R=98,W=300,H=285;
+  const pt=(i,r)=>{const ang=(-90+i*360/n)*Math.PI/180;return [cx+Math.cos(ang)*R*r,cy+Math.sin(ang)*R*r];};
+  let grid='';[0.25,0.5,0.75,1].forEach(g=>{grid+=`<polygon points="${rows.map((_,i)=>pt(i,g).join(',')).join(' ')}" fill="none" stroke="var(--border)" stroke-width="1"/>`;});
+  let axes='',labels='';
+  rows.forEach((r,i)=>{const[e1,e2]=pt(i,1);axes+=`<line x1="${cx}" y1="${cy}" x2="${e1}" y2="${e2}" stroke="var(--border)"/>`;
+    const[lx,ly]=pt(i,1.16);labels+=`<text x="${lx}" y="${ly}" font-size="10" fill="var(--muted)" text-anchor="middle" dominant-baseline="middle">${r.l}</text>`;});
+  const nm=r=>{const a=isNaN(r.a)?0:r.a,b=isNaN(r.b)?0:r.b,mx=Math.max(a,b)||1,mn=Math.min(a,b);
+    let ra,rb;if(r.hi){ra=a/mx;rb=b/mx;}else{ra=a?mn/a:1;rb=b?mn/b:1;}return [Math.max(.1,ra),Math.max(.1,rb)];};
+  const pA=rows.map((r,i)=>pt(i,nm(r)[0]).join(',')).join(' ');
+  const pB=rows.map((r,i)=>pt(i,nm(r)[1]).join(',')).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:330px;height:auto;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
+    ${grid}${axes}${labels}
+    <polygon points="${pB}" fill="#9aa4b233" stroke="#9aa4b2" stroke-width="1.5"/>
+    <polygon points="${pA}" fill="var(--accent2)33" stroke="var(--accent2)" stroke-width="2"/></svg>
+  <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-top:2px">
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--accent2);vertical-align:0"></span> ${aName}</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#9aa4b2;vertical-align:0"></span> ${bName}</span>
+    <span class="muted">外圈＝該項較佳</span></div>`;
+}
 function compareCard(A,B){
   if(A.isPitcher!==B.isPitcher)return `<div class="card" style="margin-top:14px"><div class="err">兩位球員類型不同（打者 vs 投手），無法直接比較數據。</div></div>`;
   const metrics=cmpMetrics(A.isPitcher);
@@ -979,8 +1056,11 @@ function compareCard(A,B){
       <div class="muted">vs</div>
       <div style="text-align:center">${playerPhoto(B.p.id,44,'big')}<div style="font-weight:700;font-size:13px">${B.full.fullName}</div></div>
     </div>
+    <div class="seclabel" style="margin-top:0">能力雷達</div>
+    ${radarChart(chartRows,A.full.fullName,B.full.fullName)}
+    <div class="seclabel">逐項長條</div>
     ${barChart(chartRows,A.full.fullName,B.full.fullName)}
-    <table style="margin-top:6px"><thead><tr><th class="num">${A.full.fullName}</th><th style="text-align:center">項目</th><th class="num">${B.full.fullName}</th></tr></thead><tbody>${tbl}</tbody></table>
+    <table class="fit" style="margin-top:6px"><thead><tr><th class="num">${A.full.fullName}</th><th style="text-align:center">項目</th><th class="num">${B.full.fullName}</th></tr></thead><tbody>${tbl}</tbody></table>
     <p class="muted" style="font-size:11.5px;margin-bottom:0">綠色粗體＝該項較佳（ERA/WHIP/BB%/對打數據為越低越好）。</p></div>`;
 }
 function mainCard(d){
@@ -1071,11 +1151,11 @@ async function renderRadar(){
     const inR=ROSTER.some(r=>r.id===pl.id);
     const namecell=`<span class="tcell">${playerPhoto(pl.id,30)}<b>${pl.fullName}</b>${inR?' <span class="chip">我隊</span>':''}</span>`;
     const tcell=`<span class="tcell">${teamLogo(tid,18)}<span class="muted">${abbr(tm)}</span></span>`;
-    const cells=cols.map(c=>{const v=c.f?c.f(s[c.k]):(s[c.k]??'–');const hl=c.k===radarSort;return `<td class="num${c.good&&!hl?' tag-good':''}"${hl?' style="color:var(--accent);font-weight:700"':''}>${v}</td>`;}).join('');
+    const cells=cols.map(c=>{const v=c.f?c.f(s[c.k]):(s[c.k]??'–');const hl=c.k===radarSort;return `<td class="num${c.good&&!hl?' tag-good':''}" data-l="${c.l}"${hl?' style="color:var(--accent);font-weight:700"':''}>${v}</td>`;}).join('');
     const btn=`<button class="btn ghost wbtn" data-id="${pl.id}" data-nm="${pl.fullName}" data-tid="${tid||''}" data-tn="${tm}" data-pos="${radarGroup==='pitching'?'P':''}" style="padding:5px 9px">${watched?'★ 已收藏':'☆ 收藏'}</button>`;
-    return `<tr><td>${namecell}</td><td>${tcell}</td>${cells}<td>${btn}</td></tr>`;
+    return `<tr><td>${namecell}</td><td data-l="隊">${tcell}</td>${cells}<td data-l="">${btn}</td></tr>`;
   }).join('');
-  box.innerHTML=`<table><thead>${head}</thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 12px">顯示 ${splits.length} 位（符合門檻共 ${totalR} 位）· 依${(RADAR_SORTS[radarGroup].find(o=>o.k===radarSort)||{}).label||''}排序${radarPos!=='ALL'?` · 守位 ${radarPos}`:''}${radarHideMine?' · 已隱藏我隊':''}</div>`;
+  box.innerHTML=`<table class="rtable"><thead>${head}</thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 12px">顯示 ${splits.length} 位（符合門檻共 ${totalR} 位）· 依${(RADAR_SORTS[radarGroup].find(o=>o.k===radarSort)||{}).label||''}排序${radarPos!=='ALL'?` · 守位 ${radarPos}`:''}${radarHideMine?' · 已隱藏我隊':''}</div>`;
   box.querySelectorAll('.wbtn').forEach(b=>b.onclick=()=>{
     const added=toggleWatch({id:+b.dataset.id,fullName:b.dataset.nm,teamId:+b.dataset.tid||undefined,teamName:b.dataset.tn,pos:b.dataset.pos});
     b.textContent=added?'★ 已收藏':'☆ 收藏';renderWatch();
@@ -1108,17 +1188,42 @@ async function streamFinder(){
   for(const c of top){try{const {s}=await playerSeason(c.pit.id,'pitching');c.era=parseFloat(s.era);c.whip=parseFloat(s.whip);c.k9=parseFloat(s.strikeoutsPer9Inn);}catch(e){}}
   top.forEach(c=>{let sc=50;if(!isNaN(c.oppOPS))sc+=(0.720-c.oppOPS)*150;if(!isNaN(c.era))sc+=(4.0-c.era)*5;if(!isNaN(c.whip))sc+=(1.25-c.whip)*20;c.score=clampScore(sc);});
   top.sort((a,b)=>b.score-a.score);
-  box.innerHTML=`<table style="margin-top:6px"><thead><tr><th>投手</th><th>對手打線</th><th class="num">對手 OPS</th><th class="num">ERA</th><th class="num">WHIP</th><th class="num">K/9</th><th class="num">分數</th><th></th></tr></thead><tbody>`+
+  box.innerHTML=`<table class="rtable" style="margin-top:6px"><thead><tr><th>投手</th><th>對手打線</th><th class="num">對手 OPS</th><th class="num">ERA</th><th class="num">WHIP</th><th class="num">K/9</th><th class="num">分數</th><th></th></tr></thead><tbody>`+
     top.map(c=>{const watched=WATCH.some(w=>w.id===c.pit.id);
       return `<tr><td><span class="tcell">${playerPhoto(c.pit.id,28)}${teamLogo(c.teamId,16)}<b>${c.pit.fullName}</b></span></td>
-        <td><span class="tcell">${teamLogo(c.oppId,16)}<span class="muted">${teamZh(c.oppName)||abbr(c.oppName)}</span></span></td>
-        <td class="num">${fmt(c.oppOPS)}</td><td class="num">${fmt(c.era,2)}</td><td class="num">${fmt(c.whip,2)}</td><td class="num">${fmt(c.k9,1)}</td>
-        <td class="num"><b style="color:var(--accent)">${c.score}</b></td>
-        <td><button class="btn ghost swbtn" data-id="${c.pit.id}" data-nm="${c.pit.fullName.replace(/"/g,'')}" data-tid="${c.teamId}" style="padding:5px 9px">${watched?'★':'☆ 收藏'}</button></td></tr>`;
+        <td data-l="對手打線"><span class="tcell">${teamLogo(c.oppId,16)}<span class="muted">${teamZh(c.oppName)||abbr(c.oppName)}</span></span></td>
+        <td class="num" data-l="對手 OPS">${fmt(c.oppOPS)}</td><td class="num" data-l="ERA">${fmt(c.era,2)}</td><td class="num" data-l="WHIP">${fmt(c.whip,2)}</td><td class="num" data-l="K/9">${fmt(c.k9,1)}</td>
+        <td class="num" data-l="分數"><b style="color:var(--accent)">${c.score}</b></td>
+        <td data-l=""><button class="btn ghost swbtn" data-id="${c.pit.id}" data-nm="${c.pit.fullName.replace(/"/g,'')}" data-tid="${c.teamId}" style="padding:5px 9px">${watched?'★ 已收藏':'☆ 收藏'}</button></td></tr>`;
     }).join('')+'</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 4px">分數越高＝對手打線越弱＋投手品質越好，越適合臨時 stream；「對手 OPS」越低越有利。已依分數排序。</div>';
   box.querySelectorAll('.swbtn').forEach(b=>b.onclick=()=>{const added=toggleWatch({id:+b.dataset.id,fullName:b.dataset.nm,teamId:+b.dataset.tid||undefined,teamName:'',pos:'P'});b.textContent=added?'★':'☆ 收藏';});
 }
 if($('#streamBtn'))$('#streamBtn').onclick=streamFinder;
+
+// ---------- MLB 戰績排名 ----------
+const DIV_NAME={200:'美聯西區',201:'美聯東區',202:'美聯中區',203:'國聯西區',204:'國聯東區',205:'國聯中區'};
+const DIV_ORDER=[201,202,200,204,205,203];
+async function loadStandings(){
+  const box=$('#standResult');box.innerHTML='<div class="loading"><span class="spin"></span>載入戰績…</div>';
+  let recs;
+  try{const d=await J(`${API}/standings?leagueId=103,104&season=${SEASON}`);recs=d.records||[];}
+  catch(e){box.innerHTML=`<div class="err">載入失敗：${e.message}</div>`;return;}
+  const byDiv={};recs.forEach(r=>{byDiv[r.division?.id]=r.teamRecords||[];});
+  box.innerHTML='<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:10px">'+
+    DIV_ORDER.filter(id=>byDiv[id]).map(id=>{
+      const rows=byDiv[id].sort((a,b)=>(+a.divisionRank)-(+b.divisionRank)).map((t,i)=>{
+        const mine=ROSTER.some(r=>r.teamId===t.team.id);
+        return `<tr style="${mine?'background:var(--mine)':''}"><td class="muted" style="width:14px">${i+1}</td>
+          <td><span class="tcell">${teamLogo(t.team.id,18)}<b>${teamAbbr(t.team.id,t.team.name)}</b></span></td>
+          <td class="num">${t.wins}-${t.losses}</td><td class="num muted">${fmt(parseFloat(t.winningPercentage))}</td>
+          <td class="num muted">${t.gamesBack==='-'?'—':t.gamesBack}</td>
+          <td class="num" style="color:${(t.streak?.streakCode||'').startsWith('W')?'var(--good)':'var(--bad)'}">${t.streak?.streakCode||''}</td></tr>`;
+      }).join('');
+      return `<div class="card" style="padding:12px"><div class="seclabel" style="margin-top:0">${DIV_NAME[id]||''}</div>
+        <table class="fit" style="font-size:12.5px"><thead><tr><th></th><th>隊</th><th class="num">W-L</th><th class="num">勝率</th><th class="num">勝差</th><th class="num">連</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }).join('')+'</div><div class="muted" style="font-size:11.5px;padding:6px 2px">勝差「—」＝該分區領先；連勝/連敗以綠/紅顯示。⭐ 你陣容所屬球隊以底色標示。</div>';
+}
+if($('#standBtn'))$('#standBtn').onclick=loadStandings;
 
 // ---------- 收藏名單 (watchlist) ----------
 function toggleWatch(p){
@@ -1174,23 +1279,23 @@ function drawNews(){
   tx.sort((a,b)=>{const da=(b.date||b.effectiveDate||'').localeCompare(a.date||a.effectiveDate||'');if(da)return da;return (isInjTx(b)?1:0)-(isInjTx(a)?1:0);});
   if(newsInjOnly)tx=tx.filter(isInjTx);
   if(newsMineOnly)tx=tx.filter(t=>t.person&&myIds.has(t.person.id));
-  if(newsQuery)tx=tx.filter(t=>t.person&&t.person.fullName.toLowerCase().includes(newsQuery));
+  if(newsQuery)tx=tx.filter(t=>t.person&&fuzzyScore(newsQuery,t.person.fullName)!=null);
   // 每位球員只留最新一筆（已依日期新→舊排序，第一筆即最新）
   if(newsLatestOnly){const seen=new Set();tx=tx.filter(t=>{const id=t.person?.id;if(!id)return true;if(seen.has(id))return false;seen.add(id);return true;});}
   const total=tx.length;tx=tx.slice(0,150);
   stamp();
   if(!tx.length){box.innerHTML='<div class="empty"><div class="big">🩹</div>沒有符合條件的紀錄。'+(newsQuery?`找不到「${newsQuery}」。`:'')+'</div>';return;}
-  box.innerHTML=`<table><thead><tr><th>日期</th><th>球員</th><th>球隊</th><th>類型</th><th>說明（中文）· 預計歸隊</th></tr></thead><tbody>`+
+  box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>日期</th><th>球隊</th><th>類型</th><th>說明（中文）· 預計歸隊</th></tr></thead><tbody>`+
     tx.map(t=>{
       const mine=t.person&&myIds.has(t.person.id);
       const z=zhTransaction(t);
       const inj=z.isInj||isInjTx(t);
-      return `<tr style="${mine?'background:#1d2530':''}">
-        <td class="muted" style="white-space:nowrap">${t.date||t.effectiveDate||''}</td>
+      return `<tr style="${mine?'background:var(--mine)':''}">
         <td><span class="tcell">${playerPhoto(t.person?.id,26)}<span>${mine?'<b>':''}${t.person?t.person.fullName:'—'}${mine?' ⭐</b>':''}</span></span></td>
-        <td><span class="tcell">${teamLogo(t.toTeam?.id||t.team?.id,18)}<span class="muted">${abbr(t.toTeam?.name||t.team?.name||'')}</span></span></td>
-        <td>${inj?'<span class="tag-bad">🩹 傷兵</span>':'<span class="muted">'+(TYPE_ZH[t.typeDesc]||t.typeDesc||'')+'</span>'}</td>
-        <td style="font-size:12.5px" title="${(t.description||'').replace(/"/g,'&quot;')}">${z.text}${z.reason?`<br><span class="muted">傷況：${z.reason}</span>`:''}${z.ret?`<br><span class="tag-warn">⏱ ${z.ret}</span>`:''}</td>
+        <td class="muted" data-l="日期" style="white-space:nowrap">${t.date||t.effectiveDate||''}</td>
+        <td data-l="球隊"><span class="tcell">${teamLogo(t.toTeam?.id||t.team?.id,18)}<span class="muted">${abbr(t.toTeam?.name||t.team?.name||'')}</span></span></td>
+        <td data-l="類型">${inj?'<span class="tag-bad">🩹 傷兵</span>':'<span class="muted">'+(TYPE_ZH[t.typeDesc]||t.typeDesc||'')+'</span>'}</td>
+        <td data-l="說明" class="long" style="font-size:12.5px;text-align:left" title="${(t.description||'').replace(/"/g,'&quot;')}">${z.text}${z.reason?`<br><span class="muted">傷況：${z.reason}</span>`:''}${z.ret?`<br><span class="tag-warn">⏱ ${z.ret}</span>`:''}</td>
       </tr>`;
     }).join('')+'</tbody></table>'+(total>150?`<div class="muted" style="padding:10px 14px;font-size:11.5px">顯示前 150 筆（共 ${total} 筆），用上方搜尋或篩選可縮小範圍。</div>`:'');
 }
@@ -1301,7 +1406,7 @@ function recalcH2H(){
     if(r!=null){
       const diff=Math.abs((+mv)-(+ov));const isClose=diff<=c.close;
       if(r===0){status='<span class="rec STREAM">➖ 平手·關鍵</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 平手，今天全力推`);}
-      else if(r===-1&&isClose){status='<span class="rec START" style="background:#3a2a12;color:#f7b733">🔥 可搶</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 落後 ${fmtDiff(c,diff)}（可搶）`);}
+      else if(r===-1&&isClose){status='<span class="rec GRAB">🔥 可搶</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 落後 ${fmtDiff(c,diff)}（可搶）`);}
       else if(r===-1){status='<span class="rec SIT">💤 可放生</span>';}
       else if(r===1&&isClose){status='<span class="rec STREAM">⚠️ 要守</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 僅領先 ${fmtDiff(c,diff)}（守住）`);}
       else status='<span class="rec START">✅ 穩拿</span>';
