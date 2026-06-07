@@ -4,50 +4,66 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Perfect Fantasy Baseball Draft</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect x='1' y='1' width='38' height='38' rx='11' fill='%23ff5a1f'/><circle cx='20' cy='20' r='12.5' fill='%23fff'/><path d='M13 11.5 q5 8.5 0 17 M27 11.5 q-5 8.5 0 17' stroke='%23ff5a1f' stroke-width='1.6' fill='none' stroke-linecap='round'/><text x='20' y='25.5' font-family='Arial' font-size='15' font-weight='900' fill='%230b1f3a' text-anchor='middle'>P</text></svg>"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect x='1' y='1' width='38' height='38' rx='12' fill='%23C0623E'/><circle cx='20' cy='20' r='12.5' fill='%23FBFAF7'/><path d='M13 11.5 q5 8.5 0 17 M27 11.5 q-5 8.5 0 17' stroke='%23C0623E' stroke-width='1.6' fill='none' stroke-linecap='round'/><text x='20' y='25.5' font-family='Georgia,serif' font-size='15' font-weight='700' fill='%231F1E1C' text-anchor='middle'>P</text></svg>"/>
 <style>
   :root{
-    --bg:#f4f6fa; --panel:#ffffff; --panel2:#eef2f8; --border:#dde4ee;
-    --text:#0b1f3a; --muted:#5a6a82; --accent:#ff5a1f; --accent2:#2f6fed;
-    --good:#0ea15a; --warn:#bf7a00; --bad:#dc3545; --chip:#eef2f8;
-    --hover:#f3f6fc; --mine:#fff1e9;
-    --good-bg:#e3f6ec; --bad-bg:#fdebed; --warn-bg:#fbf3e3;
-    --navbg:#0b1f3a; --navmut:#9fb0c8;
-    --shadow:0 1px 2px rgba(11,31,58,.05),0 8px 24px rgba(11,31,58,.06);
+    --bg:#F3F1EA; --panel:#FBFAF7; --panel2:#F0ECE3; --border:#E6E1D4;
+    --text:#1F1E1C; --muted:#76726A; --accent:#C0623E; --accent2:#4C8C7D;
+    --good:#3f8f5b; --warn:#b0822a; --bad:#bf4a3f; --chip:#efebe1;
+    --hover:#f6f3ec; --mine:#f6e8de;
+    --good-bg:#e6efe5; --bad-bg:#f7e7e2; --warn-bg:#f5ecd8;
+    --navbg:#FBFAF7; --navmut:#76726A;
+    --shadow:0 1px 2px rgba(40,33,26,.04),0 10px 30px rgba(40,33,26,.06);
+    --font-serif:"Tiempos Text",Georgia,"Noto Serif TC","Songti TC",serif;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
-       background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+       background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
-  header{background:var(--navbg);border-bottom:1px solid var(--navbg);
-         padding:13px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header{background:var(--panel);border-bottom:1px solid var(--border);
+         padding:14px 22px;display:flex;align-items:center;gap:13px;flex-wrap:wrap}
   .brandmark{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center}
   .brandmark svg{width:38px;height:38px;display:block}
-  header h1{font-size:17px;margin:0;letter-spacing:-.3px;font-weight:800;line-height:1.1;color:#fff}
+  header h1{font-family:var(--font-serif);font-size:19px;margin:0;letter-spacing:0;font-weight:600;line-height:1.15;color:var(--text)}
   header h1 .baseball{color:var(--accent)}
-  header .sub,header label{color:var(--navmut);font-size:11px;letter-spacing:.2px}
-  header .datepick{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22)}
-  header .datepick::-webkit-calendar-picker-indicator{filter:invert(1)}
-  header .iconbtn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22)}
-  .updated{color:var(--navmut)}
+  header .sub,header label{color:var(--muted);font-size:11.5px;letter-spacing:.2px}
+  .updated{color:var(--muted)}
   .spacer{flex:1}
   .datepick{background:var(--panel);color:var(--text);border:1px solid var(--border);
-            border-radius:8px;padding:7px 10px;font-size:13px}
-  nav{display:flex;gap:2px;padding:0 12px;background:var(--navbg);border-bottom:1px solid var(--navbg);
+            border-radius:9px;padding:7px 10px;font-size:13px}
+  nav{display:flex;gap:2px;padding:0 14px;background:var(--panel);border-bottom:1px solid var(--border);
       overflow-x:auto;position:sticky;top:0;z-index:20}
-  nav button{background:none;border:none;color:var(--navmut);padding:13px 14px;font-size:13.5px;
-             cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600}
-  nav button:hover{color:#fff}
+  nav button{background:none;border:none;color:var(--muted);padding:13px 14px;font-size:13.5px;
+             cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600;transition:color .15s}
+  nav button:hover{color:var(--text)}
   nav button.active{color:var(--accent);border-bottom-color:var(--accent)}
-  main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+  main{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
   .view{display:none;animation:fade .25s ease}
   .view.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  h2.sec{font-size:16px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
+  h2.sec{font-size:15px;margin:2px 0 12px;display:flex;align-items:center;gap:8px;font-weight:700}
   h2.sec .pill{font-size:11px;background:var(--chip);color:var(--muted);padding:2px 8px;border-radius:20px;font-weight:600}
   .grid{display:grid;gap:14px}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:14px;box-shadow:var(--shadow);transition:box-shadow .2s ease,border-color .2s ease}
+  /* --- 互動動態 --- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+  .view.active>.card,.view.active>h2.sec,.view.active>.grid{animation:fadeUp .26s cubic-bezier(.2,.7,.3,1) both}
+  .view.active>.card:nth-child(2){animation-delay:.04s}
+  .view.active>.card:nth-child(3){animation-delay:.08s}
+  .view.active>.card:nth-child(4){animation-delay:.12s}
+  .view.active>.card:nth-child(n+5){animation-delay:.15s}
+  .kpi-link,.gamerow{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+  .kpi-link:hover,.gamerow:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(40,33,26,.10)}
+  .clickable{transition:transform .12s ease,filter .15s ease}
+  .clickable:active{transform:scale(.96)}
+  button.btn{transition:transform .12s ease,filter .15s ease}
+  button.btn:active{transform:scale(.97)}
+  .prow{transition:background .15s ease,transform .12s ease}
+  .gamerow{animation:popIn .25s ease both}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   .muted{color:var(--muted)}
   .row{display:flex;align-items:center;gap:10px}
   .chip{display:inline-block;background:var(--chip);border:1px solid var(--border);border-radius:20px;
@@ -161,9 +177,22 @@
   .legend .lg{display:inline-flex;align-items:center;gap:5px;background:var(--panel2);border:1px solid var(--border);
               border-radius:20px;padding:3px 10px}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .grouprow td{background:var(--panel2);font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;padding:6px 10px}
+  .stratrow{display:flex;gap:8px;align-items:baseline;margin-bottom:8px;flex-wrap:wrap}
+  .stratrow b{font-size:12.5px;white-space:nowrap;min-width:52px}
+  .stratrow span{display:flex;gap:6px;flex-wrap:wrap}
+  .catbtn{background:var(--good-bg);color:var(--good);border:1px solid var(--good);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:transform .12s}
+  .catbtn:active{transform:scale(.95)}
   .tlogo{vertical-align:-4px;object-fit:contain;display:inline-block}
   .tcell{display:inline-flex;align-items:center;gap:6px}
   .hl{display:none}
+  .newsitem{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center;text-decoration:none;transition:transform .12s ease}
+  .newsitem:last-child{border-bottom:none}
+  .newsitem:active{transform:scale(.99)}
+  .newsitem:hover .nhead{color:var(--accent)}
+  .nthumb{width:66px;height:46px;border-radius:9px;object-fit:cover;background:var(--panel2);flex:none}
+  .nhead{font-weight:600;font-size:13.5px;line-height:1.3;color:var(--text)}
+  .nmeta{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:6px;align-items:center}
   .phead{border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--border);vertical-align:middle;flex:none}
   .phead.big{border-radius:14px;border:1px solid var(--border)}
 
@@ -172,7 +201,7 @@
 
   /* --- toast --- */
   #toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:24px;z-index:200;
-         background:#0b1f3a;border:1px solid var(--accent);color:#fff;padding:11px 18px;border-radius:10px;
+         background:#2B2823;border:1px solid var(--accent);color:#fff;padding:11px 18px;border-radius:12px;
          font-size:13.5px;box-shadow:0 8px 30px #000a;opacity:0;pointer-events:none;transition:.25s}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -202,10 +231,10 @@
     main{max-width:100%;padding:16px 12px 86px}
     nav{position:fixed;left:0;right:0;bottom:0;top:auto;justify-content:space-around;gap:0;padding:0;
         border-top:1px solid var(--border);border-bottom:none;overflow:visible;
-        background:var(--navbg);box-shadow:0 -2px 16px rgba(11,31,58,.18)}
+        background:rgba(251,250,247,.97);backdrop-filter:blur(8px);box-shadow:0 -2px 18px rgba(40,33,26,.10)}
     nav button{flex:1;flex-direction:column;gap:2px;padding:8px 1px 7px;border-bottom:none;
                border-top:2px solid transparent;min-height:54px;font-weight:600}
-    nav button.active{color:var(--accent);border-bottom-color:transparent;border-top-color:var(--accent);background:rgba(255,255,255,.06)}
+    nav button.active{color:var(--accent);border-bottom-color:transparent;border-top-color:var(--accent);background:rgba(192,98,62,.08)}
     nav button .ic{font-size:19px}
     nav button .lb{font-size:10px;letter-spacing:-.2px}
     table:not(.rtable):not(.fit){min-width:520px}
@@ -215,7 +244,9 @@
     table.rtable{min-width:0;font-size:13px}
     .rtable thead{display:none}
     .rtable,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
-    .rtable tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:8px}
+    .rtable tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:6px 11px;margin-bottom:6px}
+    .rtable td:first-child{font-size:13.5px}
+    .rtable td:first-child .tcell img.phead{width:26px!important;height:26px!important}
     .rtable tr:hover td{background:none}
     .rtable td{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0;border:none;text-align:right}
     .rtable td::before{content:attr(data-l);color:var(--muted);font-size:11px;font-weight:600;text-align:left;white-space:nowrap}
@@ -257,7 +288,7 @@
 </head>
 <body>
 <header>
-  <div class="brandmark"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="38" height="38" rx="11" fill="#ff5a1f"/><circle cx="20" cy="20" r="12.5" fill="#fff"/><path d="M13 11.5 q5 8.5 0 17 M27 11.5 q-5 8.5 0 17" stroke="#ff5a1f" stroke-width="1.6" fill="none" stroke-linecap="round"/><text x="20" y="25.5" font-family="Arial Black, Arial" font-size="15" font-weight="900" fill="#0b1f3a" text-anchor="middle">P</text></svg></div>
+  <div class="brandmark"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="38" height="38" rx="12" fill="#C0623E"/><circle cx="20" cy="20" r="12.5" fill="#FBFAF7"/><path d="M13 11.5 q5 8.5 0 17 M27 11.5 q-5 8.5 0 17" stroke="#C0623E" stroke-width="1.6" fill="none" stroke-linecap="round"/><text x="20" y="25.5" font-family="Georgia, serif" font-size="15" font-weight="700" fill="#1F1E1C" text-anchor="middle">P</text></svg></div>
   <div>
     <h1>The Perfect <span class="baseball">Fantasy</span> Baseball Draft</h1>
     <span class="sub">即時 MLB 進階數據決策台</span>
@@ -272,10 +303,10 @@
   <button data-v="dash" class="active"><span class="ic">📋</span><span class="lb">總覽</span></button>
   <button data-v="schedule"><span class="ic">📅</span><span class="lb">賽程</span></button>
   <button data-v="h2h"><span class="ic">🥊</span><span class="lb">對戰</span></button>
-  <button data-v="stats"><span class="ic">🔬</span><span class="lb">數據</span></button>
-  <button data-v="radar"><span class="ic">📡</span><span class="lb">雷達</span></button>
-  <button data-v="news"><span class="ic">🩹</span><span class="lb">傷兵</span></button>
-  <button data-v="roster"><span class="ic">⭐</span><span class="lb">我隊</span></button>
+  <button data-v="stats"><span class="ic">🔬</span><span class="lb">球員</span></button>
+  <button data-v="radar"><span class="ic">📡</span><span class="lb">市場</span></button>
+  <button data-v="news"><span class="ic">🔁</span><span class="lb">異動</span></button>
+  <button data-v="roster"><span class="ic">⭐</span><span class="lb">陣容</span></button>
 </nav>
 
 <main>
@@ -299,6 +330,17 @@
         </div>
       </div>
       <div id="dashLineup" class="loading" style="margin-top:10px"><span class="spin"></span>分析中…</div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 class="sec" style="margin:0">📋 昨日建議回顧 <span class="pill">命中率</span></h2>
+        <button class="btn ghost" id="reviewBtn">看昨日</button>
+      </div>
+      <div id="dashReview" class="muted" style="font-size:12px;margin-top:8px">系統幫你打分：昨天「該先發」的有沒有發揮、「該板凳」的有沒有漏掉爆發。</div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2 class="sec" style="margin-top:0">📰 聯盟頭條 <span class="pill">ESPN · 即時</span></h2>
+      <div id="dashNews" class="loading"><span class="spin"></span>載入頭條…</div>
     </div>
   </section>
 
@@ -331,24 +373,35 @@
     <h2 class="sec">本週分類對戰 <span class="pill">Yahoo H2H · 10 項</span></h2>
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:14px;align-items:flex-end">
-        <label class="sub" style="display:flex;flex-direction:column;gap:4px">本週 (Week)
-          <input id="h2hWeek" class="datepick" style="width:110px" placeholder="11"></label>
+        <label class="sub" style="display:flex;flex-direction:column;gap:4px">週次
+          <input id="h2hWeek" class="datepick" style="width:90px" placeholder="週次"></label>
         <label class="sub" style="display:flex;flex-direction:column;gap:4px">我的隊名
-          <input id="h2hMe" class="datepick" style="width:160px" placeholder="陳土豆"></label>
+          <input id="h2hMe" class="datepick" style="width:150px" placeholder="輸入我的隊名"></label>
         <label class="sub" style="display:flex;flex-direction:column;gap:4px">對手隊名
-          <input id="h2hOpp" class="datepick" style="width:160px" placeholder="正港呆灣郎"></label>
+          <input id="h2hOpp" class="datepick" style="width:150px" placeholder="輸入對手隊名"></label>
         <span class="spacer"></span>
         <button class="btn ghost" id="h2hClear">清空</button>
       </div>
     </div>
 
     <div class="card" id="h2hScoreCard" style="margin-top:14px;text-align:center">
-      <div class="row" style="justify-content:center;gap:28px;align-items:center">
-        <div style="flex:1;text-align:right"><div class="muted" id="h2hMeName">我</div></div>
+      <div class="row" style="justify-content:center;gap:24px;align-items:center">
+        <div style="flex:1;text-align:right"><div style="font-weight:700" id="h2hMeName">我</div></div>
         <div class="matchscore" id="h2hScore" style="font-size:34px">0 – 0</div>
-        <div style="flex:1;text-align:left"><div class="muted" id="h2hOppName">對手</div></div>
+        <div style="flex:1;text-align:left"><div style="font-weight:700" id="h2hOppName">對手</div></div>
       </div>
-      <div class="muted" style="font-size:12px;margin-top:4px" id="h2hVerdict">輸入兩隊的各項加總，下方即時計算戰況。</div>
+      <div id="h2hBar" style="display:flex;height:10px;border-radius:6px;overflow:hidden;margin:12px 0 8px;background:var(--panel2)">
+        <span id="h2hBarW" style="background:var(--good);width:0;transition:width .3s"></span>
+        <span id="h2hBarT" style="background:var(--muted);opacity:.35;width:0;transition:width .3s"></span>
+        <span id="h2hBarL" style="background:var(--bad);width:0;transition:width .3s"></span>
+      </div>
+      <div class="row" style="justify-content:center;gap:14px;font-size:12px">
+        <span class="tag-good" id="h2hLeadW">領先 0</span>
+        <span class="muted" id="h2hLeadT">平 0</span>
+        <span class="tag-bad" id="h2hLeadL">落後 0</span>
+      </div>
+      <div style="font-size:13px;margin-top:8px;font-weight:600" id="h2hVerdict">輸入兩隊各項加總，即時計算戰況。</div>
+      <div id="h2hDelta" class="muted" style="font-size:11.5px;margin-top:4px"></div>
     </div>
 
     <div class="card" style="margin-top:14px;padding:0;overflow:hidden">
@@ -356,8 +409,8 @@
     </div>
 
     <div class="card" style="margin-top:14px">
-      <h2 class="sec" style="margin-top:0">🎯 今日調整建議</h2>
-      <div id="h2hAdvice" class="muted">填入數據後，這裡會列出該主攻、要守、可放生的項目。</div>
+      <h2 class="sec" style="margin-top:0">🎯 分類策略</h2>
+      <div id="h2hAdvice" class="muted">填入兩隊各項加總後，這裡給你主攻／守住／放生策略。</div>
     </div>
     <p class="muted" style="font-size:12px">每天把兩隊最新加總抄進來（自動存本機）。🔥 可搶＝落後但差距小，今天主攻；💤 可放生＝差太多別追。</p>
   </section>
@@ -490,6 +543,14 @@
       </div>
       <div class="rosterbar" id="watchBar" style="margin-top:10px"></div>
     </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 class="sec" style="margin:0">🗓 本週投手排程 <span class="pill">兩階投手</span></h2>
+        <button class="btn ghost" id="rotBtn">分析本週</button>
+      </div>
+      <div id="rotResult" class="muted" style="font-size:12px;margin-top:8px">算出你的投手這週各先發幾場、誰有「兩次先發」（週賽制隱藏勝負手）。</div>
+    </div>
   </section>
 </main>
 
@@ -548,8 +609,9 @@ function onView(v){
 $('#globalDate').value=GDATE;
 $('#globalDate').onchange=e=>{GDATE=e.target.value;scheduleCache={};refreshAll();};
 function refreshAll(){renderDash();renderSchedule();renderNews();}
+if($('#reviewBtn'))$('#reviewBtn').onclick=renderReview;
 $('#refreshBtn').onclick=()=>{
-  scheduleCache={};PLAYER_INDEX=null;NEWS_KEY='';NEWS_DATA=null;RECENT_CACHE={};TEAM_OPS=null;
+  scheduleCache={};PLAYER_INDEX=null;NEWS_KEY='';NEWS_DATA=null;RECENT_CACHE={};TEAM_OPS=null;NEWS_FEED=null;LEAGUE_DIST={};SPLIT_CACHE={};
   const active=document.querySelector('#nav button.active')?.dataset.v||'dash';
   onView(active);stamp();toast('已重新抓取即時資料');
 };
@@ -695,8 +757,59 @@ function savantSlug(id,name){
   return `${slug}-${id}`;
 }
 
+// ========== 聯盟頭條 (ESPN) ==========
+let NEWS_FEED=null;
+const NEWS_TYPE={Recap:'戰報',HeadlineNews:'快訊',Media:'影片',Story:'報導',Preview:'賽前',Notebook:'筆記',Analysis:'分析'};
+async function getMLBNews(){if(NEWS_FEED)return NEWS_FEED;const d=await J('https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news');NEWS_FEED=d.articles||[];return NEWS_FEED;}
+function timeAgo(iso){const t=new Date(iso),now=new Date();const mn=Math.round((now-t)/60000);if(mn<60)return mn+' 分鐘前';const hr=Math.round(mn/60);if(hr<24)return hr+' 小時前';return Math.round(hr/24)+' 天前';}
+async function renderNewsFeed(){
+  const box=$('#dashNews');if(!box)return;
+  let arts;try{arts=await getMLBNews();}catch(e){box.innerHTML='<div class="muted" style="font-size:12px">頭條暫時無法載入。</div>';return;}
+  const myNames=new Set(ROSTER.map(r=>r.fullName.toLowerCase()));
+  box.innerHTML=arts.slice(0,10).map(a=>{
+    const img=(a.images||[]).find(i=>i.url)?.url;
+    const href=a.links?.web?.href||a.links?.mobile?.href||'#';
+    const mine=(a.categories||[]).some(c=>c.athlete&&myNames.has((c.athlete.description||'').toLowerCase()));
+    const ty=NEWS_TYPE[a.type]||a.type||'';
+    return `<a href="${href}" target="_blank" rel="noopener" class="newsitem">
+      ${img?`<img class="nthumb" src="${img}" loading="lazy" alt="">`:'<div class="nthumb"></div>'}
+      <div style="flex:1;min-width:0"><div class="nhead">${mine?'⭐ ':''}${a.headline}</div>
+      <div class="nmeta"><span class="chip">${ty}</span> ${timeAgo(a.published)}</div></div></a>`;
+  }).join('')||'<div class="muted" style="font-size:12px">目前沒有頭條。</div>';
+}
+
+// ========== 昨日建議回顧 / 命中率 ==========
+let REC_SNAP=load('pfbd_recsnap',{});
+async function getDayLine(id,group,date){try{const d=await J(`${API}/people/${id}/stats?stats=byDateRange&group=${group}&startDate=${date}&endDate=${date}&season=${SEASON}`);return d.stats?.[0]?.splits?.[0]?.stat||null;}catch(e){return null;}}
+async function renderReview(){
+  const box=$('#dashReview');box.innerHTML='<div class="loading"><span class="spin"></span>抓昨日成績…</div>';
+  const dates=Object.keys(REC_SNAP).filter(d=>d<GDATE).sort();const prev=dates[dates.length-1];
+  if(!prev){box.innerHTML='<div class="muted" style="font-size:12px">尚無前一日的建議紀錄；明天起就能回顧命中率。</div>';return;}
+  const snap=REC_SNAP[prev];const ids=Object.keys(snap);
+  const res=[];for(const id of ids){const s=snap[id];const line=await getDayLine(+id,s.isHitter?'hitting':'pitching',prev);res.push({id,s,line});}
+  let hit=0,tot=0;
+  const rows=res.map(({id,s,line})=>{
+    let lineStr='未出賽',good=null;
+    if(line){
+      if(s.isHitter){const H=+line.hits||0,AB=+line.atBats||0,HR=+line.homeRuns||0,RBI=+line.rbi||0,R=+line.runs||0,SB=+line.stolenBases||0,BB=+line.baseOnBalls||0;
+        if(AB||BB){lineStr=`${H}-${AB}${HR?` ${HR}HR`:''}${RBI?` ${RBI}打點`:''}${R?` ${R}分`:''}${SB?` ${SB}盜`:''}`;const f=H+2*HR+RBI+R+SB+0.5*BB;good=f>=2?true:(f<1?false:null);}
+      } else {const IP=parseFloat(line.inningsPitched)||0,ER=+line.earnedRuns||0,K=+line.strikeOuts||0,W=+line.wins||0,SV=+line.saves||0;
+        if(IP>0||K>0){lineStr=`${line.inningsPitched}IP ${ER}ER ${K}K${W?' 勝':''}${SV?' SV':''}`;good=((ER<=2&&IP>=5)||K>=6||W>=1||SV>=1)?true:(ER>=4?false:null);}
+      }
+    }
+    let grade='';
+    if(s.rec==='START'&&good!=null){tot++;if(good){hit++;grade='✓ 該先發';}else grade='✗ 沒發揮';}
+    else if(s.rec==='SIT'&&good!=null){tot++;if(!good){hit++;grade='✓ 該板凳';}else grade='✗ 漏爆發';}
+    const gc=grade.startsWith('✓')?'tag-good':grade.startsWith('✗')?'tag-bad':'muted';
+    return `<div class="prow"><span class="tcell">${playerPhoto(+id,26)}${teamLogo(s.teamId,15)}<b>${s.name}</b></span><div style="flex:1;min-width:0;text-align:right"><span class="meta">${lineStr}</span></div><span class="${gc}" style="font-size:11.5px;font-weight:700;white-space:nowrap">${grade||recLabel(s.rec)}</span></div>`;
+  }).join('');
+  const rate=tot?Math.round(hit/tot*100):null;
+  box.innerHTML=`<div style="font-size:13px;margin-bottom:8px">${prev.slice(5).replace('-','/')} 建議命中率：<b class="${rate>=60?'tag-good':rate>=40?'tag-warn':'tag-bad'}" style="font-size:17px">${rate==null?'—':rate+'%'}</b>${tot?` <span class="muted">（${hit}/${tot}）</span>`:''}</div><div class="plist">${rows}</div>`;
+}
+
 // ========== DASHBOARD ==========
 async function renderDash(){
+  renderNewsFeed();
   $('#dashDate').textContent=GDATE;
   $('#kpiRoster').textContent=ROSTER.length;
   // games
@@ -706,6 +819,9 @@ async function renderDash(){
     $('#dashTop').innerHTML='';$('#kpiStart').textContent='0';$('#kpiSit').textContent='0';$('#kpiInj').textContent='0';stamp();return;}
   box.innerHTML='<div class="loading"><span class="spin"></span>比對今日對戰中…</div>';
   const ms=await buildMatchups(GDATE);
+  // 存今日建議快照供「昨日回顧」打分
+  const snap={};ms.forEach(x=>{if(x.hasGame)snap[x.id]={rec:x.rec,score:x.score,name:x.name,teamId:x.teamId,isHitter:x.isHitter};});
+  if(Object.keys(snap).length){REC_SNAP[GDATE]=snap;const ks=Object.keys(REC_SNAP).sort();while(ks.length>14)delete REC_SNAP[ks.shift()];save('pfbd_recsnap',REC_SNAP);}
   // 依分數高→低排序（有比賽優先），先發在上、板凳在下
   ms.sort((a,b)=>{const ga=a.hasGame?1:0,gb=b.hasGame?1:0;if(ga!==gb)return gb-ga;return b.score-a.score;});
   let start=0,sit=0;
@@ -913,42 +1029,42 @@ async function buildMatchups(date){
 }
 function computeHitterMatchup(r,m,hs,recent,splits,pitRecent){
   const factors=[];let score=50;
-  factors.push({label:'基準分',delta:50,detail:'每位打者從 50 分中性起算'});
+  factors.push({label:'基準分',delta:50,detail:'中性 50 起算'});
   const hOPS=parseFloat(hs.ops)||.700;
-  const d1=(hOPS-.720)*110;score+=d1;
-  factors.push({label:'打者火力 (整季 OPS)',value:fmt(hOPS),delta:d1,detail:`整季 OPS ${fmt(hOPS)}，與聯盟平均約 .720 相比`});
-  if(recent&&(+recent.plateAppearances)>=10){const rOPS=parseFloat(recent.ops);const dr=(rOPS-hOPS)*40;score+=dr;
-    factors.push({label:'近況手感 (近14天 OPS)',value:fmt(rOPS),delta:dr,detail:`近 14 天 OPS ${fmt(rOPS)}（${recent.plateAppearances} 打席）vs 整季 ${fmt(hOPS)}`});}
-  // 左右對位：優先用實際 split 數據
+  const d1=(hOPS-.720)*100;score+=d1;
+  factors.push({label:'打者火力',value:`OPS ${fmt(hOPS)}`,delta:d1,detail:'整季 OPS vs 聯盟均值 .720'});
+  if(recent&&(+recent.plateAppearances)>=10){const rOPS=parseFloat(recent.ops);const dr=(rOPS-hOPS)*45;score+=dr;
+    factors.push({label:'近況手感',value:`14天 ${fmt(rOPS)}`,delta:dr,detail:`近 14 天 vs 整季 ${fmt(hOPS)}`});}
   const code=m.oppHand==='L'?'vl':'vr';const sp=splits&&splits[code];
-  if(sp&&(+sp.plateAppearances)>=25){const spOPS=parseFloat(sp.ops);const d4=(spOPS-hOPS)*60;score+=d4;
-    factors.push({label:`左右對位 (對${m.oppHand}投實戰)`,value:fmt(spOPS),delta:d4,detail:`本季對${m.oppHand==='L'?'左':'右'}投 OPS ${fmt(spOPS)}（${sp.plateAppearances} 打席）vs 整體 ${fmt(hOPS)}`});}
+  if(sp&&(+sp.plateAppearances)>=25){const spOPS=parseFloat(sp.ops);const d4=(spOPS-hOPS)*65;score+=d4;
+    factors.push({label:`對${m.oppHand==='L'?'左':'右'}投`,value:`OPS ${fmt(spOPS)}`,delta:d4,detail:`實戰 split ${sp.plateAppearances} 打席 vs 整體 ${fmt(hOPS)}`});}
   else if(r.bat&&m.oppHand&&r.bat!=='S'){const d4=r.bat!==m.oppHand?6:-5;score+=d4;
-    factors.push({label:'左右對位 (platoon)',value:`${r.bat}打 vs ${m.oppHand}投`,delta:d4,detail:r.bat!==m.oppHand?'左右相剋，對位有利（split 樣本不足，用一般慣例）':'同手對位較吃虧（split 樣本不足）'});}
-  // 對手投手：融合整季與近 30 天
+    factors.push({label:'左右對位',value:`${r.bat} vs ${m.oppHand}`,delta:d4,detail:'split 樣本不足，採一般慣例'});}
   const recOK=pitRecent&&parseFloat(pitRecent.inningsPitched)>=10;
   let opsA=m.pitOPSagainst,eraP=m.pitERA;const prOPS=pitRecent?parseFloat(pitRecent.ops):NaN,prERA=pitRecent?parseFloat(pitRecent.era):NaN;
   if(recOK&&!isNaN(prOPS))opsA=0.6*opsA+0.4*prOPS;
   if(recOK&&!isNaN(prERA))eraP=0.6*eraP+0.4*prERA;
-  if(!isNaN(opsA)){const d2=(opsA-.700)*110;score+=d2;
-    factors.push({label:'對手投手好不好打 (對打 OPS)',value:fmt(opsA),delta:d2,detail:`對打 OPS ${fmt(opsA)}${recOK?`（整季 ${fmt(m.pitOPSagainst)}＋近30天 ${fmt(prOPS)} 加權）`:''}；越高越好打`});}
+  if(!isNaN(opsA)){const d2=(opsA-.700)*100;score+=d2;
+    factors.push({label:'對手投手壓制力',value:`對打 OPS ${fmt(opsA)}`,delta:d2,detail:recOK?'整季＋近30天加權，越高越好打':'越高越好打'});}
   if(!isNaN(eraP)){const d3=(eraP-4.0)*4;score+=d3;
-    factors.push({label:'對手投手 ERA',value:fmt(eraP,2),delta:d3,detail:`ERA ${fmt(eraP,2)}${recOK?`（整季＋近30天加權）`:''}，與 4.00 相比`});}
+    factors.push({label:'對手投手 ERA',value:fmt(eraP,2),delta:d3,detail:'基準 4.00'});}
   if(m.parkPF&&m.parkPF!==100){const d5=(m.parkPF-100)*0.5;score+=d5;
-    factors.push({label:'球場係數 (park factor)',value:m.parkPF,delta:d5,detail:`本場球場打者友善度約 ${m.parkPF}（100 中性，>100 利打者）`});}
-  return {score:clampScore(score),factors,raw:score};
+    factors.push({label:'球場係數',value:m.parkPF,delta:d5,detail:'100 中性，>100 利打者'});}
+  return {score:finalScore(score),factors,raw:score};
 }
 function computePitcherStream(hs,oppOPS,oppName){
   const factors=[];let score=50;
-  factors.push({label:'基準分',delta:50,detail:'每位投手從 50 分中性起算'});
+  factors.push({label:'基準分',delta:50,detail:'中性 50 起算'});
   const era=parseFloat(hs.era),whip=parseFloat(hs.whip),k9=parseFloat(hs.strikeoutsPer9Inn);
-  if(!isNaN(era)){const d=(4.0-era)*6;score+=d;factors.push({label:'自身 ERA',value:fmt(era,2),delta:d,detail:`本季 ERA ${fmt(era,2)}，越低越好（基準 4.00）`});}
-  if(!isNaN(whip)){const d=(1.25-whip)*28;score+=d;factors.push({label:'自身 WHIP',value:fmt(whip,2),delta:d,detail:`本季 WHIP ${fmt(whip,2)}，越低越好（基準 1.25）`});}
-  if(!isNaN(k9)){const d=(k9-8.5)*1.5;score+=d;factors.push({label:'三振能力 K/9',value:fmt(k9,1),delta:d,detail:`K/9 ${fmt(k9,1)}，越高越好（基準 8.5）`});}
-  if(!isNaN(oppOPS)){const d=(0.720-oppOPS)*90;score+=d;factors.push({label:'對手打線強弱 (OPS)',value:fmt(oppOPS),delta:d,detail:`今日對手 ${teamZh(oppName)||oppName} 整體 OPS ${fmt(oppOPS)}；越低越好投`});}
-  return {score:clampScore(score),factors,raw:score};
+  if(!isNaN(era)){const d=(4.0-era)*6;score+=d;factors.push({label:'自身 ERA',value:fmt(era,2),delta:d,detail:'基準 4.00'});}
+  if(!isNaN(whip)){const d=(1.25-whip)*28;score+=d;factors.push({label:'自身 WHIP',value:fmt(whip,2),delta:d,detail:'基準 1.25'});}
+  if(!isNaN(k9)){const d=(k9-8.5)*1.5;score+=d;factors.push({label:'三振能力 K/9',value:fmt(k9,1),delta:d,detail:'基準 8.5'});}
+  if(!isNaN(oppOPS)){const d=(0.720-oppOPS)*90;score+=d;factors.push({label:'對手打線',value:`OPS ${fmt(oppOPS)}`,delta:d,detail:`${teamZh(oppName)||oppName}，越低越好投`});}
+  return {score:finalScore(score),factors,raw:score};
 }
 function clampScore(x){return Math.max(5,Math.min(98,Math.round(x)));}
+// 邏輯斯映射：把加權總分平滑壓到 1–99，中段拉開、極端自然收斂（更有鑑別度）
+function finalScore(raw){return Math.max(1,Math.min(99,Math.round(100/(1+Math.exp(-(raw-50)/15)))));}
 
 // ---------- 詳細分析 modal ----------
 function showModal(html,title){$('#modalBody').innerHTML=html;if(title)$('#modalTitle').textContent=title;$('#modalBack').classList.add('show');}
@@ -974,34 +1090,31 @@ function openMatchupDetail(id){
   if(!m.hasGame){showModal(head+'<div class="empty"><div class="big">🛌</div>該球員今日無賽程，建議放板凳 / 找替補。</div>','對戰分析');return;}
   let oppCard='';
   if(m.isHitter&&m.oppPitcher){
-    oppCard=`<div class="card" style="margin-bottom:14px;background:var(--panel2)">
-      <div class="row" style="gap:10px">${playerPhoto(m.oppPitcherId,40)}
-        <div><div style="font-weight:700">對手先發：${m.oppPitcher} <span class="chip ${m.oppHand}">${m.oppHand||'?'}投</span></div>
-        <div class="muted" style="font-size:12px">${teamLogo(m.oppTeamId,15)} ${teamZh(m.oppTeamName)||m.oppTeamName}</div></div>
+    const pst=[['ERA',fmt(m.pitERA,2)],['WHIP',fmt(m.pitWHIP,2)],['對打OPS',fmt(m.pitOPSagainst)],['K/9',fmt(m.pitK9,1)],['對打AVG',fmt(m.pitAVGa)]];
+    oppCard=`<div class="card" style="margin-bottom:12px;background:var(--panel2);padding:11px 13px">
+      <div class="row" style="gap:9px">${playerPhoto(m.oppPitcherId,34)}
+        <div style="min-width:0"><div style="font-weight:700;font-size:13.5px">對手先發 ${m.oppPitcher} <span class="chip ${m.oppHand}">${m.oppHand||'?'}投</span></div>
+        <div class="muted" style="font-size:11.5px">${teamLogo(m.oppTeamId,14)} ${teamZh(m.oppTeamName)||m.oppTeamName}</div></div>
       </div>
-      <div class="statbox" style="margin-top:10px">
-        <div class="stat"><div class="v">${fmt(m.pitERA,2)}</div><div class="k">ERA</div></div>
-        <div class="stat"><div class="v">${fmt(m.pitWHIP,2)}</div><div class="k">WHIP</div></div>
-        <div class="stat"><div class="v">${fmt(m.pitOPSagainst)}</div><div class="k">對打 OPS</div></div>
-        <div class="stat"><div class="v">${fmt(m.pitK9,1)}</div><div class="k">K/9</div></div>
-        <div class="stat"><div class="v">${fmt(m.pitAVGa)}</div><div class="k">對打 AVG</div></div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-size:12.5px">
+        ${pst.map(([k,v])=>`<span><span class="muted">${k}</span> <b>${v}</b></span>`).join('')}
       </div></div>`;
   } else if(!m.isHitter){
-    oppCard=`<div class="card" style="margin-bottom:14px;background:var(--panel2)"><div class="muted" style="font-size:12.5px">投手出賽評估以<b>自身 ERA / WHIP</b> 為主要依據（對手打線整體強弱較難即時量化，故先用投手品質做基準參考）。</div></div>`;
+    oppCard=`<div class="card" style="margin-bottom:12px;background:var(--panel2);padding:11px 13px"><div class="muted" style="font-size:12px">投手評估以自身 ERA / WHIP / K9 ＋對手打線強弱為依據。</div></div>`;
   }
   const rows=m.factors.map(f=>`<div class="frow">
       <div class="fl">${f.label}${f.value!=null?` <span class="muted">· ${f.value}</span>`:''}<small>${f.detail||''}</small></div>
       ${deltaHTML(f.delta)}
     </div>`).join('');
-  const clampNote=(Math.round(m.raw)!==m.score)?`<span class="muted">（加權總分 ${Math.round(m.raw)}，限制在 5–98 後為 ${m.score}）</span>`:'';
-  const summary=m.rec==='START'?'綜合對戰條件偏向有利，建議排<b>先發</b>。'
-    :m.rec==='SIT'?'綜合對戰條件偏向不利，建議放<b>板凳</b>或找替補。'
-    :'對戰條件中性，可<b>觀望</b>，視當天傷況/近況再決定。';
+  const clampNote=`<small>加權 ${Math.round(m.raw)} → 校準</small>`;
+  const summary=m.rec==='START'?'條件有利，建議<b>先發</b>。'
+    :m.rec==='SIT'?'條件不利，建議<b>板凳</b>。'
+    :'條件中性，<b>觀望</b>。';
   const body=head+oppCard+
-    `<div style="font-size:12px;color:var(--muted);margin-bottom:4px">分數組成（每項對最終分數的加減）：</div>`+rows+
+    `<div style="font-size:12px;color:var(--muted);margin-bottom:4px">分數組成（加權加減）</div>`+rows+
     `<div class="frow" style="border-bottom:none"><div class="fl"><b>對戰分數</b> ${clampNote}</div><span class="fdelta" style="color:var(--accent)">${m.score}</span></div>
      <div class="row" style="margin-top:8px;gap:10px"><span class="rec ${m.rec}">${recLabel(m.rec)}</span><span style="font-size:13px">${summary}</span></div>
-     <p class="muted" style="font-size:11.5px;margin-bottom:0;margin-top:12px">⚠️ 此為數據輔助評分（基準：先發≥62、板凳≤42），未涵蓋傷況、天氣、球場、近況連續表現等；請搭配「傷兵」「賽程」分頁一起判斷。</p>`;
+     <p class="muted" style="font-size:11.5px;margin-bottom:0;margin-top:12px">數據輔助評分（先發 ≥62、板凳 ≤42），未含傷況/天氣，請搭配判斷。</p>`;
   showModal(body,'對戰分析 · 有憑有據');
 }
 window.openMatchupDetail=openMatchupDetail;
@@ -1081,11 +1194,11 @@ function barChart(rows,aName,bName){
     const aw=Math.max(2,a/mx*barMax),bw=Math.max(2,b/mx*barMax);
     const betterA=r.hi?a>b:a<b,betterB=r.hi?b>a:b<a;
     svg+=`<text x="${labelX}" y="${y+rowH/2+1}" fill="var(--muted)" font-size="12">${r.l}</text>`;
-    svg+=`<rect x="${barX}" y="${y+3}" width="${aw}" height="13" rx="3" fill="#2f6fed"/><text x="${barX+aw+4}" y="${y+13}" fill="${betterA?'#0ea15a':'var(--muted)'}" font-size="11" font-weight="${betterA?'700':'400'}">${r.d?fmt(a,r.d):a}</text>`;
-    svg+=`<rect x="${barX}" y="${y+20}" width="${bw}" height="13" rx="3" fill="#f59e0b"/><text x="${barX+bw+4}" y="${y+30}" fill="${betterB?'#0ea15a':'var(--muted)'}" font-size="11" font-weight="${betterB?'700':'400'}">${r.d?fmt(b,r.d):b}</text>`;
+    svg+=`<rect x="${barX}" y="${y+3}" width="${aw}" height="13" rx="3" fill="#4C8C7D"/><text x="${barX+aw+4}" y="${y+13}" fill="${betterA?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterA?'700':'400'}">${r.d?fmt(a,r.d):a}</text>`;
+    svg+=`<rect x="${barX}" y="${y+20}" width="${bw}" height="13" rx="3" fill="#C0623E"/><text x="${barX+bw+4}" y="${y+30}" fill="${betterB?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterB?'700':'400'}">${r.d?fmt(b,r.d):b}</text>`;
   });
   svg+=`</svg>`;
-  return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2f6fed;vertical-align:0"></span> ${aName}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;vertical-align:0"></span> ${bName}</span></div>`+svg;
+  return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4C8C7D;vertical-align:0"></span> ${aName}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C0623E;vertical-align:0"></span> ${bName}</span></div>`+svg;
 }
 function radarChart(rows,aName,bName){
   const n=rows.length,cx=150,cy=145,R=98,W=300,H=285;
@@ -1100,11 +1213,11 @@ function radarChart(rows,aName,bName){
   const pB=rows.map((r,i)=>pt(i,nm(r)[1]).join(',')).join(' ');
   return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:330px;height:auto;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
     ${grid}${axes}${labels}
-    <polygon points="${pB}" fill="#f59e0b" fill-opacity="0.14" stroke="#f59e0b" stroke-width="2"/>
-    <polygon points="${pA}" fill="#2f6fed" fill-opacity="0.16" stroke="#2f6fed" stroke-width="2"/></svg>
+    <polygon points="${pB}" fill="#C0623E" fill-opacity="0.15" stroke="#C0623E" stroke-width="2"/>
+    <polygon points="${pA}" fill="#4C8C7D" fill-opacity="0.16" stroke="#4C8C7D" stroke-width="2"/></svg>
   <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-top:2px">
-    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2f6fed;vertical-align:0"></span> ${aName}</span>
-    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f59e0b;vertical-align:0"></span> ${bName}</span></div>`;
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#4C8C7D;vertical-align:0"></span> ${aName}</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#C0623E;vertical-align:0"></span> ${bName}</span></div>`;
 }
 function compareCard(A,B){
   if(A.isPitcher!==B.isPitcher)return `<div class="card" style="margin-top:14px"><div class="err">兩位球員類型不同（打者 vs 投手），無法直接比較數據。</div></div>`;
@@ -1152,13 +1265,42 @@ function mainCard(d){
     <p class="muted" style="font-size:11.5px;margin-bottom:0">xwOBA、Barrel%、擊球初速等 Statcast 數據見 Savant。</p>
   </div>`;
 }
+// ---------- 聯盟百分位 ----------
+let LEAGUE_DIST={};
+const PERC_METRICS={
+  hitting:[{k:'ops',l:'OPS',hi:1,d:3},{k:'avg',l:'AVG',hi:1,d:3},{k:'obp',l:'OBP',hi:1,d:3},{k:'slg',l:'SLG',hi:1,d:3},{k:'homeRuns',l:'HR',hi:1,d:0},{k:'stolenBases',l:'SB',hi:1,d:0}],
+  pitching:[{k:'era',l:'ERA',hi:0,d:2},{k:'whip',l:'WHIP',hi:0,d:2},{k:'strikeoutsPer9Inn',l:'K/9',hi:1,d:1},{k:'baseOnBallsPer9',l:'BB/9',hi:0,d:1},{k:'strikeOuts',l:'K',hi:1,d:0},{k:'inningsPitched',l:'IP',hi:1,d:1}]
+};
+async function getLeagueDist(group){
+  if(LEAGUE_DIST[group])return LEAGUE_DIST[group];
+  const d=await J(`${API}/stats?stats=season&group=${group}&gameType=R&season=${SEASON}&sportId=1&playerPool=qualified&limit=300`);
+  const splits=d.stats?.[0]?.splits||[];const dist={};
+  PERC_METRICS[group].forEach(m=>{dist[m.k]=splits.map(s=>parseFloat(s.stat[m.k])).filter(v=>!isNaN(v));});
+  LEAGUE_DIST[group]=dist;return dist;
+}
+function pctRank(arr,v,hi){if(!arr||!arr.length||isNaN(v))return null;const c=arr.filter(x=>hi?x<=v:x>=v).length;return Math.round(c/arr.length*100);}
+function percentileCard(d,dist){
+  const ms=PERC_METRICS[d.isPitcher?'pitching':'hitting'];
+  const rows=ms.map(m=>{const v=parseFloat(d.s[m.k]);const p=pctRank(dist[m.k],v,m.hi);if(p==null)return '';
+    const col=p>=80?'var(--good)':p>=60?'#7BA86B':p>=40?'var(--warn)':'var(--bad)';
+    return `<div style="display:flex;align-items:center;gap:8px;margin:8px 0">
+      <span style="width:44px;font-size:11px;color:var(--muted)">${m.l}</span>
+      <div style="flex:1;height:8px;border-radius:5px;background:var(--panel2);position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;height:100%;width:${p}%;background:${col}"></span></div>
+      <span style="width:70px;text-align:right;font-size:11.5px"><b>${p}</b><span class="muted"> · ${m.d?fmt(v,m.d):(isNaN(v)?'–':v)}</span></span></div>`;
+  }).join('');
+  return `<div class="card" style="margin-top:14px"><h2 class="sec" style="margin-top:0">📊 聯盟百分位 <span class="pill">vs 規定打席/投球局數球員</span></h2>
+    ${rows}<p class="muted" style="font-size:11px;margin-bottom:0">數字＝贏過聯盟百分之幾（越高越強）；ERA/WHIP/BB9 已換算成「越低越好＝百分位越高」。</p></div>`;
+}
 async function renderStats(){
   const panel=$('#statsPanel');if(!STATS_MAIN)return;
   panel.innerHTML='<div class="loading"><span class="spin"></span>載入數據…</div>';
   try{
     const A=await loadPlayerFull(STATS_MAIN);
     let html=mainCard(A);
-    if(STATS_RANGE==='season'){const recent=await getRecent(A.p.id,A.group);html+=trendCard(recent,A.s,A.isPitcher);}
+    if(STATS_RANGE==='season'){
+      const dist=await getLeagueDist(A.group).catch(()=>null);if(dist)html+=percentileCard(A,dist);
+      const recent=await getRecent(A.p.id,A.group);html+=trendCard(recent,A.s,A.isPitcher);
+    }
     if(STATS_CMP){const B=await loadPlayerFull(STATS_CMP);html+=compareCard(A,B);}
     panel.innerHTML=html;
     const inRoster=ROSTER.some(r=>r.id===A.p.id);
@@ -1262,7 +1404,7 @@ async function streamFinder(){
   cands.sort((x,y)=>(x.oppOPS||1)-(y.oppOPS||1)); // 對手打線最弱優先
   const top=cands.slice(0,14);
   for(const c of top){try{const {s}=await playerSeason(c.pit.id,'pitching');c.era=parseFloat(s.era);c.whip=parseFloat(s.whip);c.k9=parseFloat(s.strikeoutsPer9Inn);}catch(e){}}
-  top.forEach(c=>{let sc=50;if(!isNaN(c.oppOPS))sc+=(0.720-c.oppOPS)*150;if(!isNaN(c.era))sc+=(4.0-c.era)*5;if(!isNaN(c.whip))sc+=(1.25-c.whip)*20;c.score=clampScore(sc);});
+  top.forEach(c=>{let sc=50;if(!isNaN(c.oppOPS))sc+=(0.720-c.oppOPS)*150;if(!isNaN(c.era))sc+=(4.0-c.era)*5;if(!isNaN(c.whip))sc+=(1.25-c.whip)*20;c.score=finalScore(sc);});
   top.sort((a,b)=>b.score-a.score);
   box.innerHTML=`<table class="rtable" style="margin-top:6px"><thead><tr><th>投手</th><th>對手打線</th><th class="num">對手 OPS</th><th class="num">ERA</th><th class="num">WHIP</th><th class="num">K/9</th><th class="num">分數</th><th></th></tr></thead><tbody>`+
     top.map(c=>{const watched=WATCH.some(w=>w.id===c.pit.id);
@@ -1300,6 +1442,31 @@ async function loadStandings(){
     }).join('')+'</div><div class="muted" style="font-size:11.5px;padding:6px 2px">勝差「—」＝該分區領先；連勝/連敗以綠/紅顯示。⭐ 你陣容所屬球隊以底色標示。</div>';
 }
 if($('#standBtn'))$('#standBtn').onclick=loadStandings;
+
+// ---------- 本週投手排程 / 兩階投手 ----------
+function weekRange(){const d=new Date(GDATE);const day=(d.getDay()+6)%7;const mon=new Date(d);mon.setDate(d.getDate()-day);const sun=new Date(mon);sun.setDate(mon.getDate()+6);return [mon,sun];}
+async function analyzeRotation(){
+  const box=$('#rotResult');
+  const sps=ROSTER.filter(r=>['P','SP','RP'].includes(r.pos));
+  if(!sps.length){box.innerHTML='你的陣容沒有投手，先到上方加入。';return;}
+  box.innerHTML='<div class="loading"><span class="spin"></span>抓本週賽程…</div>';
+  const [mon,sun]=weekRange();let dates;
+  try{const d=await J(`${API}/schedule?sportId=1&startDate=${todayStr(mon)}&endDate=${todayStr(sun)}&hydrate=probablePitcher,team`);dates=d.dates||[];}
+  catch(e){box.innerHTML=`<div class="err">載入失敗：${e.message}</div>`;return;}
+  const startMap={},teamGames={};
+  dates.forEach(dt=>{(dt.games||[]).forEach(g=>{const a=g.teams.away,h=g.teams.home;
+    teamGames[a.team.id]=(teamGames[a.team.id]||0)+1;teamGames[h.team.id]=(teamGames[h.team.id]||0)+1;
+    [[a,h.team],[h,a.team]].forEach(([side,oppTeam])=>{const pp=side.probablePitcher;if(pp)(startMap[pp.id]=startMap[pp.id]||[]).push({date:dt.date,opp:oppTeam});});});});
+  const rows=sps.map(p=>({p,starts:startMap[p.id]||[],tg:teamGames[p.teamId]||0}))
+    .sort((a,b)=>b.starts.length-a.starts.length||b.tg-a.tg);
+  box.innerHTML='<div class="plist">'+rows.map(r=>{
+    const n=r.starts.length;
+    const badge=n>=2?'<span class="rec START">★ 兩階投手</span>':n===1?'<span class="chip">先發 1 場</span>':'<span class="chip">先發未公布</span>';
+    const opps=r.starts.map(s=>`${s.date.slice(5).replace('-','/')} vs ${teamAbbr(s.opp.id,s.opp.name)}`).join('、');
+    return `<div class="prow" style="align-items:flex-start"><div style="flex:1;min-width:0"><div class="nm"><span class="tcell">${playerPhoto(r.p.id,24)}${teamLogo(r.p.teamId,16)}${r.p.fullName}</span></div><div class="meta" style="margin-top:3px">${opps||'本週尚無公布先發'} · 球隊本週 ${r.tg} 場</div></div>${badge}</div>`;
+  }).join('')+'</div><div class="muted" style="font-size:11px;margin-top:8px">先發約開賽前 5 天公布，本週後段可能尚未定。★ 兩階投手＝本週預計先發 2 場。</div>';
+}
+if($('#rotBtn'))$('#rotBtn').onclick=analyzeRotation;
 
 // ---------- 收藏名單 (watchlist) ----------
 function toggleWatch(p){
@@ -1433,6 +1600,9 @@ const CATS=[
 ];
 let MATCHUP=load('pfbd_matchup',{week:'',me:'',opp:'',mv:{},ov:{}});
 function saveM(){save('pfbd_matchup',MATCHUP);}
+let H2H_HIST=load('pfbd_h2h_hist',{});
+function h2hPrevSnap(){const today=todayStr(new Date());let best=null;for(const d in H2H_HIST){if(d<today&&(H2H_HIST[d].week||'')===(MATCHUP.week||'')){if(!best||d>best)best=d;}}return best?Object.assign({date:best},H2H_HIST[best]):null;}
+function h2hSaveSnap(m,o,t){const today=todayStr(new Date());H2H_HIST[today]={m,o,t,week:MATCHUP.week||''};const ks=Object.keys(H2H_HIST).sort();while(ks.length>40)delete H2H_HIST[ks.shift()];save('pfbd_h2h_hist',H2H_HIST);}
 
 ['h2hWeek','h2hMe','h2hOpp'].forEach(id=>{
   const key=id==='h2hWeek'?'week':id==='h2hMe'?'me':'opp';
@@ -1457,9 +1627,11 @@ function renderH2H(){
   const tbl=$('#h2hTable');
   const inStyle='width:78px;text-align:right;background:var(--panel2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:5px 7px';
   const head=`<thead><tr><th>類別</th><th class="num">${MATCHUP.me||'我'}</th><th></th><th class="num">${MATCHUP.opp||'對手'}</th><th>狀態</th></tr></thead>`;
+  let lastG='';
   const body=CATS.map(c=>{
     const mv=MATCHUP.mv[c.k],ov=MATCHUP.ov[c.k];
-    return `<tr>
+    let pre='';if(c.g!==lastG){lastG=c.g;pre=`<tr class="grouprow"><td colspan="5">${c.g==='打'?'⚾ 打者項目':'🥎 投手項目'}</td></tr>`;}
+    return pre+`<tr>
       <td><b>${c.k}</b> <span class="chip">${c.g}</span></td>
       <td class="num" id="mc_${c.k}"><input class="h2hin" data-side="mv" data-k="${c.k}" value="${mv??''}" inputmode="decimal" style="${inStyle}"></td>
       <td class="muted" style="text-align:center;font-size:11px">${c.dir===1?'高勝':'低勝'}</td>
@@ -1477,7 +1649,7 @@ function renderH2H(){
 function fmtDiff(c,d){return c.dec?d.toFixed(c.dec).replace(/^0\./,'.'):Math.round(d);}
 // 即時重算狀態徽章、比數、調整建議（不重建輸入框，游標不跳）
 function recalcH2H(){
-  let m=0,o=0,t=0;const advHit=[],advPit=[];
+  let m=0,o=0,t=0;const B={grab:[],hold:[],punt:[],safe:[],tie:[]};
   CATS.forEach(c=>{
     const mv=MATCHUP.mv[c.k],ov=MATCHUP.ov[c.k];
     const r=cmp(c,mv,ov);
@@ -1488,30 +1660,56 @@ function recalcH2H(){
     if(r===1)m++;else if(r===-1)o++;else if(r===0)t++;
     if(r!=null){
       const diff=Math.abs((+mv)-(+ov));const isClose=diff<=c.close;
-      if(r===0){status='<span class="rec STREAM">➖ 平手·關鍵</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 平手，今天全力推`);}
-      else if(r===-1&&isClose){status='<span class="rec GRAB">🔥 可搶</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 落後 ${fmtDiff(c,diff)}（可搶）`);}
-      else if(r===-1){status='<span class="rec SIT">💤 可放生</span>';}
-      else if(r===1&&isClose){status='<span class="rec STREAM">⚠️ 要守</span>';(c.g==='打'?advHit:advPit).push(`<b>${c.k}</b> 僅領先 ${fmtDiff(c,diff)}（守住）`);}
-      else status='<span class="rec START">✅ 穩拿</span>';
+      if(r===0){status='<span class="rec STREAM">➖ 平手·關鍵</span>';B.tie.push(c.k);}
+      else if(r===-1&&isClose){status='<span class="rec GRAB">🔥 可搶</span>';B.grab.push(c.k);}
+      else if(r===-1){status='<span class="rec SIT">💤 可放生</span>';B.punt.push(c.k);}
+      else if(r===1&&isClose){status='<span class="rec STREAM">⚠️ 要守</span>';B.hold.push(c.k);}
+      else {status='<span class="rec START">✅ 穩拿</span>';B.safe.push(c.k);}
     }
     if(st)st.innerHTML=status;
   });
   $('#h2hScore').textContent=`${m} – ${o}`+(t?` (${t}平)`:'');
-  const v=$('#h2hVerdict');
-  if(m+o+t===0){v.textContent='輸入兩隊的各項加總，下方即時計算戰況。';v.className='muted';}
-  else if(m>o)v.innerHTML=`<span class="tag-good">目前領先 ${m}-${o}${t?` (${t}平)`:''}，守住膠著項目就能贏。</span>`;
-  else if(m<o)v.innerHTML=`<span class="tag-bad">目前落後 ${m}-${o}${t?` (${t}平)`:''}，集中火力搶下方標🔥的項目。</span>`;
-  else v.innerHTML=`<span class="tag-warn">平手 ${m}-${o}${t?` (${t}未定)`:''}，每一項都關鍵。</span>`;
+  const tot=(m+o+t)||1;
+  const bw=$('#h2hBarW'),bt=$('#h2hBarT'),bl=$('#h2hBarL');
+  if(bw){bw.style.width=(m/tot*100)+'%';bt.style.width=(t/tot*100)+'%';bl.style.width=(o/tot*100)+'%';}
+  const lw=$('#h2hLeadW'),lt=$('#h2hLeadT'),ll=$('#h2hLeadL');
+  if(lw){lw.textContent='領先 '+m;lt.textContent='平 '+t;ll.textContent='落後 '+o;}
+  const v=$('#h2hVerdict');const need=Math.max(0,6-m);
+  if(m+o+t===0){v.innerHTML='<span class="muted">輸入兩隊各項加總，即時計算戰況。</span>';}
+  else if(m>=6)v.innerHTML=`<span class="tag-good">🎉 已搶下 ${m} 項，鎖定多數、勝券在握！</span>`;
+  else if(m>o)v.innerHTML=`<span class="tag-good">領先 ${m}-${o}，再搶 ${need} 項就鎖定勝利 💪</span>`;
+  else if(m<o)v.innerHTML=`<span class="tag-bad">落後 ${m}-${o}，主攻下方 🔥 標記的項目還有機會！</span>`;
+  else v.innerHTML=`<span class="tag-warn">平手 ${m}-${o}，每一項都是關鍵 🔥</span>`;
   const kp=$('#kpiH2H');if(kp)kp.textContent=`${m}-${o}`;
+  const de=$('#h2hDelta');
+  if(de){const prev=h2hPrevSnap();
+    if(prev&&(m+o+t)>0){const dw=m-prev.m,mmdd=prev.date.slice(5).replace('-','/');
+      de.innerHTML=`較 ${mmdd}：領先項 <b style="color:${dw>0?'var(--good)':dw<0?'var(--bad)':'var(--muted)'}">${dw>0?'+':''}${dw}</b> ${dw>0?'⬆':dw<0?'⬇':'―'}`;}
+    else de.textContent='';}
+  if((m+o+t)>0)h2hSaveSnap(m,o,t);
   const adv=$('#h2hAdvice');if(adv){
-    if(!advHit.length&&!advPit.length){
-      adv.innerHTML=(m+o+t)?'目前沒有膠著項目：守住領先、放生大幅落後的即可。':'填入兩隊各項加總後，這裡會給每日主攻建議。';
-    }else{
-      adv.innerHTML=`${advHit.length?`<div style="margin-bottom:6px"><b>打擊</b>：${advHit.join('；')}</div>`:''}
-        ${advPit.length?`<div><b>投手</b>：${advPit.join('；')}</div>`:''}`;
+    if(m+o+t===0){adv.innerHTML='填入兩隊各項加總後，這裡給你主攻／守住／放生策略。';}
+    else{
+      const chaseChip=k=>{const c=CHASE[k];return c?`<button class="catbtn" onclick="gotoRadar('${c[0]}','${c[1]}')">${k} 找FA ›</button>`:`<span class="chip">${k}</span>`;};
+      const main=[...B.tie,...B.grab];
+      adv.innerHTML=
+        (main.length?`<div class="stratrow"><b class="tag-good">🔥 主攻</b><span>${main.map(chaseChip).join('')}</span></div>`:'')+
+        (B.hold.length?`<div class="stratrow"><b class="tag-warn">⚠️ 守住</b><span>${B.hold.map(k=>`<span class="chip">${k}</span>`).join('')}</span></div>`:'')+
+        (B.punt.length?`<div class="stratrow"><b class="tag-bad">💤 放生</b><span>${B.punt.map(k=>`<span class="chip">${k}</span>`).join('')}</span></div>`:'')+
+        (B.safe.length?`<div class="stratrow"><b class="tag-good">✅ 穩拿</b><span>${B.safe.map(k=>`<span class="chip">${k}</span>`).join('')}</span></div>`:'')+
+        (main.some(k=>CHASE[k])?`<div class="muted" style="font-size:11px;margin-top:6px">點「找FA」直接到雷達找能補強該項的自由球員。</div>`:'');
     }
   }
 }
+const CHASE={HR:['hitting','homeRuns'],R:['hitting','runs'],RBI:['hitting','rbi'],SB:['hitting','stolenBases'],K:['pitching','strikeOuts'],W:['pitching','wins'],SV:['pitching','saves']};
+function gotoRadar(group,sortKey){
+  goTo('radar');radarGroup=group;
+  $$('#radarGroup button').forEach(x=>x.classList.toggle('on',x.dataset.g===group));
+  fillSortOptions();
+  if(sortKey){radarSort=sortKey;const sel=$('#radarSort');if(sel)sel.value=sortKey;}
+  renderRadar();
+}
+window.gotoRadar=gotoRadar;
 const renderH2HScore=recalcH2H;
 
 // ========== INIT ==========
