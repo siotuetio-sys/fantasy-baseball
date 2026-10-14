@@ -749,7 +749,7 @@
     <div class="card">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap">
         <h2 class="sec" style="margin:0">我的陣容 <span class="pill" id="rosterCount">0</span></h2>
-        <span class="muted" style="font-size:11.5px">Yahoo 陣容手動同步 · 存本機</span>
+        <span class="row" style="gap:10px"><span class="muted" style="font-size:11.5px">存在這台裝置</span><button class="btn ghost" id="shareRosterBtn" onclick="shareRoster()">分享陣容</button></span>
       </div>
       <p class="muted" style="margin:8px 0 0">把球員叫進來報到，總覽、賽程和傷兵頁都會繞著他們轉。</p>
       <div class="pos-rel" style="margin-top:10px">
@@ -1850,6 +1850,86 @@ function renderRosterBar(){
 }
 window.removeRoster=removeRoster;
 
+
+// ========== SHARE ROSTER (link carries a snapshot in #share=…) ==========
+const SHARE_MAX=60;
+function b64urlEncode(str){const bytes=new TextEncoder().encode(str);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64urlDecode(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)));}
+// anything that came from a link is untrusted: keep plain text and short codes only
+function cleanText(v,max=60){return String(v??'').replace(/[<>&"'`\\]/g,'').trim().slice(0,max);}
+function cleanCode(v){v=String(v??'').toUpperCase();return /^[A-Z0-9]{1,3}$/.test(v)?v:'';}
+function cleanShared(list){
+  if(!Array.isArray(list))return[];
+  const seen=new Set();const out=[];
+  for(const a of list.slice(0,SHARE_MAX)){
+    if(!Array.isArray(a))continue;
+    const id=Number(a[0]);if(!Number.isInteger(id)||id<=0||seen.has(id))continue;
+    const fullName=cleanText(a[1]);if(!fullName)continue;
+    const teamId=Number(a[5]);
+    seen.add(id);
+    out.push({id,fullName,pos:cleanCode(a[2]),bat:cleanCode(a[3]),pitch:cleanCode(a[4]),teamId:Number.isInteger(teamId)&&teamId>0?teamId:undefined,teamName:cleanText(a[6],40)});
+  }
+  return out;
+}
+function shareUrl(){
+  const data={v:1,n:cleanText(MATCHUP.me,30),p:ROSTER.slice(0,SHARE_MAX).map(r=>[r.id,r.fullName,r.pos||'',r.bat||'',r.pitch||'',r.teamId||0,r.teamName||''])};
+  return location.href.split('#')[0]+'#share='+b64urlEncode(JSON.stringify(data));
+}
+function shareRoster(){
+  if(!ROSTER.length){toast('陣容是空的，先叫幾個球員報到再分享吧。');return;}
+  const url=shareUrl();
+  showModal(`<p style="margin:0 0 12px">把這個連結傳給朋友，他打開就會看到你的 <b>${ROSTER.length}</b> 位球員，也能一鍵複製成他自己的陣容。</p>
+    <input class="search" id="shareUrlBox" readonly value="${url}" style="font-size:12px">
+    <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn" id="copyShareBtn">複製連結</button><span class="muted" style="font-size:12px">只有球員名單，不含你的對戰數字。之後改了陣容，要重新分享一次。</span></div>`,'分享我的陣容');
+  const box=$('#shareUrlBox');
+  $('#copyShareBtn').onclick=()=>{
+    const done=()=>toast('連結已複製，快去炫耀你的陣容。');
+    const fallback=()=>{box.focus();box.select();toast('已選取連結，按 Ctrl+C（手機長按）複製。');};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,fallback);else fallback();
+  };
+}
+window.shareRoster=shareRoster;
+let SHARED=null;
+function clearShareHash(){try{history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
+function importShared(mode){
+  if(!SHARED)return;
+  if(mode==='replace'){ROSTER=SHARED.p.slice();}
+  else{const have=new Set(ROSTER.map(r=>r.id));SHARED.p.forEach(r=>{if(!have.has(r.id))ROSTER.push(r);});}
+  save('pfbd_roster',ROSTER);
+  const n=SHARED.p.length;SHARED=null;clearShareHash();closeModal();
+  renderRosterBar();renderDash();goTo('roster');
+  toast(mode==='replace'?`已換成這份陣容（${n} 人）。`:'已把新球員加進你的陣容。');
+}
+window.importShared=importShared;
+function dismissShared(){SHARED=null;clearShareHash();closeModal();}
+window.dismissShared=dismissShared;
+// returns true when the page was opened from a share link
+function handleShareLink(){
+  const h=location.hash||'';
+  if(!h.startsWith('#share='))return false;
+  let data=null;
+  try{data=JSON.parse(b64urlDecode(h.slice(7)));}catch(e){}
+  const players=cleanShared(data&&data.p);
+  if(!players.length){clearShareHash();toast('這個分享連結讀不出球員，請朋友重新分享一次。');return true;}
+  SHARED={n:cleanText(data.n,30),p:players};
+  const who=SHARED.n?`「${SHARED.n}」`:'朋友';
+  const isPit=r=>['P','SP','RP'].includes(r.pos);
+  const chips=list=>list.map(r=>`<span class="pchip" style="padding:4px 12px">${r.fullName} <span class="posbadge">${r.pos||'?'}</span></span>`).join('');
+  const hit=players.filter(r=>!isPit(r)),pit=players.filter(isPit);
+  const mine=ROSTER.length;
+  showModal(`<p style="margin:0 0 10px">${who}傳了 <b>${players.length}</b> 位球員給你看。</p>
+    ${hit.length?`<div class="seclabel">打者 ${hit.length}</div><div class="rosterbar" style="margin-top:6px">${chips(hit)}</div>`:''}
+    ${pit.length?`<div class="seclabel" style="margin-top:12px">投手 ${pit.length}</div><div class="rosterbar" style="margin-top:6px">${chips(pit)}</div>`:''}
+    <div class="row" style="margin-top:18px;flex-wrap:wrap">
+      <button class="btn" onclick="importShared('replace')">換成這份陣容</button>
+      ${mine?`<button class="btn ghost" onclick="importShared('merge')">加進我的陣容</button>`:''}
+      <button class="btn ghost" onclick="dismissShared()">只是看看</button>
+    </div>
+    ${mine?`<p class="muted" style="font-size:12px;margin:10px 0 0">「換成這份陣容」會取代你目前的 ${mine} 位球員；「加進我的陣容」只補上你還沒有的人。</p>`:''}`,
+    '朋友的陣容');
+  return true;
+}
+
 // ========== H2H MATCHUP ==========
 // 10-category Yahoo H2H. dir:1 => higher wins, dir:-1 => lower wins. close = flippable margin.
 const CATS=[
@@ -1987,7 +2067,7 @@ const renderH2HScore=recalcH2H;
   renderH2HHeader();
   renderH2HScore();
   renderDash();
-  const hv=(location.hash||'').slice(1);if(hv&&hv!=='dash'&&$('#view-'+hv))goTo(hv);
+  if(!handleShareLink()){const hv=(location.hash||'').slice(1);if(/^[a-z0-9]+$/.test(hv)&&hv!=='dash'&&$('#view-'+hv))goTo(hv);}
 })();
 </script>
 </body>
