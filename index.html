@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox=%220 0 40 40%22 fill=%22none%22 stroke=%22%23141414%22 stroke-width=%222%22 stroke-linecap=%22round%22><circle cx=%2220%22 cy=%2220%22 r=%2217%22 fill=%22%23fff04f%22/><path d=%22M11.5 8.5q6 11.5 0 23M28.5 8.5q-6 11.5 0 23%22/><path d=%22M12.6 12.5l2.4-1M13.8 17l2.5-.4M13.8 23l2.5.4M12.6 27.5l2.4 1M27.4 12.5l-2.4-1M26.2 17l-2.5-.4M26.2 23l-2.5.4M27.4 27.5l-2.4 1%22 stroke-width=%221.6%22/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@500&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root{
     /* Paper + ink + one lemon pop. Ink lines draw the shapes; lemon sets the mood. */
@@ -22,7 +22,7 @@
     --f-display:"Anton","Arial Narrow",Impact,"Noto Sans TC",sans-serif;
     --f-head:"Noto Serif TC","Songti TC","PMingLiU",serif;
     --f-body:"Noto Sans TC",-apple-system,"Segoe UI",Roboto,sans-serif;
-    --f-hand:"Caveat","Comic Sans MS","Noto Sans TC",cursive;
+    --f-mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -298,11 +298,12 @@
   /* ===== Lemon theme: paper, ink lines, one pop of lemon ===== */
   .ico{width:18px;height:18px;display:block}
   .iconbtn .ico{width:17px;height:17px}
-  .hand{font-family:var(--f-hand);font-weight:700;font-size:1.25em;color:var(--muted);letter-spacing:0;line-height:1}
+  .sticker{display:inline-block;font-family:var(--f-mono);font-weight:500;font-size:11px;line-height:1.2;text-transform:uppercase;letter-spacing:1.5px;
+           color:var(--text);border:1.5px solid var(--line);border-radius:999px;padding:4px 10px 3px;white-space:nowrap}
   h2.sec{font-family:var(--f-head);font-weight:900;font-size:19px;gap:10px;flex-wrap:wrap;letter-spacing:.3px}
   h2.sec .pill{font-family:var(--f-body);letter-spacing:0;background:var(--chip);color:var(--muted)}
   .view>h2.sec{font-size:28px;margin:4px 0 16px;letter-spacing:.5px}
-  .view>h2.sec .hand{font-size:24px}
+  .view>h2.sec .sticker{font-size:12px}
   a{color:var(--text);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
   a:hover{background:var(--pop-soft)}
   input:focus,button:focus-visible,a:focus-visible{outline:2.5px solid var(--line);outline-offset:2px}
@@ -399,7 +400,7 @@
   /* dashboard hero */
   .hero{position:relative;background:var(--pop);border-radius:28px;padding:30px 34px 0;display:grid;grid-template-columns:1.15fr 1fr;gap:10px;overflow:hidden;margin-bottom:16px}
   .hero-copy{padding-bottom:30px;min-width:0}
-  .hero .hand{font-size:27px;color:var(--text);margin:0 0 6px}
+  .hero .sticker{font-size:13px;margin:0 0 12px}
   .hero-title{font-family:var(--f-head);font-weight:900;font-size:44px;line-height:1.15;margin:0;letter-spacing:.5px;text-wrap:balance}
   .hero-title u{text-decoration:none;background:linear-gradient(transparent 60%,var(--bg) 60%,var(--bg) 90%,transparent 90%)}
   .hero-score{display:flex;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap}
@@ -411,7 +412,7 @@
   .pillrow .pill{background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:12.5px}
   .hero-art{position:relative;align-self:end;justify-self:end;width:100%;max-width:360px}
   .mascot{display:block;width:100%;height:auto}
-  .bubble{position:absolute;top:8px;left:-12px;background:var(--bg);border:1.5px solid var(--line);border-radius:22px;padding:10px 16px;font-weight:700;font-size:13.5px;line-height:1.4;max-width:200px;z-index:1}
+  .bubble{position:absolute;top:8px;left:-12px;background:var(--bg);border:1.5px solid var(--line);border-radius:22px;padding:10px 16px;font-weight:700;font-size:13.5px;line-height:1.4;white-space:nowrap;z-index:1}
   .bubble::after{content:"";position:absolute;bottom:-10px;right:46px;width:18px;height:18px;background:var(--bg);border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line);transform:rotate(35deg) skewX(-10deg)}
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
   .kpi{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:16px 18px;display:flex;align-items:center;gap:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background .15s ease,transform .12s ease}
@@ -450,7 +451,7 @@
     nav button .ico{width:21px;height:21px}
     main{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
     .view>h2.sec{font-size:23px}
-    .view>h2.sec .hand{font-size:20px}
+    .view>h2.sec .sticker{font-size:11px}
     .view.doodled>h2.sec{padding-right:88px}
     .page-doodle{width:84px;top:-22px;right:2px}
     .hero{grid-template-columns:1fr;padding:22px 20px 0;border-radius:24px}
@@ -458,7 +459,7 @@
     .hero-title{font-size:32px}
     .hero-num span{font-size:66px}
     .hero-art{max-width:290px;justify-self:center;margin-top:10px}
-    .bubble{left:-8px;font-size:12.5px;max-width:170px}
+    .bubble{left:-8px;font-size:12.5px}
     .kpis{grid-template-columns:1fr;gap:10px}
     .kpi{padding:12px 16px}.kpi b{font-size:36px}
     .card{padding:16px}
@@ -496,7 +497,7 @@
   <section class="view active" id="view-dash">
     <section class="hero">
       <div class="hero-copy">
-        <p class="hand" id="heroHello">Hey, Skipper!</p>
+        <p class="sticker" id="heroHello">Hey, Skipper!</p>
         <h2 class="hero-title">今天，<u>誰該上場</u>？</h2>
         <div class="hero-score">
           <button class="hero-num" onclick="goTo('h2h')" aria-label="本週分類對戰比數，看各項戰況"><span id="kpiH2H">–</span></button>
@@ -544,7 +545,7 @@
     </div>
     <div class="card" id="lineupCard">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <h2 class="sec" style="margin:0">今日先發建議 <span class="hand">coach's picks</span></h2>
+        <h2 class="sec" style="margin:0">今日先發建議 <span class="sticker">coach's picks</span></h2>
         <div class="legend">
           <span class="lg"><span class="dot" style="background:var(--good)"></span>建議先發 <b id="kpiStart" style="color:var(--good)">–</b></span>
           <span class="lg"><span class="dot" style="background:var(--warn)"></span>觀望</span>
@@ -554,25 +555,25 @@
       <div id="dashLineup" class="loading" style="margin-top:10px"><span class="spin"></span>教練翻筆記中…</div>
     </div>
     <div class="card" style="margin-top:16px">
-      <h2 class="sec" style="margin-top:0">聯盟頭條 <span class="hand">hot off the press</span> <span class="pill">ESPN · 即時</span></h2>
+      <h2 class="sec" style="margin-top:0">聯盟頭條 <span class="sticker">hot off the press</span> <span class="pill">ESPN · 即時</span></h2>
       <div id="dashNews" class="loading"><span class="spin"></span>報紙送來中…</div>
     </div>
     <div class="card" style="margin-top:16px">
-      <h2 class="sec" style="margin-top:0">話題球員 <span class="hand">everyone's talking</span> <span class="pill">依新聞提及次數</span></h2>
+      <h2 class="sec" style="margin-top:0">話題球員 <span class="sticker">everyone's talking</span> <span class="pill">依新聞提及次數</span></h2>
       <div id="dashBuzz" class="loading"><span class="spin"></span>偷聽休息室八卦中…</div>
     </div>
   </section>
 
   <!-- SCHEDULE -->
   <section class="view doodled" id="view-schedule">
-    <h2 class="sec">今天誰跟誰打 <span class="hand">tonight's games</span> <span class="pill" id="schDate"></span></h2>
+    <h2 class="sec">今天誰跟誰打 <span class="sticker">tonight's games</span> <span class="pill" id="schDate"></span></h2>
     <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="投球中的棒球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 78q20 32 0 64M128 78q-20 32 0 64" stroke-width="2.2"/><path d="M76 90l7-3M80 106l8-1M80 120l8 1M76 134l7 3M124 90l-7-3M120 106l-8-1M120 120l-8 1M124 134l-7 3" stroke-width="1.8"/><path d="M64 92q2-40 38-42q34 2 38 38" fill="#141414"/><path d="M64 92q-20 1-30 9q26 4 54-4" fill="#141414"/><path d="M100 50v-6" stroke-width="4"/><ellipse cx="90" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="111" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><path d="M93 124q7 5 14 0"/><path d="M84 99l10 2M117 99l-10 2" stroke-width="2.2"/><path d="M144 104q20-6 26-38"/><circle cx="172" cy="56" r="8" fill="#fff04f"/><path d="M167 51q5 5 0 10" stroke-width="1.6"/><path d="M184 40l7-7M188 52h10M180 30l2-9" stroke-width="2.2"/><path d="M58 128q-14 6-26 2"/><path d="M32 138q-14 0-16-12q0-10 10-12q10 0 14 10q2 8-8 14z" fill="#141414"/><path d="M108 154v14"/><path d="M108 168h14q5 0 5 5h-19z" fill="#141414"/><path d="M86 152q-4 10-18 8q-6-1-6-8"/><path d="M62 152q-10-2-12 6h12z" fill="#141414"/></svg></div>
     <div id="scheduleList" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">
       <div class="loading"><span class="spin"></span>載入賽程中…</div>
     </div>
     <div class="card" style="margin-top:18px">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <h2 class="sec" style="margin:0">Stream 投手撿便宜 <span class="hand">bargain arms</span></h2>
+        <h2 class="sec" style="margin:0">Stream 投手撿便宜 <span class="sticker">bargain arms</span></h2>
         <button class="btn" id="streamBtn">分析今日先發</button>
       </div>
       <p class="muted" style="font-size:12px;margin-top:6px">找出今天剛好撞上冷鋒打線、最值得臨時撿來投一場的先發投手。</p>
@@ -581,7 +582,7 @@
 
     <div class="card" style="margin-top:18px">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-        <h2 class="sec" style="margin:0">聯盟排行榜 <span class="hand">standings</span></h2>
+        <h2 class="sec" style="margin:0">聯盟排行榜 <span class="sticker">standings</span></h2>
         <button class="btn ghost" id="standBtn">載入戰績</button>
       </div>
       <div id="standResult"></div>
@@ -590,7 +591,7 @@
 
   <!-- H2H MATCHUP -->
   <section class="view doodled" id="view-h2h">
-    <h2 class="sec">本週對決 <span class="hand">head to head</span> <span class="pill">Yahoo H2H · 10 項</span></h2>
+    <h2 class="sec">本週對決 <span class="sticker">head to head</span> <span class="pill">Yahoo H2H · 10 項</span></h2>
     <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="揮棒準備中的棒球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 78q20 32 0 64M128 78q-20 32 0 64" stroke-width="2.2"/><path d="M76 90l7-3M80 106l8-1M80 120l8 1M76 134l7 3M124 90l-7-3M120 106l-8-1M120 120l-8 1M124 134l-7 3" stroke-width="1.8"/><path d="M60 88q4-38 38-40q36 2 38 42" fill="#141414"/><path d="M136 92q20 1 30 9q-26 4-54-4" fill="#141414"/><path d="M100 50v-6" stroke-width="4"/><ellipse cx="90" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="111" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><path d="M93 124q7 4 14 0"/><path d="M85 99l9-1M115 99l-9-1" stroke-width="2.2"/><path d="M116 150q16-10 22-26M134 144q8-8 8-20"/><path d="M140 120l6-4l40-78q-2-9-10-7l-40 80z" fill="#fff04f"/><circle cx="141" cy="118" r="7" fill="#fbf8f1"/><path d="M30 70q-16 28 2 58M18 82q-8 18 2 36" stroke-width="2.2"/><path d="M86 154v14M114 154v14"/><path d="M86 168h-14q-5 0-5 5h19zM114 168h14q5 0 5 5h-19z" fill="#141414"/></svg></div>
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:14px;align-items:flex-end">
@@ -630,7 +631,7 @@
     </div>
 
     <div class="card" style="margin-top:14px">
-      <h2 class="sec" style="margin-top:0">教練錦囊 <span class="hand">game plan</span></h2>
+      <h2 class="sec" style="margin-top:0">教練錦囊 <span class="sticker">game plan</span></h2>
       <div id="h2hAdvice" class="muted">填入兩隊各項加總後，這裡給你主攻／守住／放生策略。</div>
     </div>
     <p class="muted" style="font-size:12px">每天把兩隊最新加總抄進來（自動存本機）。🔥 可搶＝落後但差距小，今天主攻；💤 可放生＝差太多別追。</p>
@@ -638,7 +639,7 @@
 
   <!-- STATS -->
   <section class="view" id="view-stats">
-    <h2 class="sec">球員顯微鏡 <span class="hand">under the microscope</span> <span class="pill">Statcast 風格</span></h2>
+    <h2 class="sec">球員顯微鏡 <span class="sticker">under the microscope</span> <span class="pill">Statcast 風格</span></h2>
     <div class="card">
       <div class="row" style="gap:10px;flex-wrap:wrap;align-items:flex-start">
         <div class="pos-rel" style="flex:1;min-width:220px">
@@ -667,7 +668,7 @@
 
   <!-- RADAR -->
   <section class="view" id="view-radar">
-    <h2 class="sec">自由市場撿寶 <span class="hand">waiver wire gems</span> <span class="pill">近期熱手</span></h2>
+    <h2 class="sec">自由市場撿寶 <span class="sticker">waiver wire gems</span> <span class="pill">近期熱手</span></h2>
 
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:10px;align-items:center">
@@ -706,7 +707,7 @@
 
   <!-- NEWS -->
   <section class="view doodled" id="view-news">
-    <h2 class="sec">誰上誰下 <span class="hand">who's in, who's out</span> <span class="pill" id="newsRange"></span></h2>
+    <h2 class="sec">誰上誰下 <span class="sticker">who's in, who's out</span> <span class="pill" id="newsRange"></span></h2>
     <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="頭上冰敷的棒球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 78q20 32 0 64M128 78q-20 32 0 64" stroke-width="2.2"/><path d="M76 90l7-3M80 106l8-1M80 120l8 1M76 134l7 3M124 90l-7-3M120 106l-8-1M120 120l-8 1M124 134l-7 3" stroke-width="1.8"/><path d="M64 92q2-40 38-42q34 2 38 38" fill="#141414"/><path d="M64 92q-20 1-30 9q26 4 54-4" fill="#141414"/><path d="M100 50v-6" stroke-width="4"/><path d="M84 104l9 4l-9 4M117 104l-9 4l9 4"/><path d="M92 126q4-4 8 0q4 4 8 0"/><rect x="72" y="30" width="60" height="22" rx="10" fill="#fff04f"/><path d="M132 37q8-2 10 4q-4 6-10 4" fill="#fff04f"/><path d="M84 37h8M96 43h6M108 36h8M118 44h6" stroke-width="2"/><path d="M146 104q12-26-8-50"/><path d="M54 116q-12 6-14 18"/><g transform="rotate(-28 70 132)"><rect x="56" y="126" width="28" height="11" rx="4" fill="#fbf8f1"/><path d="M66 129v5M74 129v5" stroke-width="1.6"/></g><path d="M158 62q7 9 0 14q-7-5 0-14z" fill="#fbf8f1" stroke-width="2"/><path d="M170 80q5 6 0 10q-5-4 0-10z" fill="#fbf8f1" stroke-width="2"/><path d="M90 154v14M112 154v14"/><path d="M90 168h-14q-5 0-5 5h19zM112 168h14q5 0 5 5h-19z" fill="#141414"/></svg></div>
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:10px;align-items:center">
@@ -744,7 +745,7 @@
 
   <!-- ROSTER + WATCHLIST (我的球員中心) -->
   <section class="view" id="view-roster">
-    <h2 class="sec">我的球隊 <span class="hand">your dugout</span></h2>
+    <h2 class="sec">我的球隊 <span class="sticker">your dugout</span></h2>
     <div class="card">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap">
         <h2 class="sec" style="margin:0">我的陣容 <span class="pill" id="rosterCount">0</span></h2>
@@ -1062,7 +1063,7 @@ async function renderDash(){
   }).join('');
   box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>今日對戰</th><th class="num">對戰分數</th><th>建議</th></tr></thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 4px 0">🔥 最該先發 · 🧊 最該避開 · 點任一列看完整依據。</div>`;
   $('#kpiStart').textContent=start;$('#kpiSit').textContent=sit;
-  setBubble(start||sit?`${start} 人先發、${sit} 人坐板凳。<br>我已經幫你排好了！`:'今天沒有明確的先發或板凳，<br>看你直覺囉！');
+  setBubble(start||sit?`${start} 人先發、${sit} 人坐板凳。<br>我已經幫你排好了！`:'今天先發板凳都不明顯，<br>看你直覺囉！');
   // injuries
   try{const inj=await myInjuries();$('#kpiInj').textContent=inj;$('#kpiInj').classList.toggle('hot',inj>0);}catch(e){$('#kpiInj').textContent='?';}
   stamp();
