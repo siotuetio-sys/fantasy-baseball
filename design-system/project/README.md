@@ -8,8 +8,8 @@ Perfect Draft is the look and voice of **The Perfect Fantasy Baseball Draft**, a
   - Loading: 「教練翻筆記中…」「偷聽休息室八卦中…」「在自由市場翻箱倒櫃…」
   - Empty: 「板凳空空的。先把你的 Yahoo 陣容叫進來，之後每天幫你排好先發。」「今天沒有比賽。球員們應該在打電動。」
   - Errors say what broke and what to do: 「球被接殺了：連不上資料來源，檢查一下網路。」 with a 「再揮一次」 button.
-- **Page names are plain questions or nicknames**, followed by a handwritten English aside: 今天誰跟誰打 *tonight's games* · 本週對決 *head to head* · 球員顯微鏡 *under the microscope* · 自由市場撿寶 *waiver wire gems* · 誰上誰下 *who's in, who's out* · 我的球隊 *your dugout* · 教練錦囊 *game plan*.
-- **Greeting by the clock** above the hero: *Morning, Skipper!* / *Afternoon, Skipper!* / *Evening, Skipper!* / *Still up, Skipper?*
+- **Page names are plain questions or nicknames**, followed by an English sticker label: 今天誰跟誰打 *tonight's games* · 本週對決 *head to head* · 球員顯微鏡 *under the microscope* · 自由市場撿寶 *waiver wire gems* · 誰上誰下 *who's in, who's out* · 我的球隊 *your dugout* · 教練錦囊 *game plan*.
+- **Greeting by the clock** above the hero, as a sticker: MORNING, SKIPPER! / AFTERNOON, SKIPPER! / EVENING, SKIPPER! / STILL UP, SKIPPER?
 - **No emoji in headings.** Drawings do that job.
 
 ## Visual foundations
@@ -26,7 +26,7 @@ Perfect Draft is the look and voice of **The Perfect Fantasy Baseball Draft**, a
 - `display` (Anton) for numbers, the wordmark and START/SIT labels. Numbers are the loudest thing on any screen: `hero-num` 88px, `kpi-num` 44px, `stat-num` 26px.
 - `head` (Noto Serif TC 900) for Chinese headings: `hero-title` 44px, `page-title` 28px, `card-title` 19px.
 - `body` (Noto Sans TC) for everything else at 14px / 1.55.
-- `hand` (Caveat 700) only for short English asides and the greeting, at 1.25em of the heading beside it, in `muted`. Never set Chinese in `hand`.
+- `mono` (DM Mono 500) only for English sticker labels: uppercase, 1.5px tracking, inside a `line-width` ink pill (`sticker`, `sticker-hero`). Two or three words; never Chinese.
 - Fonts load from Google Fonts; `bundle.css` imports them.
 
 ### Lines, shapes and spacing
@@ -47,6 +47,7 @@ Perfect Draft is the look and voice of **The Perfect Fantasy Baseball Draft**, a
   - `mascot-ice.svg` ice bag on the cap, plaster, sweat drops. Transactions and injuries page.
   - `mascot-head.svg` the head alone on a lemon ball. Every empty state.
 - Page mascots sit at the right of the page title and peek over the first card's top edge (`PageMascot`). One drawing per screen, plus the empty-state head where needed.
+- Speech bubbles never wrap on their own: break lines with `<br>` and keep each line under about 14 characters.
 - Speech bubbles carry live facts in the mascot's voice: 「9 人先發、3 人坐板凳。我已經幫你排好了！」
 - Draw new poses from the same parts: 46-unit ball, seams with tick stitches, cap with brim, ellipse eyes, 2.6 stroke, round caps and joins. Add only `pop` and `bg` as fills.
 

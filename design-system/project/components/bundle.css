@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@500&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap");
 /* Perfect Draft components, lifted from index.html (Lemon theme). Paper, ink lines, one pop of lemon. */
 *{box-sizing:border-box}
 body{margin:0;font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -11,7 +11,7 @@ a:hover{background:var(--pop-soft)}
 .tag-good{color:var(--good)} .tag-warn{color:var(--warn)} .tag-bad{color:var(--bad)}
 input:focus,button:focus-visible,a:focus-visible{outline:2.5px solid var(--line);outline-offset:2px}
 input[type=checkbox],input[type=radio]{accent-color:var(--text)}
-.hand{font-family:var(--font-hand);font-weight:700;font-size:1.25em;color:var(--muted);line-height:1}
+.sticker{display:inline-block;font-family:var(--font-mono);font-weight:500;font-size:11px;line-height:1.2;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);border:var(--line-width) solid var(--line);border-radius:var(--radius-pill);padding:4px 10px 3px;white-space:nowrap}
 .ico{width:18px;height:18px;display:block}
 
 /* App bar */
@@ -36,7 +36,7 @@ nav.tabs.bottom .ico{width:21px;height:21px}
 /* Headings */
 h2.sec{font-family:var(--font-head);font-weight:900;font-size:19px;letter-spacing:.3px;margin:2px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 h2.sec.page{font-size:28px;letter-spacing:.5px;margin:4px 0 16px}
-h2.sec.page .hand{font-size:24px}
+h2.sec.page .sticker{font-size:12px}
 h2.sec .pill,.pill{font-family:var(--font-body);font-size:11px;background:var(--chip);color:var(--muted);padding:2px 8px;border-radius:var(--radius-pill);font-weight:600;letter-spacing:0}
 
 /* Surfaces */
@@ -49,7 +49,7 @@ h2.sec .pill,.pill{font-family:var(--font-body);font-size:11px;background:var(--
 /* Hero */
 .hero{position:relative;background:var(--pop);border-radius:var(--radius-hero);padding:30px 34px 0;display:grid;grid-template-columns:1.15fr 1fr;gap:10px;overflow:hidden}
 .hero-copy{padding-bottom:30px;min-width:0}
-.hero .hand{font-size:27px;color:var(--text);margin:0 0 6px}
+.hero .sticker{font-size:13px;margin:0 0 12px}
 .hero-title{font-family:var(--font-head);font-weight:900;font-size:44px;line-height:1.15;margin:0;letter-spacing:.5px;text-wrap:balance}
 .hero-title u{text-decoration:none;background:linear-gradient(transparent 60%,var(--bg) 60%,var(--bg) 90%,transparent 90%)}
 .hero-score{display:flex;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap}
@@ -59,7 +59,7 @@ h2.sec .pill,.pill{font-family:var(--font-body);font-size:11px;background:var(--
 .pillrow{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;align-items:center}
 .hero-art{position:relative;align-self:end;justify-self:end;width:100%;max-width:360px}
 .hero-art img{display:block;width:100%;height:auto}
-.bubble{position:absolute;top:8px;left:-12px;background:var(--bg);border:var(--line-width) solid var(--line);border-radius:var(--radius-kpi);padding:10px 16px;font-weight:700;font-size:13.5px;line-height:1.4;max-width:200px;z-index:1}
+.bubble{position:absolute;top:8px;left:-12px;background:var(--bg);border:var(--line-width) solid var(--line);border-radius:var(--radius-kpi);padding:10px 16px;font-weight:700;font-size:13.5px;line-height:1.4;white-space:nowrap;z-index:1}
 .bubble::after{content:"";position:absolute;bottom:-10px;right:46px;width:18px;height:18px;background:var(--bg);border-right:var(--line-width) solid var(--line);border-bottom:var(--line-width) solid var(--line);transform:rotate(35deg) skewX(-10deg)}
 
 /* KPI card */
