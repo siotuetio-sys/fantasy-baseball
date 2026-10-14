@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>The Perfect Fantasy Basketball Draft</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox=%220 0 40 40%22 fill=%22none%22 stroke=%22%23141414%22 stroke-width=%222%22 stroke-linecap=%22round%22><circle cx=%2220%22 cy=%2220%22 r=%2217%22 fill=%22%23fff04f%22/><path d=%22M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24%22 stroke-width=%221.8%22/></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@500&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Paper + ink + one lemon pop. Ink lines draw the shapes; lemon sets the mood. */
+    --bg:#fbf8f1; --panel:#ffffff; --panel2:#f6f2e8; --border:#e4dfd3; --line:#141414;
+    --text:#141414; --muted:#5f5a50; --accent:#141414; --accent2:#141414;
+    --pop:#fff04f; --pop-soft:#fffbd1;
+    --good:#1f7a4d; --warn:#8a5f00; --bad:#c8372d; --chip:#f3efe4;
+    --hover:#fffbd1; --mine:#fffbd1;
+    --good-bg:#e3f2e8; --bad-bg:#fbe6e3; --warn-bg:#fbf1cf;
+    --navbg:#fbf8f1; --navmut:#5f5a50;
+    --shadow:none;
+    --f-display:"Anton","Arial Narrow",Impact,"Noto Sans TC",sans-serif;
+    --f-head:"Noto Serif TC","Songti TC","PMingLiU",serif;
+    --f-body:"Noto Sans TC",-apple-system,"Segoe UI",Roboto,sans-serif;
+    --f-mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--f-body);
+       background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{background:var(--navbg);border-bottom:1px solid var(--navbg);
+         padding:13px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .brandmark{width:38px;height:38px;flex:none;display:flex;align-items:center;justify-content:center}
+  .brandmark svg{width:38px;height:38px;display:block}
+  header h1{font-size:18px;margin:0;letter-spacing:-.3px;font-weight:800;line-height:1.1;color:#fff}
+  header h1 .baseball{color:var(--accent)}
+  header .sub,header label{color:var(--navmut);font-size:11px;letter-spacing:.2px}
+  header .datepick{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22)}
+  header .datepick::-webkit-calendar-picker-indicator{filter:invert(1)}
+  header .iconbtn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.22)}
+  .updated{color:var(--navmut)}
+  .spacer{flex:1}
+  .datepick{background:var(--panel);color:var(--text);border:1px solid var(--border);
+            border-radius:9px;padding:7px 10px;font-size:13px}
+  nav{display:flex;gap:2px;padding:0 14px;background:var(--navbg);border-bottom:1px solid var(--navbg);
+      overflow-x:auto;position:sticky;top:0;z-index:20}
+  nav button{background:none;border:none;color:var(--navmut);padding:13px 14px;font-size:13.5px;
+             cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-weight:600;transition:color .15s}
+  nav button:hover{color:#fff}
+  nav button.active{color:var(--accent);border-bottom-color:var(--accent)}
+  main{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+  .view{display:none;animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:15px;margin:2px 0 12px;display:flex;align-items:center;gap:8px;font-weight:700}
+  h2.sec .pill{font-size:11px;background:var(--chip);color:var(--muted);padding:2px 8px;border-radius:20px;font-weight:600}
+  .grid{display:grid;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:14px;box-shadow:var(--shadow);transition:box-shadow .2s ease,border-color .2s ease}
+  /* --- 互動動態 --- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+  .view.active>.card,.view.active>h2.sec,.view.active>.grid{animation:fadeUp .26s cubic-bezier(.2,.7,.3,1) both}
+  .view.active>.card:nth-child(2){animation-delay:.04s}
+  .view.active>.card:nth-child(3){animation-delay:.08s}
+  .view.active>.card:nth-child(4){animation-delay:.12s}
+  .view.active>.card:nth-child(n+5){animation-delay:.15s}
+  .kpi-link,.gamerow{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+  .kpi-link:hover,.gamerow:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(40,33,26,.10)}
+  .clickable{transition:transform .12s ease,filter .15s ease}
+  .clickable:active{transform:scale(.96)}
+  button.btn{transition:transform .12s ease,filter .15s ease}
+  button.btn:active{transform:scale(.97)}
+  .prow{transition:background .15s ease,transform .12s ease}
+  .gamerow{animation:popIn .25s ease both}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  .muted{color:var(--muted)}
+  .row{display:flex;align-items:center;gap:10px}
+  .chip{display:inline-block;background:var(--chip);border:1px solid var(--border);border-radius:20px;
+        padding:2px 9px;font-size:11.5px;color:var(--muted)}
+  .chip.L{color:#2563eb;border-color:#2563eb44}
+  .chip.R{color:#c2410c;border-color:#c2410c44}
+  .tag-good{color:var(--good)} .tag-warn{color:var(--warn)} .tag-bad{color:var(--bad)}
+  input.search{width:100%;background:var(--panel2);border:1px solid var(--border);border-radius:9px;
+               color:var(--text);padding:11px 13px;font-size:14px}
+  button.btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 15px;
+             font-weight:700;cursor:pointer;font-size:13px}
+  button.btn.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+  button.btn:hover{filter:brightness(1.08)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
+  tr:hover td{background:var(--hover)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .loading{color:var(--muted);padding:30px;text-align:center}
+  .spin{display:inline-block;width:15px;height:15px;border:2px solid var(--border);
+        border-top-color:var(--accent);border-radius:50%;animation:r .7s linear infinite;vertical-align:-3px;margin-right:7px}
+  @keyframes r{to{transform:rotate(360deg)}}
+  .game{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
+  .team{display:flex;flex-direction:column;gap:3px}
+  .team .nm{font-weight:700}
+  .vs{color:var(--muted);font-size:12px;text-align:center}
+  .matchscore{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+  /* compact schedule cards */
+  .gcard{padding:10px 12px}
+  .grow{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center}
+  .gt{display:flex;align-items:center;gap:8px;min-width:0}
+  .gnm{font-weight:700;font-size:14px;line-height:1.15}
+  .gnm small{color:var(--muted);font-weight:500;font-size:10.5px;margin-left:3px}
+  .gsp{font-size:11px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gmid{text-align:center;min-width:60px}
+  .gmid .matchscore{font-size:18px}
+  .gmid .vs{font-size:11px;line-height:1.3}
+  .gfoot{font-size:10.5px;text-align:center;margin-top:6px;opacity:.85}
+  /* tappable compact game row */
+  .gamerow{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:8px;width:100%;
+           background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 12px;
+           cursor:pointer;color:var(--text);font:inherit;text-align:left}
+  .gamerow:hover{border-color:var(--accent2)}
+  .gamerow:active{transform:scale(.99)}
+  .gtime{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .gscore{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+  .gteams{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px}
+  .gteams .gtm{display:inline-flex;align-items:center;gap:5px}
+  .gteams .at{color:var(--muted);font-size:11px}
+  .gstate{color:var(--muted);font-size:12px;text-align:right;min-width:30px}
+  .gstate.live{color:var(--good);font-weight:700}
+  .meter{height:7px;border-radius:6px;background:var(--panel2);overflow:hidden;margin-top:5px}
+  .meter > span{display:block;height:100%;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good))}
+  .statbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:10px}
+  .stat{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+  .stat .v{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+  .stat .k{font-size:11px;color:var(--muted);margin-top:2px}
+  .empty{text-align:center;color:var(--muted);padding:40px 10px}
+  .empty .big{font-size:34px;margin-bottom:8px}
+  .resultlist{position:absolute;z-index:30;background:var(--panel2);border:1px solid var(--border);
+              border-radius:10px;width:100%;max-height:300px;overflow:auto;margin-top:4px;box-shadow:0 8px 24px #0008}
+  .resultlist div{padding:9px 13px;cursor:pointer;border-bottom:1px solid var(--border)}
+  .resultlist div:hover{background:var(--accent2);color:#fff}
+  .pos-rel{position:relative}
+  .rec{font-weight:800;font-size:13px;padding:3px 9px;border-radius:6px}
+  .rec.START{background:var(--good-bg);color:var(--good)}
+  .rec.SIT{background:var(--bad-bg);color:var(--bad)}
+  .rec.STREAM{background:var(--warn-bg);color:var(--warn)}
+  .rec.GRAB{background:var(--warn-bg);color:var(--warn)}
+  .rosterbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .pchip{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;
+         font-size:12.5px;display:flex;align-items:center;gap:7px}
+  .pchip button{background:none;border:none;color:var(--bad);cursor:pointer;font-size:14px;line-height:1}
+  /* 名單列表 (roster/watch) */
+  .plist{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .seclabel{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;margin:8px 0 2px}
+  .prow{display:flex;align-items:center;gap:10px;padding:8px 11px;background:var(--panel2);border:1px solid var(--border);border-radius:10px}
+  .prow .nm{font-weight:700;font-size:13.5px;line-height:1.15}
+  .prow .meta{font-size:11px;color:var(--muted)}
+  .prow .rt{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .prow button.act{background:none;border:1px solid var(--border);border-radius:7px;padding:4px 9px;cursor:pointer;font-size:12px}
+  .prow button.rm{background:none;border:none;color:var(--bad);cursor:pointer;font-size:17px;line-height:1}
+  .prow .posbadge{font-size:10px;background:var(--chip);border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:var(--muted)}
+  /* 可點捷徑卡 */
+  .kpi-link{cursor:pointer;position:relative}
+  .kpi-link:hover{border-color:var(--accent2)}
+  .kpi-link .arrow{position:absolute;top:8px;right:10px;color:var(--muted);font-size:13px}
+  .err{background:var(--bad-bg);border:1px solid #dc354555;color:#b02a37;padding:10px 14px;border-radius:9px;font-size:12.5px}
+  footer{color:var(--muted);font-size:11.5px;text-align:center;padding:24px;border-top:1px solid var(--border)}
+  .seg{display:inline-flex;background:var(--panel2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+  .seg button{background:none;border:none;color:var(--muted);padding:9px 14px;cursor:pointer;font-size:12.5px;font-weight:600;min-height:38px}
+  .seg button.on{background:var(--accent);color:#fff}
+
+  /* --- nav icon/label --- */
+  nav button{display:flex;align-items:center;gap:6px}
+  nav button .ic{font-size:15px;line-height:1}
+  nav button .lb{font-size:13.5px}
+
+  /* --- focus states (accessibility) --- */
+  input:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent2);outline-offset:1px}
+  input.search:focus,.datepick:focus{border-color:var(--accent2)}
+
+  /* --- icon header buttons --- */
+  .iconbtn{background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:8px;
+           width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px}
+  .iconbtn:hover{border-color:var(--accent2)}
+  .updated{font-size:11px;color:var(--muted);white-space:nowrap}
+
+  /* --- legend --- */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--muted);align-items:center}
+  .legend .lg{display:inline-flex;align-items:center;gap:5px;background:var(--panel2);border:1px solid var(--border);
+              border-radius:20px;padding:3px 10px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .grouprow td{background:var(--panel2);font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;padding:6px 10px}
+  .stratrow{display:flex;gap:8px;align-items:baseline;margin-bottom:8px;flex-wrap:wrap}
+  .stratrow b{font-size:12.5px;white-space:nowrap;min-width:52px}
+  .stratrow span{display:flex;gap:6px;flex-wrap:wrap}
+  .catbtn{background:var(--good-bg);color:var(--good);border:1px solid var(--good);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:transform .12s}
+  .catbtn:active{transform:scale(.95)}
+  .tlogo{vertical-align:-4px;object-fit:contain;display:inline-block}
+  .tcell{display:inline-flex;align-items:center;gap:6px}
+  .hl{display:none}
+  .newsitem{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--border);align-items:center;text-decoration:none;transition:transform .12s ease}
+  .newsitem:last-child{border-bottom:none}
+  .newsitem:active{transform:scale(.99)}
+  .newsitem:hover .nhead{color:var(--accent)}
+  .nthumb{width:66px;height:46px;border-radius:9px;object-fit:cover;background:var(--panel2);flex:none}
+  .nhead{font-weight:600;font-size:13.5px;line-height:1.3;color:var(--text)}
+  .nmeta{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:6px;align-items:center}
+  .phead{border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--border);vertical-align:middle;flex:none}
+  .phead.big{border-radius:14px;border:1px solid var(--border)}
+
+  /* --- empty-state CTA --- */
+  .empty .cta{margin-top:14px}
+
+  /* --- toast --- */
+  #toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:24px;z-index:200;
+         background:#0b1f3a;border:1px solid var(--accent);color:#fff;padding:11px 18px;border-radius:12px;
+         font-size:13.5px;box-shadow:0 8px 30px #000a;opacity:0;pointer-events:none;transition:.25s}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* --- modal (詳細分析) --- */
+  #modalBack{position:fixed;inset:0;background:#000b;z-index:150;display:none;align-items:center;justify-content:center;padding:16px}
+  #modalBack.show{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--border);border-radius:14px;max-width:580px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px #000d}
+  .modal .mhead{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--panel);z-index:2}
+  .modal .mbody{padding:16px 18px}
+  .modal .mclose{background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:17px;flex:none}
+  .frow{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+  .frow .fl{font-size:13px}
+  .frow .fl small{color:var(--muted);display:block;font-size:11px;margin-top:2px}
+  .fdelta{font-weight:800;font-variant-numeric:tabular-nums;min-width:50px;text-align:right;font-size:15px}
+  .clickable{cursor:pointer}
+  .clickable:hover{filter:brightness(1.12)}
+
+  /* --- responsive tables: horizontal scroll on small screens --- */
+  .tscroll, #dashLineup, #matchups, #radarTable, #newsTable{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #h2hTable{width:100%}
+
+  /* ===== MOBILE: bottom tab bar (matches app mental model) ===== */
+  @media (max-width:680px){
+    header{padding:11px 14px}
+    header h1{font-size:15px}
+    header .sub{display:none}
+    main{max-width:100%;padding:16px 12px 86px}
+    nav{position:fixed;left:0;right:0;bottom:0;top:auto;justify-content:space-around;gap:0;padding:0;
+        border-top:1px solid var(--border);border-bottom:none;overflow:visible;
+        background:var(--navbg);box-shadow:0 -2px 16px rgba(11,31,58,.18)}
+    nav button{flex:1;flex-direction:column;gap:2px;padding:8px 1px 7px;border-bottom:none;
+               border-top:2px solid transparent;min-height:54px;font-weight:600}
+    nav button.active{color:var(--accent);border-bottom-color:transparent;border-top-color:var(--accent);background:rgba(255,255,255,.06)}
+    nav button .ic{font-size:19px}
+    nav button .lb{font-size:10px;letter-spacing:-.2px}
+    table:not(.rtable):not(.fit){min-width:520px}
+    table.fit{min-width:0;font-size:12px}
+    table.fit th,table.fit td{padding:7px 5px}
+    /* 響應式：寬表在手機變成每列一張卡片 */
+    table.rtable{min-width:0;font-size:13px}
+    .rtable thead{display:none}
+    .rtable,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
+    .rtable tr{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:6px 11px;margin-bottom:6px}
+    .rtable td:first-child{font-size:13.5px}
+    .rtable td:first-child .tcell img.phead{width:26px!important;height:26px!important}
+    .rtable tr:hover td{background:none}
+    .rtable td{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0;border:none;text-align:right}
+    .rtable td::before{content:attr(data-l);color:var(--muted);font-size:11px;font-weight:600;text-align:left;white-space:nowrap}
+    .rtable td:first-child{justify-content:flex-start;font-size:14px;border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:4px}
+    .rtable td:first-child::before{display:none}
+    .rtable td:empty{display:none}
+    .rtable td.long{flex-direction:column;align-items:stretch;text-align:left;gap:2px}
+    .rtable .meter{flex:1;max-width:120px}
+    /* 手風琴：次要欄位收起，點一下展開 */
+    .rtable td.det{display:none}
+    .rtable tr.open td.det{display:flex}
+    .rtable td:first-child{cursor:pointer}
+    .rtable td:first-child{gap:6px}
+    .rtable td:first-child .tcell{flex:1;min-width:0;overflow:hidden}
+    .rtable td:first-child .tcell b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rtable td:first-child .hl{display:inline-flex;align-items:center;gap:10px;margin-left:auto;font-weight:800;font-size:13px;flex:none;font-variant-numeric:tabular-nums}
+    .hl .m{display:inline-block;min-width:58px;text-align:right}
+    .hl .ml{color:var(--muted);font-weight:400;font-size:10px;margin-right:3px}
+    .rtable td:first-child::after{content:'▾';margin-left:auto;color:var(--muted);font-size:12px;transition:transform .15s;flex:none}
+    .rtable tr:not(.open) td:first-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+    .rtable tr.open td:first-child::after{transform:rotate(180deg)}
+    #h2hTable{min-width:0}
+    #h2hTable th,#h2hTable td{padding:8px 6px}
+    .statbox{grid-template-columns:repeat(2,1fr);gap:8px}
+    h2.sec{font-size:15px}
+    .game{grid-template-columns:1fr auto 1fr}
+    .card{padding:13px}
+    main>section>.card,#scheduleList{margin-bottom:0}
+    .sec .pill{font-size:10px}
+    .stat{padding:9px 10px}
+    .stat .v{font-size:17px}
+    .modal{max-height:90vh}
+    .legend{font-size:10.5px;gap:6px}
+    .seg button{padding:8px 11px}
+    .datepick{padding:6px 8px}
+    #scheduleList{grid-template-columns:1fr!important}
+  }
+  /* ===== Lemon theme: paper, ink lines, one pop of lemon ===== */
+  .ico{width:18px;height:18px;display:block}
+  .iconbtn .ico{width:17px;height:17px}
+  .sticker{display:inline-block;font-family:var(--f-mono);font-weight:500;font-size:11px;line-height:1.2;text-transform:uppercase;letter-spacing:1.5px;
+           color:var(--text);border:1.5px solid var(--line);border-radius:999px;padding:4px 10px 3px;white-space:nowrap}
+  h2.sec{font-family:var(--f-head);font-weight:900;font-size:19px;gap:10px;flex-wrap:wrap;letter-spacing:.3px}
+  h2.sec .pill{font-family:var(--f-body);letter-spacing:0;background:var(--chip);color:var(--muted)}
+  .view>h2.sec{font-size:28px;margin:4px 0 16px;letter-spacing:.5px}
+  .view>h2.sec .sticker{font-size:12px}
+  a{color:var(--text);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+  a:hover{background:var(--pop-soft)}
+  input:focus,button:focus-visible,a:focus-visible{outline:2.5px solid var(--line);outline-offset:2px}
+
+  /* header + nav */
+  header{background:var(--bg);border-bottom:1.5px solid var(--line);padding:14px 24px}
+  .brandmark,.brandmark svg{width:40px;height:40px}
+  .wordmark{display:flex;flex-direction:column;line-height:1;white-space:nowrap}
+  header h1{font-family:var(--f-display);font-weight:400;font-size:25px;letter-spacing:.6px;color:var(--text)}
+  header .sub,header label{color:var(--muted);font-size:11.5px;letter-spacing:.5px;margin-top:4px}
+  header .datepick{background:var(--panel);color:var(--text);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:700}
+  header .datepick::-webkit-calendar-picker-indicator{filter:none}
+  header .iconbtn{background:var(--pop);color:var(--text);border:1.5px solid var(--line);border-radius:50%;width:38px;height:38px}
+  .updated{color:var(--muted)}
+  nav{background:var(--bg);border-bottom:1.5px solid var(--line);padding:10px 20px;gap:6px}
+  nav button{color:var(--text);padding:7px 14px;border-radius:999px;border:1.5px solid transparent;font-weight:700}
+  nav button:hover{color:var(--text);border-color:var(--line)}
+  nav button.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+  nav button .ic{display:flex}
+
+  /* surfaces */
+  .card{border:1.5px solid var(--line);border-radius:24px;padding:20px 22px;box-shadow:none}
+  .view.active>.card+.card,.view.active>div>.card+.card{margin-top:16px}
+  .stat{background:var(--panel);border:1.5px solid var(--border);border-radius:16px}
+  .stat .v{font-family:var(--f-display);font-weight:400;font-size:26px;letter-spacing:.3px}
+  .matchscore,#h2hScore{font-family:var(--f-display);font-weight:400;letter-spacing:1px}
+  footer{border-top:1.5px solid var(--line)}
+
+  /* controls */
+  button.btn{background:var(--text);color:var(--bg);border:1.5px solid var(--text);border-radius:999px;padding:9px 18px}
+  button.btn.ghost{background:var(--panel);color:var(--text);border:1.5px solid var(--line)}
+  button.btn:hover{filter:none;background:#2b2b2b}
+  button.btn.ghost:hover{background:var(--pop-soft)}
+  .iconbtn{background:var(--panel);border:1.5px solid var(--line);border-radius:50%}
+  .iconbtn:hover{background:var(--pop)}
+  .seg{border:1.5px solid var(--line);border-radius:999px;background:var(--panel)}
+  .seg button{color:var(--text);font-weight:700}
+  .seg button.on{background:var(--text);color:var(--pop)}
+  input.search,.datepick{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;color:var(--text)}
+  input.search{border-radius:999px;padding:11px 18px}
+  input.search:focus,.datepick:focus{border-color:var(--line);box-shadow:0 0 0 3px var(--pop)}
+  .resultlist{background:var(--panel);border:1.5px solid var(--line);border-radius:16px;box-shadow:none}
+  .resultlist div:hover{background:var(--pop);color:var(--text)}
+  .catbtn{background:var(--pop);color:var(--text);border:1.5px solid var(--line)}
+  .chip{background:var(--chip);border-color:var(--border);color:var(--muted)}
+  .rec{font-family:var(--f-display);font-weight:400;letter-spacing:.8px;font-size:13.5px;border-radius:999px;padding:3px 13px;border:1.5px solid var(--line)}
+  .rec.START{background:var(--text);color:var(--pop)}
+  .rec.SIT{background:var(--panel);color:var(--bad);border-color:var(--bad)}
+  .rec.STREAM,.rec.GRAB{background:var(--pop-soft);color:var(--text)}
+  .legend .lg{background:var(--panel);border-color:var(--border)}
+  .meter{border:1.5px solid var(--line);background:var(--panel);height:9px;border-radius:99px}
+  .meter>span{background:var(--text)}
+  .spin{border-color:var(--border);border-top-color:var(--text)}
+  .err{background:var(--bad-bg);border:1.5px dashed var(--bad);border-radius:16px;color:#9b241c}
+  .errretry{margin-left:10px;background:var(--panel);border:1.5px solid var(--line);color:var(--text);border-radius:999px;padding:4px 13px;font:inherit;font-weight:700;cursor:pointer}
+  .errretry:hover{background:var(--pop)}
+  th{color:var(--muted)}
+  tr:hover td{background:var(--hover)}
+  .grouprow td{background:var(--chip)}
+
+  /* lists, rows, game rows */
+  .prow{background:var(--panel);border:1.5px solid var(--border);border-radius:16px}
+  .pchip{background:var(--panel);border:1.5px solid var(--line);border-radius:999px;padding:4px 6px 4px 14px}
+  .prow button.rm,.pchip button{min-width:32px;min-height:32px;border-radius:50%}
+  .prow button.rm:hover,.pchip button:hover{background:var(--bad-bg)}
+  .gamerow{border:1.5px solid var(--line);border-radius:18px}
+  .gamerow:hover{border-color:var(--line);background:var(--pop-soft);transform:translateY(-2px);box-shadow:none}
+  .gscore{font-family:var(--f-display);font-weight:400;font-size:18px;letter-spacing:.5px}
+  .kpi-link:hover,.gamerow:hover{box-shadow:none}
+  .nthumb{border-radius:12px;border:1.5px solid var(--line)}
+  .newsitem{text-decoration:none}
+  .newsitem:hover{background:none}
+  .newsitem:hover .nhead{color:var(--text);text-decoration:underline}
+  .phead{border:1.5px solid var(--line)}
+
+  /* empty states get the mascot instead of an emoji */
+  .empty{color:var(--muted)}
+  .empty .big{font-size:0;width:92px;height:86px;margin:0 auto 12px;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23fff04f'/><path d='M33 37q17 29 0 58M87 37q-17 29 0 58' stroke-width='2.4'/><path d='M22 46q2-34 38-36q34 2 38 34' fill='%23141414'/><path d='M22 46q-16 1-24 8q20 4 44-4' fill='%23141414'/><path d='M45 64q4-4 8 0M67 64q4-4 8 0'/><path d='M52 80q8 6 16 0'/><path d='M100 18q6-2 8 3t-4 7M106 34q4 0 5 3' stroke-width='2.2'/></svg>") center/contain no-repeat}
+
+  /* overlays */
+  #modalBack{background:rgba(20,20,20,.45)}
+  .modal{border:1.5px solid var(--line);border-radius:24px;box-shadow:none}
+  .modal .mhead{border-bottom:1.5px solid var(--line)}
+  .modal .mclose{border-radius:50%;border:1.5px solid var(--line);background:var(--panel)}
+  .modal .mclose:hover{background:var(--pop)}
+  #toast{background:var(--text);color:var(--pop);border:1.5px solid var(--text);border-radius:999px;font-weight:700;box-shadow:none}
+
+  input[type=checkbox],input[type=radio]{accent-color:var(--text)}
+  /* page mascots peek over the first card */
+  .view.doodled{position:relative}
+  .view.doodled>h2.sec{padding-right:130px}
+  .page-doodle{position:absolute;right:8px;top:-40px;width:120px;z-index:2;pointer-events:none}
+  .page-doodle svg{display:block;width:100%;height:auto}
+  /* dashboard hero */
+  .hero{position:relative;background:var(--pop);border-radius:28px;padding:30px 34px 0;display:grid;grid-template-columns:1.15fr 1fr;gap:10px;overflow:hidden;margin-bottom:16px}
+  .hero-copy{padding-bottom:30px;min-width:0}
+  .hero .sticker{font-size:13px;margin:0 0 12px}
+  .hero-title{font-family:var(--f-head);font-weight:900;font-size:44px;line-height:1.15;margin:0;letter-spacing:.5px;text-wrap:balance}
+  .hero-title u{text-decoration:none;background:linear-gradient(transparent 60%,var(--bg) 60%,var(--bg) 90%,transparent 90%)}
+  .hero-score{display:flex;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap}
+  .hero-num{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer}
+  .hero-num span{font-family:var(--f-display);font-size:88px;line-height:.95;letter-spacing:1px;font-variant-numeric:tabular-nums}
+  .hero-num:hover span{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:8px}
+  #heroQuip{margin:0;font-size:13.5px;font-weight:700;line-height:1.55;max-width:260px}
+  .pillrow{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;align-items:center}
+  .pillrow .pill{background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:12.5px}
+  .hero-art{position:relative;align-self:end;justify-self:end;width:100%;max-width:360px}
+  .mascot{display:block;width:100%;height:auto}
+  .bubble{position:absolute;top:8px;left:-12px;background:var(--bg);border:1.5px solid var(--line);border-radius:22px;padding:10px 16px;font-weight:700;font-size:13.5px;line-height:1.4;white-space:nowrap;z-index:1}
+  .bubble::after{content:"";position:absolute;bottom:-10px;right:46px;width:18px;height:18px;background:var(--bg);border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line);transform:rotate(35deg) skewX(-10deg)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+  .kpi{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:16px 18px;display:flex;align-items:center;gap:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background .15s ease,transform .12s ease}
+  .kpi:hover{background:var(--pop-soft)}
+  .kpi:active{transform:scale(.98)}
+  .kpi b{font-family:var(--f-display);font-weight:400;font-size:44px;line-height:1;min-width:1ch}
+  .kpi b.hot{color:var(--bad)}
+  .kpi .t{display:block;font-weight:700;font-size:14px}
+  .kpi .s{display:block;font-size:12px;color:var(--muted)}
+  .kpi .go{margin-left:auto;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none}
+  .card .empty{padding:24px 10px}
+
+  /* H2H table: fixed columns so both sides line up */
+  #h2hTable{table-layout:fixed}
+  #h2hTable th:nth-child(1){width:24%} #h2hTable th:nth-child(2){width:22%}
+  #h2hTable th:nth-child(3){width:12%;text-align:center} #h2hTable th:nth-child(4){width:22%}
+  input.h2hin{width:100%;max-width:120px;height:38px;text-align:right;background:var(--panel);border:1.5px solid var(--line);
+              border-radius:12px;color:var(--text);padding:6px 10px;font-family:var(--f-display);font-size:17px;letter-spacing:.5px}
+  input.h2hin:focus{box-shadow:0 0 0 3px var(--pop)}
+  .tag-good input.h2hin{background:#e9f6ee;color:var(--good);border-color:var(--good)}
+  #h2hTable td.num input{display:block;margin-left:auto}
+  .card[style*="padding:0"]>div>.err,.card[style*="padding:0"]>.err{border:none;border-radius:0}
+  .dir{display:block;text-align:center;font-size:11px;color:var(--muted);white-space:nowrap}
+  #h2hBar{border:1.5px solid var(--line)}
+
+  @media (max-width:680px){
+    header{flex-wrap:nowrap;gap:10px;padding:10px 14px}
+    .brandmark,.brandmark svg{width:34px;height:34px}
+    header h1{font-size:21px}
+    header .sub,.updated,.datewrap .lbl{display:none}
+    header .datepick{width:136px;padding:6px 10px}
+    header .iconbtn{flex:none}
+    nav{background:var(--bg);border-top:1.5px solid var(--line);box-shadow:none;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+    nav button{border-radius:16px;border:none;border-top:none;min-height:52px;padding:6px 1px 5px}
+    nav button.active{background:var(--pop);color:var(--text);border-top-color:transparent}
+    nav button .ico{width:21px;height:21px}
+    main{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+    .view>h2.sec{font-size:23px}
+    .view>h2.sec .sticker{font-size:11px}
+    .view.doodled>h2.sec{padding-right:88px}
+    .page-doodle{width:84px;top:-22px;right:2px}
+    .hero{grid-template-columns:1fr;padding:22px 20px 0;border-radius:24px}
+    .hero-copy{padding-bottom:4px}
+    .hero-title{font-size:32px}
+    .hero-num span{font-size:66px}
+    .hero-art{max-width:290px;justify-self:center;margin-top:10px}
+    .bubble{left:-8px;font-size:12.5px}
+    .kpis{grid-template-columns:1fr;gap:10px}
+    .kpi{padding:12px 16px}.kpi b{font-size:36px}
+    .card{padding:16px}
+    #h2hTable th,#h2hTable td{padding:7px 4px}
+    #h2hTable th:nth-child(1){width:23%} #h2hTable th:nth-child(3){width:13%} #h2hTable th:nth-child(5){width:20%}
+    input.h2hin{height:40px;font-size:17px}
+  }
+  /* ===== Hoops edition: same paper + ink + lemon, basketball props ===== */
+  .empty .big{background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23fff04f'/><path d='M36 38q16 28 0 56M84 38q-16 28 0 56M60 26v12M60 96v10M20 66h9M91 66h9' stroke-width='2.4'/><path d='M26 46q34-26 68 0l-2 11q-32-24-64 0z' fill='%23141414'/><path d='M92 46l12-6l-2 10l9 2' stroke-width='2.2'/><path d='M45 68q4-4 8 0M67 68q4-4 8 0'/><path d='M52 82q8 6 16 0'/><path d='M104 20q5 7 0 11q-5-4 0-11z' stroke-width='2'/></svg>") center/contain no-repeat}
+  .phead{object-fit:cover;object-position:50% 12%;background:var(--pop-soft)}
+  .chip.inj-bad{color:var(--bad);border-color:var(--bad);background:var(--panel)}
+  .chip.inj-warn{color:var(--warn);border-color:var(--warn);background:var(--panel)}
+  .chip.inj-good{color:var(--good);border-color:var(--good);background:var(--panel)}
+  .chip.fa{color:var(--text);border-color:var(--line);background:var(--pop)}
+  .rec.OFF{background:var(--panel);color:var(--muted);border-color:var(--border)}
+  .boxprog{font-family:var(--f-mono);font-size:11px;letter-spacing:1px;margin-left:6px}
+  .fpbig{font-family:var(--f-display);font-weight:400;font-size:22px;letter-spacing:.5px;line-height:1;font-variant-numeric:tabular-nums}
+  .delta-up{color:var(--good);font-weight:700;font-size:11.5px;white-space:nowrap}
+  .delta-dn{color:var(--bad);font-weight:700;font-size:11.5px;white-space:nowrap}
+  .linkish{cursor:pointer;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+  .linkish:hover{background:var(--pop-soft)}
+  .rmeta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin-top:3px}
+  .scoregrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+  .scoregrid label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;color:var(--muted);font-weight:700}
+  .scoregrid input.h2hin{max-width:none}
+  #h2hTable th:nth-child(1){width:34%} #h2hTable th:nth-child(2){width:33%} #h2hTable th:nth-child(3){width:33%;text-align:right}
+  #leagueTable{table-layout:fixed}
+  #leagueTable th:nth-child(1){width:11%} #leagueTable th:nth-child(2){width:39%} #leagueTable th:nth-child(3),#leagueTable th:nth-child(4){width:15%} #leagueTable th:nth-child(5){width:20%}
+  .stratrow .tx{flex:1;min-width:0;font-size:13px}
+  #leagueTable input.h2hin{max-width:none;text-align:left;font-family:var(--f-body);font-size:14px;font-weight:700;letter-spacing:0}
+  #leagueTable input.h2hin.n{text-align:right;font-family:var(--f-display);font-size:16px}
+  #leagueTable tr.me td{background:var(--mine)}
+  #leagueTable tr.cut td{border-bottom:2.5px dashed var(--line)}
+  .wkdots{display:inline-flex;gap:3px;vertical-align:middle}
+  .wkdots i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--line);display:inline-block}
+  .wkdots i.on{background:var(--text)}
+  .wkdots i.done{background:var(--border);border-color:var(--border)}
+  @media (max-width:680px){
+    .fpbig{font-size:19px}
+    #leagueTable th:nth-child(1){width:13%} #leagueTable th:nth-child(2){width:37%}
+    header{gap:8px;padding:10px 12px}
+    .brandmark,.brandmark svg{width:30px;height:30px}
+    header h1{font-size:17px;letter-spacing:.3px}
+    .wordmark{min-width:0;overflow:hidden}
+    header .datepick{width:122px;padding:6px 8px;font-size:12px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brandmark"><svg viewBox="0 0 40 40" fill="none" stroke="#141414" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#fff04f"/><path d="M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24" stroke-width="1.8"/></svg></div>
+  <div class="wordmark">
+    <h1>PERFECT DRAFT</h1>
+    <span class="sub">你的夢幻籃球軍師 · Points 制</span>
+  </div>
+  <span class="spacer"></span>
+  <span class="updated" id="updated"></span>
+  <label class="sub datewrap" style="display:flex;align-items:center;gap:6px"><span class="lbl">日期（美東）</span> <input type="date" id="globalDate" class="datepick" aria-label="分析日期（美東時間）"></label>
+  <button class="iconbtn" id="refreshBtn" title="重新整理即時資料" aria-label="重新整理即時資料"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+</header>
+
+<nav id="nav">
+  <button data-v="dash" class="active"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span><span class="lb">總覽</span></button>
+  <button data-v="schedule"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="lb">賽程</span></button>
+  <button data-v="h2h"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg></span><span class="lb">對戰</span></button>
+  <button data-v="stats"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 17v-5M11 17V5M16 17V9"/></svg></span><span class="lb">球員</span></button>
+  <button data-v="radar"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6.4-6.4"/></svg></span><span class="lb">市場</span></button>
+  <button data-v="news"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg></span><span class="lb">傷兵</span></button>
+  <button data-v="roster"><span class="ic"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6.2 5.2q4.3 6.8 0 13.6M17.8 5.2q-4.3 6.8 0 13.6"/></svg></span><span class="lb">陣容</span></button>
+</nav>
+
+<main>
+  <!-- DASHBOARD -->
+  <section class="view active" id="view-dash">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="sticker" id="heroHello">Hey, Coach!</p>
+        <h2 class="hero-title">今晚，<u>誰該上場</u>？</h2>
+        <div class="hero-score">
+          <button class="hero-num" onclick="goTo('h2h')" aria-label="本週對戰目前得分，看對戰細節"><span id="kpiH2H">–</span></button>
+          <p id="heroQuip">本週 H2H 積分對戰。</p>
+        </div>
+        <div class="pillrow">
+          <button class="btn" onclick="goTo('h2h')">看本週對戰 →</button>
+          <button class="btn ghost" onclick="document.getElementById('lineupCard').scrollIntoView({behavior:'smooth',block:'start'})">今日先發建議</button>
+          <span class="pill" id="dashDate"></span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="bubble" id="heroBubble">幫你看今晚的對位中…</div>
+        <svg class="mascot" viewBox="0 0 360 300" fill="none" stroke="#141414" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M62 118l-14-8M58 140h-16M64 162l-13 8" stroke-width="2.6"/>
+        <circle cx="180" cy="190" r="78" fill="#fbf8f1"/>
+        <path d="M128 136q34 54 0 108M232 136q-34 54 0 108" stroke-width="2.6"/>
+        <path d="M180 112v20M180 228v40M102 190h16M242 190h16" stroke-width="2.6"/>
+        <path d="M113 150Q180 116 247 150L245 167Q180 133 115 167Z" fill="#141414"/>
+        <path d="M246 153l28-10l-7 19l19 3" stroke-width="2.6"/>
+        <ellipse cx="164" cy="184" rx="4.5" ry="6.5" fill="#141414" stroke="none"/>
+        <ellipse cx="197" cy="184" rx="4.5" ry="6.5" fill="#141414" stroke="none"/>
+        <path d="M163 207q17 16 34 0"/>
+        <path d="M149 199q-6 4-12 3M211 199q6 4 12 3" stroke-width="2"/>
+        <path d="M110 178q-28-18-34-56"/>
+        <path d="M76 122q-3-14 2-22M76 122q-8-4-9-12M76 122q8 2 12-4"/>
+        <path d="M252 196q22 4 34-10"/>
+        <g transform="rotate(8 302 180)">
+          <rect x="270" y="138" width="64" height="84" rx="6" fill="#fbf8f1"/>
+          <path d="M290 132h26v12h-26z" fill="#141414"/>
+          <rect x="280" y="156" width="44" height="56" rx="3" stroke-width="2"/>
+          <path d="M302 156v56M280 184h44M294 156q8 8 16 0M294 212q8-8 16 0" stroke-width="1.8"/>
+          <path d="M286 168l6 6M292 168l-6 6M311 196a4 4 0 1 0 0.1 0" stroke-width="2"/>
+          <path d="M290 172q14 2 20 22" stroke-width="1.8" stroke-dasharray="3 3"/>
+        </g>
+        <path d="M160 266v22M202 266v22"/>
+        <path d="M160 288h-24q-6 0-6 6h30zM202 288h24q6 0 6 6h-30z" fill="#141414"/>
+        <path d="M148 280h12M202 280h12" stroke-width="2"/>
+        <path d="M300 60v22M289 71h22M292 63l16 16M308 63l-16 16" stroke-width="2.2"/>
+      </svg>
+      </div>
+    </section>
+    <div class="kpis">
+      <button class="kpi" onclick="goTo('schedule')"><b id="kpiGames">–</b><span><span class="t">今晚場次</span><span class="s">球館燈都亮了</span></span><span class="go" aria-hidden="true">→</span></button>
+      <button class="kpi" onclick="goTo('roster')"><b id="kpiRoster">–</b><span><span class="t">我的球員</span><span class="s" id="kpiRosterSub">你的夢幻隊，全員點名</span></span><span class="go" aria-hidden="true">→</span></button>
+      <button class="kpi" onclick="goTo('news')"><b id="kpiInj">–</b><span><span class="t">傷兵警示</span><span class="s">有人在冰敷就會亮紅燈</span></span><span class="go" aria-hidden="true">→</span></button>
+    </div>
+    <div class="card" id="lineupCard">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">今日先發建議 <span class="sticker">coach's picks</span></h2>
+        <div class="legend">
+          <span class="lg"><span class="dot" style="background:var(--good)"></span>建議先發 <b id="kpiStart" style="color:var(--good)">–</b></span>
+          <span class="lg"><span class="dot" style="background:var(--warn)"></span>傷況觀望</span>
+          <span class="lg"><span class="dot" style="background:var(--bad)"></span>建議板凳 <b id="kpiSit" style="color:var(--bad)">–</b></span>
+        </div>
+      </div>
+      <div id="dashLineup" style="margin-top:10px"><div class="loading"><span class="spin"></span>教練翻戰術板中…</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">火燙手感 <span class="sticker">on fire</span> <span class="pill" id="hotPill">近 7 天 · FP/G</span></h2>
+        <div class="seg" id="hotMode"><button data-m="hot" class="on">最燙</button><button data-m="rise">飆升</button><button data-m="cold">冷掉</button></div>
+      </div>
+      <div id="dashHot" style="margin-top:10px"><div class="loading"><span class="spin"></span>掃描近 7 天手感…</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2 class="sec" style="margin-top:0">網友在吵什麼 <span class="sticker">r/fantasybball</span> <span class="pill">Reddit · 熱門</span></h2>
+      <div id="dashReddit"><div class="loading"><span class="spin"></span>潛進討論區偷聽中…</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2 class="sec" style="margin-top:0">話題球員 <span class="sticker">everyone's talking</span> <span class="pill">依新聞提及次數</span></h2>
+      <div id="dashBuzz"><div class="loading"><span class="spin"></span>偷聽休息室八卦中…</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2 class="sec" style="margin-top:0">聯盟頭條 <span class="sticker">hot off the press</span> <span class="pill">ESPN · 即時</span></h2>
+      <div id="dashNews"><div class="loading"><span class="spin"></span>報紙送來中…</div></div>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="view doodled" id="view-schedule">
+    <h2 class="sec">今晚誰跟誰打 <span class="sticker">tonight's games</span> <span class="pill" id="schDate"></span></h2>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="運球中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><path d="M138 92l14-6l-3 10l10 2" stroke-width="2"/><ellipse cx="90" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="111" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><path d="M92 126q8 6 16 0"/><path d="M144 118q16 6 18 24"/><circle cx="164" cy="158" r="11" fill="#fff04f"/><path d="M164 147v22M153 158h22" stroke-width="1.6"/><path d="M152 136l-4-7M176 136l4-7M164 132v-8" stroke-width="2"/><path d="M56 118q-14 4-14 16q8 2 16-6"/><path d="M88 154v14M112 154v14"/><path d="M88 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
+    <div id="scheduleList" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">
+      <div class="loading"><span class="spin"></span>載入賽程中…</div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">本週出賽數 <span class="sticker">volume is king</span></h2>
+        <button class="btn" id="weekBtn">算本週場次</button>
+      </div>
+      <p class="muted" style="font-size:12px;margin-top:6px">Points 聯盟比的是總分：一週打 4 場的球隊，比打 2 場的多出一倍上場機會。這裡列出每隊本週（週一～週日）場次與剩餘場次。</p>
+      <div id="weekResult"></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">聯盟排行榜 <span class="sticker">standings</span></h2>
+        <button class="btn ghost" id="standBtn">載入戰績</button>
+      </div>
+      <div id="standResult"></div>
+    </div>
+  </section>
+
+  <!-- H2H POINTS -->
+  <section class="view doodled" id="view-h2h">
+    <h2 class="sec">本週對決 <span class="sticker">head to head</span> <span class="pill">H2H Points · 10 隊聯盟</span></h2>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="跳投中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><ellipse cx="92" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="113" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><circle cx="103" cy="126" r="4.5"/><path d="M140 100q20-26 10-58"/><path d="M62 100q-16-22-4-48"/><circle cx="150" cy="30" r="14" fill="#fff04f"/><path d="M150 16v28M136 30h28M141 20q6 10 0 20M159 20q-6 10 0 20" stroke-width="1.6"/><path d="M58 52q30-26 78-26" stroke-width="2" stroke-dasharray="4 5"/><path d="M174 18l8-7M178 34h10" stroke-width="2.2"/><path d="M88 154l-6 14M112 154l6 14"/><path d="M82 168h-14q-5 0-5 5h19zM118 168h14q5 0 5 5h-19z" fill="#141414"/></svg></div>
+    <div class="card">
+      <div class="row" style="flex-wrap:wrap;gap:14px;align-items:flex-end">
+        <label class="sub" style="display:flex;flex-direction:column;gap:4px">週次
+          <input id="h2hWeek" class="datepick" style="width:90px" placeholder="週次"></label>
+        <label class="sub" style="display:flex;flex-direction:column;gap:4px">我的隊名
+          <input id="h2hMe" class="datepick" style="width:150px" placeholder="輸入我的隊名"></label>
+        <label class="sub" style="display:flex;flex-direction:column;gap:4px">對手隊名
+          <input id="h2hOpp" class="datepick" style="width:150px" placeholder="輸入對手隊名"></label>
+        <span class="spacer"></span>
+        <button class="btn ghost" id="h2hAuto">用我的陣容估算</button>
+        <button class="btn ghost" id="h2hClear">清空</button>
+      </div>
+    </div>
+
+    <div class="card" id="h2hScoreCard" style="margin-top:14px;text-align:center">
+      <div class="row" style="justify-content:center;gap:24px;align-items:center">
+        <div style="flex:1;text-align:right"><div style="font-weight:700" id="h2hMeName">我</div></div>
+        <div class="matchscore" id="h2hScore" style="font-size:34px">0 – 0</div>
+        <div style="flex:1;text-align:left"><div style="font-weight:700" id="h2hOppName">對手</div></div>
+      </div>
+      <div id="h2hBar" style="display:flex;height:10px;border-radius:6px;overflow:hidden;margin:12px 0 8px;background:var(--panel2)">
+        <span id="h2hBarW" style="background:var(--text);width:50%;transition:width .3s"></span>
+        <span id="h2hBarL" style="background:var(--pop);width:50%;transition:width .3s"></span>
+      </div>
+      <div class="row" style="justify-content:center;gap:14px;font-size:12px;flex-wrap:wrap">
+        <span id="h2hProjLine" class="muted">預估終場 –</span>
+        <span id="h2hWinp" style="font-weight:700">勝率 –</span>
+      </div>
+      <div style="font-size:13px;margin-top:8px;font-weight:600" id="h2hVerdict">填入兩隊目前得分、剩餘場次和場均，即時估算終場。</div>
+      <div id="h2hDelta" class="muted" style="font-size:11.5px;margin-top:4px"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;padding:0;overflow:hidden">
+      <table id="h2hTable" class="fit"></table>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2 class="sec" style="margin-top:0">教練錦囊 <span class="sticker">game plan</span></h2>
+      <div id="h2hAdvice" class="muted">填入數字後，這裡告訴你要追幾分、該不該串流。</div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">聯盟 10 隊戰績 <span class="sticker">the league</span></h2>
+        <label class="sub" style="display:flex;align-items:center;gap:6px">季後賽名額
+          <select id="playoffN" class="datepick"><option>4</option><option selected>6</option><option>8</option></select></label>
+      </div>
+      <p class="muted" style="font-size:12px;margin:6px 0 10px">抄下 Yahoo 聯盟頁的勝敗與總得分（PF），自動排名、畫出季後賽線。名字跟「我的隊名」一樣的那列會亮起來。</p>
+      <div class="tscroll"><table id="leagueTable" class="fit"></table></div>
+      <div id="leagueNote" class="muted" style="font-size:11.5px;margin-top:8px"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="sec" style="margin:0">計分規則 <span class="sticker">house rules</span></h2>
+        <div class="seg" id="scorePreset"><button data-p="yahoo">Yahoo 預設</button><button data-p="espn">ESPN 預設</button><button data-p="sleeper">Sleeper</button><button data-p="custom" disabled>自訂</button></div>
+      </div>
+      <p class="muted" style="font-size:12px;margin:6px 0 12px">整個工具的 FP（夢幻積分）都用這組權重算。改成跟你聯盟一樣的設定，數字才準。</p>
+      <div class="scoregrid" id="scoreGrid"></div>
+      <div class="row" style="margin-top:14px;flex-wrap:wrap;gap:14px">
+        <label class="sub" style="display:flex;align-items:center;gap:6px">每日先發位數
+          <input id="slotsIn" class="h2hin" style="width:70px;height:34px" inputmode="numeric"></label>
+        <label class="sub" style="display:flex;align-items:center;gap:6px">每隊名單人數
+          <input id="rosterSizeIn" class="h2hin" style="width:70px;height:34px" inputmode="numeric"></label>
+        <span class="muted" style="font-size:11.5px">10 隊 × 名單人數＝大約多少人被選走，超出這個排名就可能躺在自由市場。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="view" id="view-stats">
+    <h2 class="sec">球員顯微鏡 <span class="sticker">under the microscope</span> <span class="pill">逐場 FP</span></h2>
+    <div class="card">
+      <div class="row" style="gap:10px;flex-wrap:wrap;align-items:flex-start">
+        <div class="pos-rel" style="flex:1;min-width:220px">
+          <input class="search" id="statsSearch" placeholder="🔍 搜尋球員（英文，如 Luka Doncic）…" autocomplete="off">
+          <div class="resultlist" id="statsResults" style="display:none"></div>
+        </div>
+        <div class="pos-rel" style="flex:1;min-width:220px">
+          <input class="search" id="cmpSearch" placeholder="⇄ 加入對比球員（可選）…" autocomplete="off" disabled>
+          <div class="resultlist" id="cmpResults" style="display:none"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;gap:8px;flex-wrap:wrap;align-items:center">
+        <span class="sub">數據範圍</span>
+        <div class="seg" id="statsRange">
+          <button data-r="season" class="on">整季</button>
+          <button data-r="15">近 15 場</button>
+          <button data-r="10">近 10 場</button>
+          <button data-r="5">近 5 場</button>
+        </div>
+      </div>
+    </div>
+    <div id="statsPanel" style="margin-top:16px">
+      <div class="empty"><div class="big">🔬</div>搜一位球員，把他的場均、逐場積分和手感全部攤開來看。<br>再加一位，就能正面單挑。</div>
+    </div>
+  </section>
+
+  <!-- RADAR -->
+  <section class="view" id="view-radar">
+    <h2 class="sec">自由市場撿寶 <span class="sticker">waiver wire gems</span> <span class="pill">box score 即時統計</span></h2>
+    <div class="card">
+      <div class="row" style="flex-wrap:wrap;gap:10px;align-items:center">
+        <div class="seg" id="radarRange">
+          <button data-d="7" class="on">近 7 天</button>
+          <button data-d="14">近 14 天</button>
+          <button data-d="30">近 30 天</button>
+        </div>
+        <div class="seg" id="radarPos">
+          <button data-p="ALL" class="on">全部</button>
+          <button data-p="G">後衛 G</button>
+          <button data-p="F">前鋒 F</button>
+          <button data-p="C">中鋒 C</button>
+        </div>
+        <span class="spacer"></span>
+        <button class="iconbtn" id="radarRefresh" title="重新整理" aria-label="重新整理"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:14px;align-items:center;margin-top:12px">
+        <label class="sub" style="display:flex;align-items:center;gap:6px">排序
+          <select id="radarSort" class="datepick"></select></label>
+        <label class="sub" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="radarFA" style="width:16px;height:16px"> 只看可能沒人要的（10 隊排名外）</label>
+        <label class="sub" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="radarHideMine" style="width:16px;height:16px"> 隱藏已在我隊的球員</label>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;padding:0;overflow:hidden">
+      <div id="radarTable"><div class="loading"><span class="spin"></span>在自由市場翻箱倒櫃…</div></div>
+    </div>
+    <p class="muted" style="font-size:12px">「本週剩餘價值」＝FP/G × 該隊本週剩下的場次，最適合挑串流。☆ 收藏的球員會進「陣容」分頁的觀察名單。第一次載入 30 天比較久，之後會記在這台裝置。</p>
+  </section>
+
+  <!-- INJURIES -->
+  <section class="view doodled" id="view-news">
+    <h2 class="sec">誰能打誰不能打 <span class="sticker">injury report</span> <span class="pill" id="injCount"></span></h2>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="頭上冰敷的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M84 104l9 4l-9 4M117 104l-9 4l9 4"/><path d="M92 126q4-4 8 0q4 4 8 0"/><rect x="70" y="50" width="60" height="22" rx="10" fill="#fff04f"/><path d="M130 57q8-2 10 4q-4 6-10 4" fill="#fff04f"/><path d="M82 57h8M94 63h6M106 56h8M116 64h6" stroke-width="2"/><path d="M146 104q12-26-8-46"/><path d="M54 116q-12 6-14 18"/><g transform="rotate(-28 70 132)"><rect x="56" y="126" width="28" height="11" rx="4" fill="#fbf8f1"/><path d="M66 129v5M74 129v5" stroke-width="1.6"/></g><path d="M158 62q7 9 0 14q-7-5 0-14z" fill="#fbf8f1" stroke-width="2"/><path d="M170 80q5 6 0 10q-5-4 0-10z" fill="#fbf8f1" stroke-width="2"/><path d="M90 154v14M112 154v14"/><path d="M90 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
+    <div class="card">
+      <div class="row" style="flex-wrap:wrap;gap:10px;align-items:center">
+        <div class="seg" id="injFilter">
+          <button data-f="all" class="on">全部</button>
+          <button data-f="out">缺陣</button>
+          <button data-f="dtd">每日觀察</button>
+          <button data-f="q">出賽成疑</button>
+        </div>
+        <label class="sub" style="display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" id="injMine" style="width:16px;height:16px"> 只看我的球員</label>
+        <span class="spacer"></span>
+        <button class="iconbtn" id="injRefresh" title="重新整理" aria-label="重新整理"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+      </div>
+      <input class="search" id="injSearch" placeholder="🔍 搜尋球員姓名（英文）…" autocomplete="off" style="margin-top:10px">
+    </div>
+    <div class="card" style="margin-top:14px;padding:0;overflow:hidden">
+      <div id="newsTable"><div class="loading"><span class="spin"></span>翻傷兵報告中…</div></div>
+    </div>
+    <p class="muted" style="font-size:12px">ESPN 每日傷兵報告，已中文化。⭐＝你的球員。「預計回歸」是官方或記者給的估計日期，會隨時變；點「查最新消息」看記者報導。</p>
+  </section>
+
+  <!-- ROSTER + WATCHLIST -->
+  <section class="view" id="view-roster">
+    <h2 class="sec">我的球隊 <span class="sticker">your bench</span></h2>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 class="sec" style="margin:0">我的陣容 <span class="pill" id="rosterCount">0</span></h2>
+        <span class="row" style="gap:10px"><span class="muted" style="font-size:11.5px">存在這台裝置</span><button class="btn ghost" id="shareRosterBtn" onclick="shareRoster()">分享陣容</button></span>
+      </div>
+      <p class="muted" style="margin:8px 0 0">把球員叫進來報到，總覽、對戰和傷兵頁都會繞著他們轉。</p>
+      <div class="pos-rel" style="margin-top:10px">
+        <input class="search" id="rosterSearch" placeholder="🔍 搜尋並加入球員到我的陣容…" autocomplete="off">
+        <div class="resultlist" id="rosterResults" style="display:none"></div>
+      </div>
+      <div class="rosterbar" id="rosterBar"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 class="sec" style="margin:0">觀察名單 <span class="pill" id="watchCount">0</span></h2>
+        <span class="muted" style="font-size:11.5px">從「市場」頁用 ☆ 收藏；只是偷看，不影響陣容</span>
+      </div>
+      <div class="rosterbar" id="watchBar" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap">
+        <h2 class="sec" style="margin:0">本週出賽表 <span class="pill">4 場週</span></h2>
+        <button class="btn ghost" id="rotBtn">分析本週</button>
+      </div>
+      <div id="rotResult" class="muted" style="font-size:12px;margin-top:8px">算出你的球員這週各打幾場、還剩幾場，預估還能拿多少分。</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  The Perfect Fantasy Basketball Draft · 即時資料來源 ESPN（site.api.espn.com）· 討論來自 Reddit r/fantasybball<br>
+  本工具為個人決策輔助原型；陣容與設定僅存於你的瀏覽器本機 (localStorage)。
+</footer>
+
+<div id="modalBack"><div class="modal"><div class="mhead"><b id="modalTitle">球員近況</b><button class="mclose" onclick="closeModal()">×</button></div><div class="mbody" id="modalBody"></div></div></div>
+<div id="toast"></div>
+<script>
+const SITE='https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+const WEB='https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba';
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f1=n=>n==null||isNaN(n)?'–':(Math.round(n*10)/10).toFixed(1);
+const fmt=(n,d=3)=>n==null||n===''||isNaN(n)?'–':Number(n).toFixed(d).replace(/^0\./,'.');
+const todayStr=d=>{const x=d||new Date();return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+const ymd=s=>s.replace(/-/g,'');
+function addDaysStr(s,n){const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return todayStr(d);}
+// NBA 賽程以美東日期為準（台灣早上看的是美國前一晚的比賽）
+function etToday(){try{return new Date().toLocaleDateString('en-CA',{timeZone:'America/New_York'});}catch(e){return todayStr();}}
+function localTime(iso){return new Date(iso).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});}
+function localDT(iso){const d=new Date(iso);return isNaN(d)?'':`${d.getMonth()+1}/${d.getDate()} ${localTime(iso)}`;}
+function espnSeason(day){const d=new Date(day+'T12:00:00');return d.getMonth()>=8?d.getFullYear()+1:d.getFullYear();} // 9 月起算下一季
+function seasonLabel(y){return `${y-1}-${String(y).slice(2)}`;}
+async function J(url){const r=await fetch(url);if(!r.ok)throw new Error(url+' '+r.status);return r.json();}
+async function pool(items,n,fn){let i=0;const out=new Array(items.length);
+  async function w(){while(i<items.length){const k=i++;try{out[k]=await fn(items[k],k);}catch(e){out[k]=null;}}}
+  await Promise.all(Array.from({length:Math.min(n,items.length)},w));return out;}
+
+// ESPN team id -> [abbr, 中文, English]
+const TEAMS={1:['ATL','老鷹','Atlanta Hawks'],2:['BOS','塞爾提克','Boston Celtics'],3:['NO','鵜鶘','New Orleans Pelicans'],4:['CHI','公牛','Chicago Bulls'],5:['CLE','騎士','Cleveland Cavaliers'],6:['DAL','獨行俠','Dallas Mavericks'],7:['DEN','金塊','Denver Nuggets'],8:['DET','活塞','Detroit Pistons'],9:['GS','勇士','Golden State Warriors'],10:['HOU','火箭','Houston Rockets'],11:['IND','溜馬','Indiana Pacers'],12:['LAC','快艇','LA Clippers'],13:['LAL','湖人','Los Angeles Lakers'],14:['MIA','熱火','Miami Heat'],15:['MIL','公鹿','Milwaukee Bucks'],16:['MIN','灰狼','Minnesota Timberwolves'],17:['BKN','籃網','Brooklyn Nets'],18:['NY','尼克','New York Knicks'],19:['ORL','魔術','Orlando Magic'],20:['PHI','76人','Philadelphia 76ers'],21:['PHX','太陽','Phoenix Suns'],22:['POR','拓荒者','Portland Trail Blazers'],23:['SAC','國王','Sacramento Kings'],24:['SA','馬刺','San Antonio Spurs'],25:['OKC','雷霆','Oklahoma City Thunder'],26:['UTAH','爵士','Utah Jazz'],27:['WSH','巫師','Washington Wizards'],28:['TOR','暴龍','Toronto Raptors'],29:['MEM','灰熊','Memphis Grizzlies'],30:['CHA','黃蜂','Charlotte Hornets']};
+const ABBR2ID={GSW:9,NOP:3,NYK:18,SAS:24,UTA:26,WAS:27,PHO:21,BRK:17,CHO:30,LA:12};
+const NAME2ID={'Los Angeles Clippers':12};
+Object.entries(TEAMS).forEach(([id,[a,,en]])=>{ABBR2ID[a]=+id;NAME2ID[en]=+id;});
+function teamId(x){if(x==null)return null;const n=+x;if(TEAMS[n])return n;return ABBR2ID[String(x).toUpperCase()]||NAME2ID[x]||null;}
+function teamAbbr(id){return TEAMS[id]?.[0]||'';}
+function teamZh(id){return TEAMS[id]?.[1]||'';}
+function teamLogo(id,size=18){const a=TEAMS[id]?.[0];if(!a)return '';
+  return `<img class="tlogo" src="https://a.espncdn.com/i/teamlogos/nba/500/${a.toLowerCase()}.png" width="${size}" height="${size}" loading="lazy" alt="">`;}
+function playerPhoto(id,size=28,cls=''){if(!id)return '';
+  return `<img class="phead ${cls}" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${id}.png&w=110&h=80" width="${size}" height="${size}" loading="lazy" alt="" onerror="this.onerror=null;this.style.visibility='hidden'">`;}
+
+// ---------- state ----------
+function load(k,def){try{return JSON.parse(localStorage.getItem(k))??def}catch(e){return def}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+let GDATE=etToday();
+let ROSTER=load('pfbk_roster',[]);   // [{id,fullName,pos,teamId}]
+let WATCH=load('pfbk_watch',[]);
+let SETTINGS=Object.assign({slots:10,rosterSize:13},load('pfbk_settings',{}));
+const PNAME={};                        // id -> {fullName,teamId,pos}，給 onclick 只傳 id 用
+function remember(id,fullName,teamId,pos){if(!id)return;const o=PNAME[id]||(PNAME[id]={});if(fullName)o.fullName=fullName;if(teamId)o.teamId=teamId;if(pos)o.pos=pos;}
+ROSTER.forEach(r=>remember(r.id,r.fullName,r.teamId,r.pos));WATCH.forEach(r=>remember(r.id,r.fullName,r.teamId,r.pos));
+function faCut(){return 10*(+SETTINGS.rosterSize||13);} // 10 隊聯盟大約被選走的人數
+
+// ---------- 計分 ----------
+const SCORE_KEYS=[['PTS','得分'],['REB','籃板'],['AST','助攻'],['STL','抄截'],['BLK','火鍋'],['TO','失誤'],['3PM','三分命中'],['FGM','投籃命中'],['FGA','投籃出手'],['FTM','罰球命中'],['FTA','罰球出手'],['DD','雙十'],['TD','大三元']];
+const PRESETS={
+  yahoo:{PTS:1,REB:1.2,AST:1.5,STL:3,BLK:3,TO:-1},
+  espn:{PTS:1,'3PM':1,FGA:-1,FGM:2,FTA:-1,FTM:1,REB:1,AST:2,STL:4,BLK:4,TO:-2},
+  sleeper:{PTS:0.5,REB:1,AST:1,STL:2,BLK:2,TO:-1,'3PM':0.5,DD:1,TD:2}
+};
+let SCORING=load('pfbk_scoring',null)||Object.assign({},PRESETS.yahoo);
+function fp(s){if(!s)return 0;const W=SCORING;let t=0;
+  const v={PTS:s.pts,REB:s.reb,AST:s.ast,STL:s.stl,BLK:s.blk,TO:s.to,'3PM':s.tpm,FGM:s.fgm,FGA:s.fga,FTM:s.ftm,FTA:s.fta};
+  for(const k in v){if(W[k])t+=W[k]*(+v[k]||0);}
+  if(W.DD||W.TD){const c=[s.pts,s.reb,s.ast,s.stl,s.blk].filter(x=>x>=10).length;if(c>=3&&W.TD)t+=W.TD;else if(c>=2&&W.DD)t+=W.DD;}
+  return t;}
+function presetName(){for(const p in PRESETS){const a=PRESETS[p];const keys=new Set([...Object.keys(a),...Object.keys(SCORING)]);if([...keys].every(k=>(+a[k]||0)===(+SCORING[k]||0)))return p;}return 'custom';}
+
+// 把 ESPN 的 labels + stats 陣列轉成 {min,pts,reb,...}
+const NAME2LABEL={minutes:'MIN','fieldGoalsMade-fieldGoalsAttempted':'FG','threePointFieldGoalsMade-threePointFieldGoalsAttempted':'3PT','freeThrowsMade-freeThrowsAttempted':'FT',totalRebounds:'REB',rebounds:'REB',assists:'AST',steals:'STL',blocks:'BLK',turnovers:'TO',points:'PTS',offensiveRebounds:'OREB',defensiveRebounds:'DREB',fouls:'PF'};
+function parseLine(labels,arr){const o={min:0,pts:0,reb:0,ast:0,stl:0,blk:0,to:0,fgm:0,fga:0,ftm:0,fta:0,tpm:0,tpa:0};
+  labels.forEach((l,i)=>{const v=arr[i];if(v==null||v==='')return;const L=String(NAME2LABEL[l]||l).toUpperCase();
+    if(L==='FG'||L==='3PT'||L==='FT'){const [m,a]=String(v).split('-').map(Number);const p=L==='FG'?'fg':L==='FT'?'ft':'tp';o[p+'m']=m||0;o[p+'a']=a||0;}
+    else if(L==='MIN')o.min=parseFloat(v)||0;
+    else{const k={PTS:'pts',REB:'reb',AST:'ast',STL:'stl',BLK:'blk',TO:'to'}[L];if(k)o[k]=+v||0;}});
+  return o;}
+const STAT_ORDER=['min','pts','reb','ast','stl','blk','to','fgm','fga','ftm','fta','tpm','tpa'];
+
+// --- UX helpers ---
+let _tt;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
+function goTo(v){const b=document.querySelector(`#nav button[data-v="${v}"]`);if(b)b.click();}
+function fmtDay(d){const x=new Date(d+'T12:00:00');return isNaN(x)?d:`${x.getMonth()+1}/${x.getDate()}（${'日一二三四五六'[x.getDay()]}）`;}
+function errText(e){const m=String(e&&e.message||e||'');const net=/fetch|network|load failed/i.test(m);const code=(m.match(/ (\d{3})$/)||[])[1];return (net?'球被抄走了：連不上資料來源，檢查一下網路。':code?`資料來源打了個嗝（${code}），等一下再試。`:'資料沒接到，等一下再試。')+'<button class="errretry" onclick="retryView()">再投一次</button>';}
+function retryView(){$('#refreshBtn').click();}
+function heroHello(){const h=new Date().getHours();const t=h<5?'Still up, Coach?':h<12?'Morning, Coach!':h<18?'Afternoon, Coach!':'Evening, Coach!';const e=$('#heroHello');if(e)e.textContent=t;}
+function setBubble(html){const b=$('#heroBubble');if(b)b.innerHTML=html;}
+function stamp(){const e=$('#updated');if(e)e.textContent='更新 '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});}
+function loadingHTML(t){return `<div class="loading"><span class="spin"></span>${t}<span class="boxprog"></span></div>`;}
+function setProg(done,total){$$('.boxprog').forEach(e=>e.textContent=total?` ${done}/${total}`:'');}
+
+// ---------- nav ----------
+$$('#nav button').forEach(b=>b.onclick=()=>{
+  $$('#nav button').forEach(x=>x.classList.remove('active'));
+  $$('.view').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  $('#view-'+b.dataset.v).classList.add('active');
+  try{history.replaceState(null,'','#'+b.dataset.v);}catch(e){}
+  window.scrollTo({top:0});
+  onView(b.dataset.v);
+});
+function onView(v){
+  if(v==='dash')renderDash();
+  if(v==='schedule')renderSchedule();
+  if(v==='h2h')renderH2H();
+  if(v==='stats'&&STATS_MAIN)renderStats();
+  if(v==='radar')renderRadar();
+  if(v==='news')renderInj();
+  if(v==='roster'){renderRosterBar();renderWatch();}
+}
+function activeView(){return document.querySelector('#nav button.active')?.dataset.v||'dash';}
+
+// ---------- date ----------
+$('#globalDate').value=GDATE;
+$('#globalDate').onchange=e=>{if(!e.target.value)return;GDATE=e.target.value;BOXP={};WEEKP={};onView(activeView());};
+$('#refreshBtn').onclick=()=>{
+  SB_CACHE={};SB_PEND={};BOXP={};WEEKP={};INJ=null;NEWS_FEED=null;REDDIT=null;GLOG={};PLAYER_INDEX=null;STANDINGS=null;
+  try{localStorage.removeItem('pfbk_index');}catch(e){}
+  onView(activeView());stamp();toast('資料剛出爐，熱騰騰的。');
+};
+
+// ========== 資料層 ==========
+// 賽程（每天一次請求，快取）
+let SB_CACHE={},SB_PEND={};
+function normEvent(e,day){const c=e.competitions?.[0]||{};const cs=c.competitors||[];
+  const h=cs.find(x=>x.homeAway==='home')||cs[0]||{},a=cs.find(x=>x.homeAway==='away')||cs[1]||{};
+  const side=x=>({id:teamId(x.team?.id)||teamId(x.team?.abbreviation),score:x.score!=null&&x.score!==''?+(x.score.value??x.score):null,rec:(x.records||[])[0]?.summary||''});
+  const st=e.status?.type||c.status?.type||{};
+  return {id:String(e.id),date:e.date,day,state:st.state||'pre',detail:st.shortDetail||st.detail||'',completed:!!st.completed,stype:e.season?.type,
+    home:side(h),away:side(a),venue:c.venue?.fullName||'',bc:(c.broadcasts||[]).flatMap(b=>b.names||[]).join(' / ')};}
+async function getScoreboard(day){
+  if(SB_CACHE[day])return SB_CACHE[day];
+  if(!SB_PEND[day])SB_PEND[day]=J(`${SITE}/scoreboard?dates=${ymd(day)}&limit=100`).then(d=>{const ev=(d.events||[]).map(e=>normEvent(e,day));SB_CACHE[day]=ev;delete SB_PEND[day];return ev;},e=>{delete SB_PEND[day];throw e;});
+  return SB_PEND[day];
+}
+async function getRange(start,end){const days=[];for(let d=start;d<=end;d=addDaysStr(d,1))days.push(d);
+  const res=await pool(days,6,getScoreboard);
+  if(res.every(r=>r==null))throw new Error('scoreboard failed');
+  return res.flatMap(r=>r||[]);}
+function weekRange(){const d=new Date(GDATE+'T12:00:00');const dow=(d.getDay()+6)%7;const mon=addDaysStr(GDATE,-dow);return [mon,addDaysStr(mon,6)];}
+let WEEKP={};
+function weekGames(){const [mon,sun]=weekRange();const k=mon;if(WEEKP[k])return WEEKP[k];
+  WEEKP[k]=getRange(mon,sun).then(evs=>{const W={};evs.forEach(e=>{[e.home.id,e.away.id].forEach(t=>{if(!t)return;const o=W[t]=W[t]||{total:0,left:0,days:[]};o.total++;const left=e.day>GDATE||(e.day===GDATE&&!e.completed);if(left)o.left++;o.days.push({day:e.day,left});});});return W;}).catch(e=>{delete WEEKP[k];throw e;});
+  return WEEKP[k];}
+
+// box score：打完的比賽不會再變，存在本機
+let BOX=load('pfbk_box',{});   // eventId -> {d, t:[home,away], p:[[id,name,teamId,pos,...STAT_ORDER]]}
+const BOX_MAX=480;
+function saveBox(){const ks=Object.keys(BOX);if(ks.length>BOX_MAX){ks.sort((a,b)=>BOX[a].d.localeCompare(BOX[b].d));ks.slice(0,ks.length-BOX_MAX).forEach(k=>delete BOX[k]);}
+  if(!save('pfbk_box',BOX)){const ks2=Object.keys(BOX).sort((a,b)=>BOX[a].d.localeCompare(BOX[b].d));ks2.slice(0,Math.floor(ks2.length/2)).forEach(k=>delete BOX[k]);save('pfbk_box',BOX);}}
+function parseBoxPlayers(sum){const out=[];
+  (sum.boxscore?.players||[]).forEach(tp=>{const tid=teamId(tp.team?.id)||teamId(tp.team?.abbreviation);const st=(tp.statistics||[])[0];if(!st)return;
+    const labels=st.labels||st.names||st.keys||[];
+    (st.athletes||[]).forEach(a=>{if(a.didNotPlay||!a.stats||!a.stats.length||!a.athlete)return;
+      const s=parseLine(labels,a.stats);if(!s.min&&!s.pts&&!s.reb&&!s.ast)return;
+      out.push({id:+a.athlete.id,name:a.athlete.displayName||a.athlete.shortName||'',teamId:tid,pos:a.athlete.position?.abbreviation||'',starter:!!a.starter,s});});});
+  return out;}
+let SUMP={};
+function getSummary(id){if(!SUMP[id])SUMP[id]=J(`${SITE}/summary?event=${id}`).catch(e=>{delete SUMP[id];throw e;});return SUMP[id];}
+function storeBox(ev,sum){const ps=parseBoxPlayers(sum);if(!ps.length)return null;
+  BOX[ev.id]={d:ev.day,t:[ev.home.id,ev.away.id],st:ev.stype,p:ps.map(p=>[p.id,p.name,p.teamId,p.pos,...STAT_ORDER.map(k=>p.s[k]||0)])};return BOX[ev.id];}
+let BOXP={};
+function loadBoxWindow(days){const k=`${GDATE}_${days}`;if(BOXP[k])return BOXP[k];
+  BOXP[k]=(async()=>{const start=addDaysStr(GDATE,-(days-1));const evs=(await getRange(start,GDATE)).filter(e=>e.completed);
+    const need=evs.filter(e=>!BOX[e.id]);let done=0;if(need.length)setProg(0,need.length);
+    await pool(need,6,async e=>{const s=await getSummary(e.id);storeBox(e,s);done++;setProg(done,need.length);});
+    if(need.length){saveBox();setProg(0,0);}
+    return evs.map(e=>BOX[e.id]?Object.assign({id:e.id},BOX[e.id]):null).filter(Boolean);})().catch(e=>{delete BOXP[k];throw e;});
+  return BOXP[k];}
+function boxRowStats(r){const s={};STAT_ORDER.forEach((k,i)=>s[k]=+r[4+i]||0);return s;}
+// 彙整：每位球員 FP/G、各項平均；每隊「被對手拿走的 FP」
+function aggregate(games){const P={},allowed={};
+  games.forEach(g=>{const teamFP={};
+    g.p.forEach(r=>{const [id,name,tid,pos]=r;const s=boxRowStats(r);const f=fp(s);remember(id,name,tid,pos);
+      const o=P[id]||(P[id]={id,name,teamId:tid,pos,gp:0,fp:0,tot:{},games:[]});
+      o.gp++;o.fp+=f;if(g.d>=(o.lastD||''))o.teamId=tid,o.lastD=g.d;if(pos)o.pos=pos;
+      STAT_ORDER.forEach(k=>o.tot[k]=(o.tot[k]||0)+s[k]);o.games.push({d:g.d,fp:f});
+      teamFP[tid]=(teamFP[tid]||0)+f;});
+    const [a,b]=g.t||[];
+    if(teamFP[a]!=null&&teamFP[b]!=null){(allowed[a]=allowed[a]||{fp:0,g:0});allowed[a].fp+=teamFP[b];allowed[a].g++;(allowed[b]=allowed[b]||{fp:0,g:0});allowed[b].fp+=teamFP[a];allowed[b].g++;}});
+  Object.values(P).forEach(o=>{o.fpg=o.fp/o.gp;o.avg={};STAT_ORDER.forEach(k=>o.avg[k]=o.tot[k]/o.gp);o.games.sort((x,y)=>y.d.localeCompare(x.d));});
+  return {P,allowed};}
+function leagueRanks(P,minGp=2){const r={};Object.values(P).filter(p=>p.gp>=minGp).sort((a,b)=>b.fpg-a.fpg).forEach((p,i)=>r[p.id]=i+1);return r;}
+// 不額外抓資料，只用本機已快取的 box score（球員頁用）
+function aggFromCache(days){const start=addDaysStr(GDATE,-(days-1));return aggregate(Object.values(BOX).filter(g=>g.d>=start&&g.d<=GDATE));}
+
+// 球員索引：30 隊名單（搜尋用），快取 12 小時
+let PLAYER_INDEX=null,_idxP=null;
+async function getPlayerIndex(){
+  if(PLAYER_INDEX)return PLAYER_INDEX;
+  const c=load('pfbk_index',null);
+  if(c&&Date.now()-c.t<12*3600e3&&c.p&&c.p.length>200){PLAYER_INDEX=c.p;PLAYER_INDEX.forEach(p=>remember(p.id,p.fullName,p.teamId,p.pos));return PLAYER_INDEX;}
+  if(_idxP)return _idxP;
+  _idxP=(async()=>{const ids=Object.keys(TEAMS).map(Number);
+    const res=await pool(ids,6,id=>J(`${SITE}/teams/${id}/roster`));
+    const out=[];
+    res.forEach((d,i)=>{if(!d)return;const tid=ids[i];
+      (d.athletes||[]).forEach(a=>{(a.items?a.items:[a]).forEach(x=>{if(!x||!x.id)return;
+        const ij=(x.injuries||[])[0];
+        out.push({id:+x.id,fullName:x.displayName||x.fullName||'',pos:x.position?.abbreviation||'',teamId:tid,inj:ij?.status||'',injDate:ij?.date||''});});});});
+    if(!out.length)throw new Error('roster empty');
+    PLAYER_INDEX=out;out.forEach(p=>remember(p.id,p.fullName,p.teamId,p.pos));
+    save('pfbk_index',{t:Date.now(),p:out});return out;})().finally(()=>{_idxP=null;});
+  return _idxP;
+}
+
+// 傷兵報告
+let INJ=null;
+const INJ_STATUS={'out':'缺陣','day-to-day':'每日觀察','questionable':'出賽成疑','doubtful':'恐缺陣','probable':'可望出賽','out for season':'球季報銷','suspension':'禁賽','game time decision':'賽前決定','active':'可出賽'};
+function statusZh(s){const k=String(s||'').toLowerCase();return INJ_STATUS[k]||s||'';}
+function statusLevel(s){const k=String(s||'').toLowerCase();if(!k||k==='active')return '';if(/out|season|suspen|doubt/.test(k))return 'bad';if(/question|day|game time/.test(k))return 'warn';return 'good';}
+function statusChip(s){if(!s)return '';const l=statusLevel(s);return `<span class="chip inj-${l||'good'}">${esc(statusZh(s))}</span>`;}
+const INJ_DICT=[['rotator cuff','旋轉肌群'],['plantar fascia','足底筋膜'],['achilles','阿基里斯腱'],['hip flexor','髖屈肌'],['lower back','下背'],['lower leg','小腿'],['upper body','上半身'],['lower body','下半身'],['rib cage','肋骨'],['quadriceps','股四頭肌'],['hamstring','腿後肌'],['oblique','腹斜肌'],['forearm','前臂'],['shoulder','肩部'],['elbow','手肘'],['wrist','手腕'],['ankle','腳踝'],['knee','膝蓋'],['groin','鼠蹊部'],['calf','小腿'],['thigh','大腿'],['adductor','內收肌'],['abdominal','腹部'],['abdomen','腹部'],['thumb','拇指'],['finger','手指'],['hand','手部'],['neck','頸部'],['back','背部'],['foot','腳部'],['toe','腳趾'],['heel','腳跟'],['rib','肋骨'],['hip','髖部'],['quad','股四頭肌'],['shin','脛骨'],['face','臉部'],['nose','鼻子'],['eye','眼睛'],['head','頭部'],['chest','胸部'],['pelvis','骨盆'],['leg','腿部'],['arm','手臂'],['ligament','韌帶'],['meniscus','半月板'],['acl','前十字韌帶'],['mcl','內側副韌帶'],
+  ['strain','拉傷'],['sprain','扭傷'],['inflammation','發炎'],['soreness','痠痛'],['sore','痠痛'],['tightness','緊繃'],['discomfort','不適'],['fracture','骨折'],['contusion','挫傷'],['bruise','瘀傷'],['surgery','手術'],['tendinitis','肌腱炎'],['tendinopathy','肌腱病變'],['tendonitis','肌腱炎'],['impingement','夾擠'],['illness','生病'],['personal','個人因素'],['rest','輪休'],['injury management','傷勢管理'],['load management','負荷管理'],['concussion protocol','腦震盪規程'],['concussion','腦震盪'],['spasms','痙攣'],['spasm','痙攣'],['stiffness','僵硬'],['laceration','撕裂傷'],['tear','撕裂'],['dislocation','脫臼'],['torn','撕裂'],['bone','骨頭'],['stress reaction','疲勞性骨膜反應'],['not injury related','非傷病'],['suspension','禁賽'],['right','右'],['left','左']];
+function translateReason(raw){let s=' '+String(raw||'').toLowerCase()+' ';INJ_DICT.forEach(([e,z])=>{s=s.split(e).join(z);});return s.replace(/\s+/g,' ').replace(/([一-鿿]) (?=[一-鿿])/g,'$1').trim();}
+async function getInjuries(){
+  if(INJ)return INJ;
+  try{const d=await J(`${SITE}/injuries`);const list=[];
+    (d.injuries||[]).forEach(t=>{(t.injuries||[]).forEach(x=>{const a=x.athlete||{};let id=+a.id;
+      if(!id){const m=(a.links||[]).map(l=>l.href||'').join(' ').match(/\/id\/(\d+)/);if(m)id=+m[1];}
+      const tid=teamId(a.team?.id)||teamId(a.team?.abbreviation)||NAME2ID[t.displayName]||teamId(t.id);
+      const det=x.details||{};
+      list.push({id,name:a.displayName||'',pos:a.position?.abbreviation||'',teamId:tid,status:x.status||x.type?.description||'',date:x.date||'',
+        what:[det.side&&det.side!=='Not Specified'?det.side:'',det.type||'',det.detail||''].filter(Boolean).join(' '),ret:det.returnDate||'',short:x.shortComment||'',long:x.longComment||''});
+      remember(id,a.displayName,tid,a.position?.abbreviation);});});
+    if(!list.length&&!(d.injuries||[]).length)throw new Error('empty');
+    INJ=list;return INJ;
+  }catch(e){ // 備援：用 30 隊名單裡的傷兵標記
+    const idx=await getPlayerIndex();
+    INJ=idx.filter(p=>p.inj&&statusLevel(p.inj)).map(p=>({id:p.id,name:p.fullName,pos:p.pos,teamId:p.teamId,status:p.inj,date:p.injDate||'',what:'',ret:'',short:'',long:''}));
+    return INJ;}
+}
+async function injMap(){const m={};try{(await getInjuries()).forEach(x=>{if(x.id)m[x.id]=x;});}catch(e){}return m;}
+
+// ---------- 模糊搜尋 ----------
+function fzNorm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[.'’-]/g,'');}
+function fzLev(a,b){const m=a.length,n=b.length;if(Math.abs(m-n)>3)return 9;
+  const d=Array.from({length:m+1},(_,i)=>{const r=new Array(n+1).fill(0);r[0]=i;return r;});
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];}
+function fuzzyScore(q,name){
+  q=fzNorm(q);const n=fzNorm(name);if(!q)return null;
+  const idx=n.indexOf(q);if(idx===0)return 0;if(idx>0)return 1;
+  const words=n.split(/\s+/);if(words.some(w=>w.startsWith(q)))return 2;
+  let i=0;for(const c of n){if(c===q[i])i++;if(i===q.length)break;}if(i===q.length)return 3;
+  const maxd=q.length<=4?1:2;if(words.some(w=>fzLev(q,w)<=maxd))return 4;
+  if(fzLev(q,n)<=maxd+1)return 5;return null;}
+function fuzzyRank(list,q,limit=12){
+  return list.map(p=>({p,s:fuzzyScore(q,p.fullName)})).filter(x=>x.s!=null)
+    .sort((a,b)=>a.s-b.s||a.p.fullName.length-b.p.fullName.length).slice(0,limit).map(x=>x.p);}
+function attachSearch(inputSel,listSel,onPick){
+  const inp=$(inputSel),list=$(listSel);let t;
+  inp.addEventListener('input',()=>{clearTimeout(t);const q=inp.value.trim();
+    if(q.length<2){list.style.display='none';return;}
+    t=setTimeout(async()=>{
+      let idx;try{idx=await getPlayerIndex();}catch(e){list.innerHTML='<div class="muted">名單載入失敗，等一下再試。</div>';list.style.display='block';return;}
+      const hits=fuzzyRank(idx,q);
+      list.innerHTML=hits.map(p=>`<div data-id="${p.id}"><span class="tcell">${playerPhoto(p.id,26)}${teamLogo(p.teamId,16)}<span>${esc(p.fullName)}</span></span> <span class="muted">· ${esc(p.pos||'?')} · ${teamZh(p.teamId)||'FA'}</span></div>`).join('')||'<div class="muted">查無球員</div>';
+      list.style.display='block';
+      list.querySelectorAll('div[data-id]').forEach(el=>el.onclick=()=>{const p=hits.find(h=>h.id==el.dataset.id);list.style.display='none';inp.value='';onPick(p);});
+    },180);});
+  document.addEventListener('click',e=>{if(!list.contains(e.target)&&e.target!==inp)list.style.display='none';});
+}
+
+// ========== 聯盟頭條 (ESPN) ==========
+let NEWS_FEED=null;
+const NEWS_TYPE={Recap:'戰報',HeadlineNews:'快訊',Media:'影片',Story:'報導',Preview:'賽前',Notebook:'筆記',Analysis:'分析',Rumor:'傳聞'};
+async function getNews(){if(NEWS_FEED)return NEWS_FEED;const d=await J(`${SITE}/news?limit=50`);NEWS_FEED=d.articles||[];return NEWS_FEED;}
+function timeAgo(iso){const t=new Date(iso),now=new Date();const mn=Math.max(0,Math.round((now-t)/60000));if(mn<60)return mn+' 分鐘前';const hr=Math.round(mn/60);if(hr<24)return hr+' 小時前';return Math.round(hr/24)+' 天前';}
+async function renderNewsFeed(){
+  const box=$('#dashNews');if(!box)return;
+  let arts;try{arts=await getNews();}catch(e){box.innerHTML='<div class="muted" style="font-size:12px">頭條暫時無法載入。</div>';return;}
+  const myIds=new Set(ROSTER.map(r=>String(r.id)));
+  arts=arts.filter(a=>a.type!=='Media'&&!/\/video\//.test(a.links?.web?.href||''));
+  box.innerHTML=arts.slice(0,8).map(a=>{
+    const img=(a.images||[]).find(i=>i.url)?.url;const href=a.links?.web?.href||a.links?.mobile?.href||'#';
+    const mine=(a.categories||[]).some(c=>c.type==='athlete'&&myIds.has(String(c.athleteId||c.athlete?.id||'')));
+    return `<a href="${esc(href)}" target="_blank" rel="noopener" class="newsitem">
+      ${img?`<img class="nthumb" src="${esc(img)}" loading="lazy" alt="">`:'<div class="nthumb"></div>'}
+      <div style="flex:1;min-width:0"><div class="nhead">${mine?'⭐ ':''}${esc(a.headline)}</div>
+      <div class="nmeta"><span class="chip">${esc(NEWS_TYPE[a.type]||a.type||'')}</span> ${a.published?timeAgo(a.published):''}</div></div></a>`;
+  }).join('')||'<div class="muted" style="font-size:12px">目前沒有頭條。</div>';
+}
+
+// ========== 話題球員（新聞熱度 + 近 7 天數據） ==========
+async function renderBuzz(){
+  const box=$('#dashBuzz');if(!box)return;
+  let arts;try{arts=await getNews();}catch(e){box.innerHTML='<div class="muted" style="font-size:12px">熱度暫時無法載入。</div>';return;}
+  const artRank=t=>({HeadlineNews:1,Story:1,Notebook:1,Analysis:1,Rumor:2,Preview:3,Recap:4,Media:5})[t]||2;
+  const cnt={};
+  arts.forEach(a=>{(a.categories||[]).forEach(c=>{if(c.type!=='athlete')return;const id=+(c.athleteId||c.athlete?.id);const nm=c.athlete?.description||c.description;if(!id||!nm)return;
+    const o=cnt[id]=cnt[id]||{id,nm,n:0,art:null};o.n++;remember(id,nm);
+    const cand={headline:a.headline,desc:(a.description||'').replace(/^[\s—–-]+/,'').trim(),href:a.links?.web?.href||a.links?.mobile?.href||'#',published:a.published||'',rank:artRank(a.type)};
+    if(!o.art||cand.rank<o.art.rank||(cand.rank===o.art.rank&&cand.published>o.art.published))o.art=cand;});});
+  const top=Object.values(cnt).sort((a,b)=>b.n-a.n).slice(0,6);
+  if(!top.length){box.innerHTML='<div class="muted" style="font-size:12px">目前沒有話題球員資料。</div>';return;}
+  const A7=aggFromCache(7).P;
+  const myIds=new Set(ROSTER.map(r=>r.id));
+  box.innerHTML='<div class="plist">'+top.map((p,i)=>{
+    const mine=myIds.has(p.id);const q=encodeURIComponent(p.nm);const a=A7[p.id];
+    const txt=p.art?((p.art.desc&&p.art.desc.length>12?p.art.desc:p.art.headline)||''):'';
+    return `<div class="prow" style="align-items:flex-start">
+      <span class="muted" style="width:18px;font-weight:700">${i+1}</span>${playerPhoto(p.id,34)}
+      <div style="flex:1;min-width:0">
+        <div class="nm" style="font-size:13px"><span class="linkish" onclick="openPlayerMini(${p.id})">${mine?'⭐ ':''}${esc(p.nm)}</span> <span class="muted" style="font-weight:400;font-size:11px">· ${p.n} 則報導${a?` · 近 7 天 ${f1(a.fpg)} FP/G`:''}</span></div>
+        ${p.art?`<a href="${esc(p.art.href)}" target="_blank" rel="noopener" style="font-size:11.5px;display:block;margin-top:2px;line-height:1.4">${esc(txt.slice(0,80))}${txt.length>80?'…':''}</a>`:''}
+      </div>
+      <a class="catbtn" style="align-self:center;text-decoration:none" href="https://www.reddit.com/r/fantasybball/search/?q=${q}&restrict_sr=1&sort=new" target="_blank" rel="noopener">討論 ›</a></div>`;
+  }).join('')+'</div><div class="muted" style="font-size:11px;margin-top:8px">熱度依「近期 ESPN 新聞提及次數」排名，旁邊附上近 7 天 FP/G；點摘要看全文、點「討論」看 Reddit 網友怎麼說。</div>';
+}
+
+// ========== Reddit r/fantasybball 熱門討論 ==========
+let REDDIT=null;
+async function renderReddit(){
+  const box=$('#dashReddit');if(!box)return;
+  const fallback=`<div class="muted" style="font-size:12.5px">討論區暫時進不去（Reddit 有時會擋瀏覽器直接讀取）。直接過去看：</div>
+    <div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap"><a class="catbtn" style="text-decoration:none" href="https://www.reddit.com/r/fantasybball/hot/" target="_blank" rel="noopener">🔥 熱門</a><a class="catbtn" style="text-decoration:none" href="https://www.reddit.com/r/fantasybball/new/" target="_blank" rel="noopener">🆕 最新</a><a class="catbtn" style="text-decoration:none" href="https://www.reddit.com/r/fantasybball/search/?q=waiver&restrict_sr=1&sort=new" target="_blank" rel="noopener">撿人討論</a></div>`;
+  try{if(!REDDIT){const d=await J('https://www.reddit.com/r/fantasybball/hot.json?limit=30&raw_json=1');REDDIT=(d.data?.children||[]).map(c=>c.data).filter(p=>p&&!p.stickied);}}
+  catch(e){box.innerHTML=fallback;return;}
+  if(!REDDIT.length){box.innerHTML=fallback;return;}
+  let idx=null;try{idx=PLAYER_INDEX||load('pfbk_index',null)?.p||null;}catch(e){}
+  const myIds=new Set(ROSTER.map(r=>r.id));
+  const names=(idx||[]).filter(p=>p.fullName&&p.fullName.length>5).map(p=>({p,n:fzNorm(p.fullName)}));
+  const posts=REDDIT.slice(0,10);
+  box.innerHTML='<div>'+posts.map(p=>{
+    const t=fzNorm(p.title||'');
+    const hit=names.filter(x=>t.includes(x.n)).slice(0,3).map(x=>x.p);
+    const mine=hit.some(h=>myIds.has(h.id));
+    const flair=p.link_flair_text?`<span class="chip">${esc(p.link_flair_text)}</span>`:'';
+    return `<a class="newsitem" href="https://www.reddit.com${esc(p.permalink)}" target="_blank" rel="noopener" style="align-items:flex-start">
+      <div style="width:52px;flex:none;text-align:center"><div class="fpbig" style="font-size:19px">${p.score>=1000?(p.score/1000).toFixed(1)+'k':p.score}</div><div class="muted" style="font-size:10px">▲ 讚</div></div>
+      <div style="flex:1;min-width:0"><div class="nhead">${mine?'⭐ ':''}${esc(p.title)}</div>
+      <div class="nmeta" style="flex-wrap:wrap">${flair}<span>💬 ${p.num_comments}</span><span>${p.created_utc?timeAgo(p.created_utc*1000):''}</span>${hit.map(h=>`<span class="chip">${esc(h.fullName)}</span>`).join('')}</div></div></a>`;
+  }).join('')+`</div><div class="muted" style="font-size:11px;margin-top:8px">r/fantasybball 目前最熱的 10 篇（已排除置頂）；標題裡提到的球員會標出來，⭐＝你的球員。<a href="https://www.reddit.com/r/fantasybball/" target="_blank" rel="noopener">看更多 ›</a></div>`;
+}
+
+// ========== 火燙手感（近 7 天 box score） ==========
+let HOT_MODE='hot';
+$$('#hotMode button').forEach(b=>b.onclick=()=>{$$('#hotMode button').forEach(x=>x.classList.remove('on'));b.classList.add('on');HOT_MODE=b.dataset.m;renderHot();});
+async function renderHot(){
+  const box=$('#dashHot');if(!box)return;
+  box.innerHTML=loadingHTML('掃描近 14 天 box score…');
+  let games;try{games=await loadBoxWindow(14);}catch(e){box.innerHTML=`<div class="err">手感資料載入失敗：${errText(e)}</div>`;return;}
+  const s7=addDaysStr(GDATE,-6);
+  const A7=aggregate(games.filter(g=>g.d>=s7)).P,Ap=aggregate(games.filter(g=>g.d<s7)).P,A14=aggregate(games).P;
+  const ranks=leagueRanks(A14);
+  let list=Object.values(A7).filter(p=>p.gp>=2).map(p=>{const b=Ap[p.id];return Object.assign({},p,{prev:b?b.fpg:null,delta:b?p.fpg-b.fpg:null,rank:ranks[p.id]});});
+  const pill=$('#hotPill');
+  if(HOT_MODE==='hot'){list.sort((a,b)=>b.fpg-a.fpg);if(pill)pill.textContent='近 7 天 · FP/G 最高';}
+  else{list=list.filter(p=>p.delta!=null&&(p.fpg>=15||p.prev>=15));list.sort((a,b)=>HOT_MODE==='rise'?b.delta-a.delta:a.delta-b.delta);if(pill)pill.textContent=HOT_MODE==='rise'?'近 7 天 vs 前 7 天 · 漲最多':'近 7 天 vs 前 7 天 · 掉最多';}
+  list=list.slice(0,8);
+  if(!list.length){box.innerHTML='<div class="empty"><div class="big">🏀</div>最近 7 天場次太少，還看不出誰手熱（季前賽或休賽期）。<br>開季後每晚都會更新。</div>';return;}
+  const myIds=new Set(ROSTER.map(r=>r.id));const cut=faCut();
+  box.innerHTML='<div class="plist">'+list.map((p,i)=>{
+    const mine=myIds.has(p.id);const fa=p.rank&&p.rank>cut;
+    const d=p.delta==null?'':p.delta>=0?`<span class="delta-up">▲ ${f1(p.delta)}</span>`:`<span class="delta-dn">▼ ${f1(-p.delta)}</span>`;
+    return `<div class="prow">
+      <span class="muted" style="width:18px;font-weight:700">${i+1}</span>${playerPhoto(p.id,34)}${teamLogo(p.teamId,18)}
+      <div style="flex:1;min-width:0"><div class="nm"><span class="linkish" onclick="openPlayerMini(${p.id})">${mine?'⭐ ':''}${esc(p.name)}</span></div>
+        <div class="meta">${esc(p.pos||'')} · ${teamZh(p.teamId)} · ${p.gp} 場 · ${f1(p.avg.pts)} 分 ${f1(p.avg.reb)} 板 ${f1(p.avg.ast)} 助${p.prev!=null?` · 前 7 天 ${f1(p.prev)}`:''}</div></div>
+      <div class="rt" style="flex-direction:column;align-items:flex-end;gap:3px"><span class="fpbig">${f1(p.fpg)}</span><span class="row" style="gap:6px">${d}${fa?'<span class="chip fa">可能 FA</span>':mine?'<span class="chip">我隊</span>':''}</span></div></div>`;
+  }).join('')+`</div><div class="muted" style="font-size:11px;margin-top:8px">FP 依你的計分規則從每場 box score 算出。「可能 FA」＝近 14 天 FP/G 排在 ${cut} 名外（10 隊 × ${SETTINGS.rosterSize} 人），在你們聯盟很可能沒人要。 <a onclick="goTo('radar')" class="linkish">去市場看更多 ›</a></div>`;
+}
+
+// ========== DASHBOARD ==========
+let LINEUP_BYID={};
+async function renderDash(){
+  heroHello();renderNewsFeed();renderReddit();renderHot().then(renderBuzz);
+  $('#dashDate').textContent=fmtDay(GDATE)+' 美東';
+  $('#kpiRoster').textContent=ROSTER.length;
+  let games=[];
+  try{games=await getScoreboard(GDATE);$('#kpiGames').textContent=games.length;}catch(e){$('#kpiGames').textContent='?';}
+  const box=$('#dashLineup');
+  if(!ROSTER.length){box.innerHTML='<div class="empty"><div class="big">⭐</div>板凳空空的。先把你的 Yahoo 陣容叫進來，<br>之後每晚幫你排好先發。<div class="cta"><button class="btn" onclick="goTo(\'roster\')">＋ 叫球員報到</button></div></div>';
+    $('#kpiStart').textContent='0';$('#kpiSit').textContent='0';$('#kpiInj').textContent='0';$('#kpiRosterSub').textContent='你的夢幻隊，全員點名';setBubble('板凳空空的…<br>先把球員叫進來吧！');stamp();return;}
+  box.innerHTML=loadingHTML('幫你一個個比對中…');setBubble('幫你看今晚的對位中…');
+  const ms=await buildLineup(games);
+  const order={START:0,STREAM:1,SIT:2,OFF:3};
+  ms.sort((a,b)=>order[a.rec]-order[b.rec]||(b.proj??-1)-(a.proj??-1));
+  let start=0,sit=0,playing=0,injN=0;
+  const rows=ms.map(m=>{
+    if(m.rec==='START')start++;if(m.rec==='SIT')sit++;if(m.hasGame)playing++;if(m.inj&&statusLevel(m.inj.status))injN++;
+    const col=m.rec==='START'?'var(--good)':m.rec==='SIT'?'var(--bad)':m.rec==='STREAM'?'var(--warn)':'var(--muted)';
+    const opp=m.hasGame?`${m.ha==='主'?'vs':'@'} ${teamLogo(m.opp,16)}<b>${teamAbbr(m.opp)}</b> <span class="muted" style="font-size:11px">${m.ev?.state==='pre'?localTime(m.ev.date):esc(m.ev?.detail||'')}</span>${m.oppIdx?` <span class="chip">${m.oppIdx>=1.04?'好打 ':''}${m.oppIdx<=0.96?'難打 ':''}${m.oppIdx>=1?'+':''}${Math.round((m.oppIdx-1)*100)}%</span>`:''}`:'<span class="muted">今晚沒比賽</span>';
+    return `<tr>
+      <td><span class="tcell">${playerPhoto(m.id,32)}${teamLogo(m.teamId,18)}<b class="linkish" onclick="openPlayerMini(${m.id})">${esc(m.fullName)}</b> <span class="muted" style="font-size:11px">${esc(m.pos||'')}</span>${m.inj?' '+statusChip(m.inj.status):''}</span><span class="hl" style="color:${col}"><span class="m" style="min-width:auto">${m.rec==='OFF'?'OFF':recLabel(m.rec)+(m.proj!=null?' '+f1(m.proj):'')}</span></span></td>
+      <td class="det" data-l="今晚對手">${opp}</td>
+      <td class="num det" data-l="近14天 FP/G">${m.fpg!=null?f1(m.fpg):'–'}${m.gp?` <span class="muted" style="font-size:11px">${m.gp}場</span>`:''}</td>
+      <td class="num det" data-l="今晚預估"><b>${m.hasGame&&m.proj!=null?f1(m.proj):'–'}</b></td>
+      <td class="det" data-l="建議">${m.hasGame?`<span class="rec ${m.rec} clickable" title="點看詳細依據" onclick="openLineupDetail(${m.id})">${recLabel(m.rec)} ⓘ</span>`:'<span class="rec OFF">OFF</span>'}</td>
+    </tr>`;}).join('');
+  box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>今晚對手</th><th class="num">近14天 FP/G</th><th class="num">今晚預估 FP</th><th>建議</th></tr></thead><tbody>${rows}</tbody></table><div class="muted" style="font-size:11.5px;padding:8px 4px 0">依今晚預估 FP 排前 ${SETTINGS.slots} 名上場（先發位數可在「對戰」頁改）。「好打/難打」＝對手近 14 天被拿走的 FP 比聯盟平均高或低。點「建議」看完整依據。</div>`;
+  $('#kpiStart').textContent=start;$('#kpiSit').textContent=sit;
+  $('#kpiInj').textContent=injN;$('#kpiInj').classList.toggle('hot',injN>0);
+  $('#kpiRosterSub').textContent=games.length?`今晚 ${playing} 人有比賽`:'今晚聯盟休兵';
+  setBubble(!games.length?'今晚沒比賽，<br>球員們在打電動。':playing?`今晚 ${playing} 人上場，<br>先發名單我排好了！`:'你的人今晚全休，<br>要不要撿個串流？');
+  stamp();
+}
+function recLabel(r){return r==='START'?'先發':r==='SIT'?'板凳':r==='STREAM'?'觀望':'休息';}
+async function buildLineup(games){
+  const playing={};
+  games.forEach(e=>{if(e.home.id)playing[e.home.id]={opp:e.away.id,ha:'主',ev:e};if(e.away.id)playing[e.away.id]={opp:e.home.id,ha:'客',ev:e};});
+  let agg={P:{},allowed:{}};try{agg=aggregate(await loadBoxWindow(14));}catch(e){}
+  const inj=await injMap();
+  const al=agg.allowed;const vals=Object.values(al).filter(x=>x.g).map(x=>x.fp/x.g);
+  const lgAvg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
+  const rows=ROSTER.map(r=>{const a=agg.P[r.id];const tid=a?.teamId||r.teamId;const g=playing[tid];
+    const m=Object.assign({},r,{teamId:tid,hasGame:!!g,opp:g?.opp,ha:g?.ha,ev:g?.ev,fpg:a?a.fpg:null,gp:a?.gp||0,inj:inj[r.id]||null,a});
+    if(g&&lgAvg&&al[g.opp]?.g>=2)m.oppIdx=(al[g.opp].fp/al[g.opp].g)/lgAvg;
+    m.proj=m.fpg!=null?m.fpg*(m.oppIdx?Math.pow(m.oppIdx,0.7):1):null; // 對手係數打折，避免小樣本放大
+    return m;});
+  const lvl=m=>statusLevel(m.inj?.status);
+  const avail=rows.filter(m=>m.hasGame&&lvl(m)!=='bad').sort((a,b)=>(b.proj??-1)-(a.proj??-1));
+  const slots=+SETTINGS.slots||10;
+  avail.forEach((m,i)=>{m.rank=i+1;m.rec=i<slots?(lvl(m)==='warn'?'STREAM':'START'):'SIT';});
+  rows.forEach(m=>{if(!m.hasGame)m.rec='OFF';else if(lvl(m)==='bad')m.rec='SIT';});
+  LINEUP_BYID={};rows.forEach(m=>LINEUP_BYID[m.id]=Object.assign(m,{availN:avail.length,slots}));
+  return rows;
+}
+function openLineupDetail(id){
+  const m=LINEUP_BYID[id];if(!m){toast('請先在總覽載入建議');return;}
+  const fr=(label,val,detail,tag)=>`<div class="frow"><div class="fl">${label}${val!=null?` <span class="muted">· ${val}</span>`:''}<small>${detail||''}</small></div>${tag||''}</div>`;
+  const tag=(t,c)=>`<span class="fdelta ${c||''}" style="font-size:13px">${t}</span>`;
+  let rows='';
+  rows+=fr('近 14 天手感',m.fpg!=null?`${f1(m.fpg)} FP/G`:'無資料',m.gp?`${m.gp} 場 · ${f1(m.a.avg.pts)} 分 ${f1(m.a.avg.reb)} 板 ${f1(m.a.avg.ast)} 助 ${f1(m.a.avg.stl+m.a.avg.blk)} 抄帽 · ${f1(m.a.avg.min)} 分鐘`:'近 14 天沒有出賽紀錄',tag(m.fpg!=null?f1(m.fpg):'–'));
+  if(m.oppIdx)rows+=fr('對手防守',`${teamZh(m.opp)} 被拿走 ${m.oppIdx>=1?'+':''}${Math.round((m.oppIdx-1)*100)}%`,'對手近 14 天每場被對方拿走的 FP vs 聯盟平均；越高越好打',tag(`×${Math.pow(m.oppIdx,0.7).toFixed(2)}`,m.oppIdx>=1?'tag-good':'tag-bad'));
+  rows+=fr('傷況',m.inj?statusZh(m.inj.status):'健康',m.inj?esc(m.inj.short||translateReason(m.inj.what)):'沒有在傷兵報告上',m.inj?tag(statusZh(m.inj.status),statusLevel(m.inj.status)==='bad'?'tag-bad':'tag-warn'):tag('OK','tag-good'));
+  if(m.rank)rows+=fr('隊內排序',`今晚可上 ${m.availN} 人中第 ${m.rank}`,`先發位 ${m.slots} 個，排進去才上場`,tag(m.rank<=m.slots?'上':'下',m.rank<=m.slots?'tag-good':'tag-bad'));
+  const summary=m.rec==='START'?'今晚有比賽、手感夠，建議<b>先發</b>。':m.rec==='STREAM'?'有傷況標記，<b>開賽前再確認</b>，沒上就換人。':m.rec==='SIT'?(statusLevel(m.inj?.status)==='bad'?'今晚報銷，<b>放板凳</b>（或丟 IL 騰位置）。':'排不進先發位，<b>放板凳</b>。'):'今晚沒比賽。';
+  showModal(`<div class="row" style="gap:12px;margin-bottom:14px">${playerPhoto(m.id,52,'big')}
+      <div><div style="font-weight:800;font-size:16px">${esc(m.fullName)}</div>
+      <div class="muted" style="font-size:12px">${teamLogo(m.teamId,16)} ${teamZh(m.teamId)} · ${esc(m.pos||'')}${m.hasGame?` · ${m.ha==='主'?'主場 vs':'客場 @'} ${teamZh(m.opp)}`:''}</div></div></div>`+rows+
+    `<div class="frow" style="border-bottom:none"><div class="fl"><b>今晚預估 FP</b><small>近 14 天 FP/G × 對手係數</small></div><span class="fdelta">${m.proj!=null?f1(m.proj):'–'}</span></div>
+     <div class="row" style="margin-top:8px;gap:10px"><span class="rec ${m.rec}">${recLabel(m.rec)}</span><span style="font-size:13px">${summary}</span></div>
+     <p class="muted" style="font-size:11.5px;margin-bottom:0;margin-top:12px">數據輔助建議，沒算進上場時間限制、背靠背輪休等臨時消息，開賽前請再看一眼傷兵頁。</p>`,'先發建議 · 有憑有據');
+}
+
+// ========== SCHEDULE ==========
+async function renderSchedule(){
+  $('#schDate').textContent=fmtDay(GDATE)+' 美東';
+  const wrap=$('#scheduleList');wrap.innerHTML='<div class="loading"><span class="spin"></span>載入賽程中…</div>';
+  let games;try{games=await getScoreboard(GDATE);}catch(e){wrap.innerHTML=`<div class="err">賽程載入失敗：${errText(e)}</div>`;return;}
+  if(!games.length){wrap.innerHTML='<div class="empty"><div class="big">📅</div>今晚沒有比賽。球員們應該在打電動。</div>';return;}
+  const myTeams=new Set(ROSTER.map(r=>r.teamId));
+  wrap.innerHTML=games.map(g=>{
+    const started=g.state!=='pre'&&g.away.score!=null;
+    const left=started?`<span class="gscore">${g.away.score}-${g.home.score}</span>`:`<span class="gtime">${localTime(g.date)}</span>`;
+    const right=started?`<span class="gstate ${g.state==='in'?'live':''}">${g.completed?'結束':esc(g.detail)}</span>`:`<span class="gstate">›</span>`;
+    const star=myTeams.has(g.away.id)||myTeams.has(g.home.id)?' ⭐':'';
+    return `<button class="gamerow" onclick="openGame('${g.id}')">
+      ${left}
+      <span class="gteams"><span class="gtm">${teamLogo(g.away.id,22)}<b>${teamAbbr(g.away.id)}</b></span><span class="at">@</span><span class="gtm">${teamLogo(g.home.id,22)}<b>${teamAbbr(g.home.id)}</b></span>${star}</span>
+      ${right}</button>`;}).join('');
+  stamp();
+}
+async function openGame(id){
+  showModal('<div class="loading"><span class="spin"></span>載入比賽…</div>','比賽詳情');
+  const games=await getScoreboard(GDATE).catch(()=>[]);const g=games.find(x=>x.id===String(id));
+  let sum;try{sum=await getSummary(id);}catch(e){showModal(`<div class="err">載入失敗：${errText(e)}</div>`);return;}
+  if(g&&g.completed&&!BOX[g.id]&&storeBox(g,sum))saveBox();
+  const comp=sum.header?.competitions?.[0]||{};const cs=comp.competitors||[];
+  const H=cs.find(x=>x.homeAway==='home')||{},A=cs.find(x=>x.homeAway==='away')||{};
+  const st=comp.status?.type||{};
+  const stateLine=st.state==='post'?'⚑ 比賽結束':st.state==='in'?`🔴 進行中 ${esc(st.shortDetail||'')}`:`🕐 開賽 ${g?localDT(g.date):''}`;
+  const teamRow=(c,side)=>{const tid=teamId(c.team?.id)||teamId(c.team?.abbreviation);return `<div class="row" style="justify-content:space-between;padding:4px 0">
+     <span class="tcell">${teamLogo(tid,26)}<b>${teamZh(tid)||esc(c.team?.displayName||'')}</b> <span class="chip">${side}</span> <span class="muted" style="font-size:11px">${esc((c.record||[])[0]?.summary||(c.records||[])[0]?.summary||'')}</span></span>
+     <span style="font-size:22px;font-weight:800;font-variant-numeric:tabular-nums" class="matchscore">${c.score??'–'}</span></div>`;};
+  let html=`<div class="card" style="background:var(--panel2);margin-bottom:12px">
+     <div class="muted" style="font-size:12px;margin-bottom:6px">${stateLine}${g?.venue?` · 📍 ${esc(g.venue)}`:''}${g?.bc?` · 📺 ${esc(g.bc)}`:''}</div>
+     ${teamRow(A,'客')}${teamRow(H,'主')}</div>`;
+  const ps=parseBoxPlayers(sum);
+  if(ps.length){
+    const myIds=new Set(ROSTER.map(r=>r.id));
+    [A,H].forEach(c=>{const tid=teamId(c.team?.id)||teamId(c.team?.abbreviation);
+      const list=ps.filter(p=>p.teamId===tid).map(p=>(remember(p.id,p.name,p.teamId,p.pos),Object.assign(p,{fp:fp(p.s)}))).sort((a,b)=>b.fp-a.fp);
+      if(!list.length)return;
+      html+=`<div class="card" style="margin-bottom:12px;padding:12px"><div class="seclabel" style="margin-top:0">${teamLogo(tid,16)} ${teamZh(tid)} · 依 FP 排序</div>
+        <table class="fit" style="font-size:12px"><thead><tr><th>球員</th><th class="num">分鐘</th><th class="num">分</th><th class="num">板</th><th class="num">助</th><th class="num">抄</th><th class="num">帽</th><th class="num">失</th><th class="num">FP</th></tr></thead><tbody>${
+        list.map(p=>`<tr style="${myIds.has(p.id)?'background:var(--mine)':''}"><td><span class="linkish" onclick="openPlayerMini(${p.id})">${myIds.has(p.id)?'⭐ ':''}${esc(p.name)}</span>${p.starter?' <span class="muted" style="font-size:10px">先發</span>':''}</td><td class="num">${Math.round(p.s.min)}</td><td class="num">${p.s.pts}</td><td class="num">${p.s.reb}</td><td class="num">${p.s.ast}</td><td class="num">${p.s.stl}</td><td class="num">${p.s.blk}</td><td class="num">${p.s.to}</td><td class="num"><b>${f1(p.fp)}</b></td></tr>`).join('')}</tbody></table></div>`;});
+  }else{
+    html+='<div class="muted" style="font-size:12px;padding:6px">還沒開打，box score 會在比賽開始後出現。</div>';
+  }
+  showModal(html,'比賽詳情');
+}
+
+// 本週各隊場次
+if($('#weekBtn'))$('#weekBtn').onclick=renderWeekTable;
+async function renderWeekTable(){
+  const box=$('#weekResult');box.innerHTML='<div class="loading"><span class="spin"></span>數本週場次…</div>';
+  let W;try{W=await weekGames();}catch(e){box.innerHTML=`<div class="err">載入失敗：${errText(e)}</div>`;return;}
+  const [mon,sun]=weekRange();const days=[];for(let d=mon;d<=sun;d=addDaysStr(d,1))days.push(d);
+  const myTeams=new Set(ROSTER.map(r=>r.teamId));
+  const ids=Object.keys(TEAMS).map(Number).sort((a,b)=>((W[b]?.left||0)-(W[a]?.left||0))||((W[b]?.total||0)-(W[a]?.total||0)));
+  box.innerHTML=`<table class="fit" style="margin-top:8px"><thead><tr><th>球隊</th><th>週一→週日</th><th class="num">本週</th><th class="num">剩餘</th></tr></thead><tbody>${ids.map(id=>{const w=W[id]||{total:0,left:0,days:[]};
+    const dots=days.map(d=>{const x=w.days.find(z=>z.day===d);return `<i class="${x?(x.left?'on':'done'):''}" title="${d}"></i>`;}).join('');
+    return `<tr style="${myTeams.has(id)?'background:var(--mine)':''}"><td><span class="tcell">${teamLogo(id,18)}<b>${teamAbbr(id)}</b> <span class="muted" style="font-size:11px">${teamZh(id)}</span>${myTeams.has(id)?' ⭐':''}</span></td><td><span class="wkdots">${dots}</span></td><td class="num"><b>${w.total}</b>${w.total>=4?' 🔥':''}</td><td class="num">${w.left}</td></tr>`;}).join('')}</tbody></table>
+    <div class="muted" style="font-size:11.5px;padding:8px 2px">${mon} ～ ${sun}（美東）。● 還沒打、灰點＝已打完。🔥 4 場週＝串流首選，⭐＝你有球員在那隊。</div>`;
+}
+// 戰績
+let STANDINGS=null;
+async function loadStandings(){
+  const box=$('#standResult');box.innerHTML='<div class="loading"><span class="spin"></span>載入戰績…</div>';
+  try{if(!STANDINGS)STANDINGS=await J('https://site.api.espn.com/apis/v2/sports/basketball/nba/standings');}
+  catch(e){box.innerHTML=`<div class="err">載入失敗：${errText(e)}</div>`;return;}
+  const confs=STANDINGS.children||[];
+  if(!confs.length){box.innerHTML='<div class="muted" style="padding:10px">目前沒有戰績資料（新球季還沒開打）。</div>';return;}
+  const myTeams=new Set(ROSTER.map(r=>r.teamId));
+  const val=(e,n)=>{const s=(e.stats||[]).find(x=>x.name===n||x.type===n);return s?(s.displayValue??s.value):'';};
+  box.innerHTML='<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin-top:10px">'+confs.map(c=>{
+    const ents=(c.standings?.entries||[]).slice().sort((a,b)=>(+val(b,'winPercent')||0)-(+val(a,'winPercent')||0));
+    return `<div class="card" style="padding:12px"><div class="seclabel" style="margin-top:0">${/east/i.test(c.name||'')?'東區':/west/i.test(c.name||'')?'西區':esc(c.name)}</div>
+      <table class="fit" style="font-size:12.5px"><thead><tr><th></th><th>隊</th><th class="num">W-L</th><th class="num">勝差</th><th class="num">連</th></tr></thead><tbody>${ents.map((e,i)=>{const tid=teamId(e.team?.id)||teamId(e.team?.abbreviation);const sk=String(val(e,'streak'));
+        return `<tr style="${myTeams.has(tid)?'background:var(--mine)':''}${i===5||i===9?';border-bottom:2px dashed var(--line)':''}"><td class="muted" style="width:16px">${i+1}</td><td><span class="tcell">${teamLogo(tid,18)}<b>${teamAbbr(tid)}</b></span></td><td class="num">${val(e,'wins')}-${val(e,'losses')}</td><td class="num muted">${val(e,'gamesBehind')||'—'}</td><td class="num" style="color:${/^W/.test(sk)?'var(--good)':'var(--bad)'}">${esc(sk)}</td></tr>`;}).join('')}</tbody></table></div>`;}).join('')+'</div><div class="muted" style="font-size:11.5px;padding:6px 2px">虛線：第 6 名（直接晉級）與第 10 名（附加賽）分界。⭐ 你陣容所屬球隊以底色標示。</div>';
+}
+if($('#standBtn'))$('#standBtn').onclick=loadStandings;
+
+// ========== 球員：逐場 game log ==========
+let GLOG={};
+function parseGameLog(d){const res={reg:[],pre:[],post:[],label:''};if(!d)return res;
+  const labels=(d.labels&&d.labels.length?d.labels:(d.names||[]));const meta=d.events||{};const seen=new Set();
+  (d.seasonTypes||[]).forEach(st=>{const nm=st.displayName||'';const b=/pre/i.test(nm)?'pre':/post|playoff|play-in/i.test(nm)?'post':'reg';if(b==='reg'&&!res.label)res.label=nm;
+    (st.categories||[]).forEach(c=>{(c.events||[]).forEach(ev=>{if(!ev.eventId||seen.has(ev.eventId))return;seen.add(ev.eventId);const m=meta[ev.eventId]||{};
+      const s=parseLine(labels,ev.stats||[]);
+      res[b].push({id:ev.eventId,date:m.gameDate||'',opp:teamId(m.opponent?.id)||teamId(m.opponent?.abbreviation),at:m.atVs||'',res:m.gameResult||'',score:m.score||'',s,fp:fp(s)});});});});
+  ['reg','pre','post'].forEach(k=>res[k].sort((a,b)=>b.date.localeCompare(a.date)));return res;}
+async function getGameLog(id){
+  if(GLOG[id])return GLOG[id];
+  const yr=espnSeason(GDATE);
+  const cur=parseGameLog(await J(`${WEB}/athletes/${id}/gamelog`).catch(()=>null));
+  let out=Object.assign(cur,{season:yr,prev:false});
+  if(!cur.reg.length){const prev=parseGameLog(await J(`${WEB}/athletes/${id}/gamelog?season=${yr-1}`).catch(()=>null));
+    if(prev.reg.length)out=Object.assign(prev,{season:yr-1,prev:true,preNow:cur.pre});}
+  // 重算 FP（計分規則可能改過）
+  GLOG[id]=out;return out;}
+function avgOf(games){const n=games.length;const t={};STAT_ORDER.forEach(k=>t[k]=0);let f=0;
+  games.forEach(g=>{STAT_ORDER.forEach(k=>t[k]+=g.s[k]||0);f+=fp(g.s);});
+  const a={gp:n,fpg:n?f/n:NaN};STAT_ORDER.forEach(k=>a[k]=n?t[k]/n:NaN);a.fgp=t.fga?t.fgm/t.fga:NaN;a.ftp=t.fta?t.ftm/t.fta:NaN;a.tpp=t.tpa?t.tpm/t.tpa:NaN;return a;}
+function sparkFP(games,W=280){const chron=games.slice().reverse();if(!chron.length)return '';
+  const vals=chron.map(g=>fp(g.s));const mx=Math.max(...vals,1);const bw=Math.max(8,Math.floor(W/chron.length)-3);
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  return `<svg viewBox="0 0 ${chron.length*(bw+3)} 50" style="width:100%;max-width:${chron.length*(bw+3)}px;height:48px;margin:2px 0 4px">`+
+    chron.map((g,i)=>{const v=vals[i];const bh=Math.max(3,v/mx*40);const col=v>=avg*1.2?'#141414':v<=avg*0.8?'var(--bad)':'#d9a300';
+      return `<rect x="${i*(bw+3)}" y="${44-bh}" width="${bw}" height="${bh}" rx="2" fill="${col}"><title>${(g.date||'').slice(5,10)} ${f1(v)} FP</title></rect>`;}).join('')+
+    `<line x1="0" x2="${chron.length*(bw+3)}" y1="${44-avg/mx*40}" y2="${44-avg/mx*40}" stroke="var(--muted)" stroke-dasharray="3 3"/></svg>`;}
+function logTable(games,n=10){const g=games.slice(0,n);if(!g.length)return '<div class="muted" style="font-size:12px;padding:6px">沒有出賽資料。</div>';
+  return `<table class="fit" style="font-size:12px"><thead><tr><th>日期</th><th>對手</th><th class="num">分鐘</th><th class="num">分</th><th class="num">板</th><th class="num">助</th><th class="num">抄</th><th class="num">帽</th><th class="num">失</th><th class="num">FP</th></tr></thead><tbody>${
+    g.map(x=>{const v=fp(x.s);return `<tr><td style="white-space:nowrap">${(x.date||'').slice(5,10).replace('-','/')}</td><td><span class="tcell">${x.at==='@'?'@':'vs'}${teamLogo(x.opp,14)}${teamAbbr(x.opp)}</span> <span class="muted" style="font-size:10.5px">${esc(x.res)}</span></td><td class="num">${Math.round(x.s.min)}</td><td class="num">${x.s.pts}</td><td class="num">${x.s.reb}</td><td class="num">${x.s.ast}</td><td class="num">${x.s.stl}</td><td class="num">${x.s.blk}</td><td class="num">${x.s.to}</td><td class="num"><b>${f1(v)}</b></td></tr>`;}).join('')}</tbody></table>`;}
+function logGames(L){return L.reg.length?L.reg:L.pre;}
+function logLabel(L){if(L.reg.length)return `${seasonLabel(L.season)} 例行賽${L.prev?'（新球季還沒開打，先看上季）':''}`;return L.pre.length?`${seasonLabel(L.season)} 季前賽`:'';}
+
+async function openPlayerMini(id){
+  const info=PNAME[id]||{};
+  showModal(`<div class="loading"><span class="spin"></span>載入 ${esc(info.fullName||'球員')}…</div>`,'球員近況');
+  let L;try{L=await getGameLog(id);}catch(e){showModal('<div class="err">載入失敗：'+errText(e)+'</div>');return;}
+  const games=logGames(L);const a=avgOf(games);const r10=avgOf(games.slice(0,10));
+  const ij=(await injMap())[id];
+  const inR=ROSTER.some(r=>r.id===id),inW=WATCH.some(w=>w.id===id);
+  const boxes=[['FP/G',f1(a.fpg)],['近10場',f1(r10.fpg)],['得分',f1(a.pts)],['籃板',f1(a.reb)],['助攻',f1(a.ast)],['抄+帽',f1(a.stl+a.blk)]]
+    .map(([k,v])=>`<div class="stat"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+  showModal(`<div class="row" style="gap:12px;margin-bottom:12px">${playerPhoto(id,52,'big')}
+      <div><div style="font-weight:800;font-size:16px">${esc(info.fullName||'')} ${ij?statusChip(ij.status):''}</div>
+      <div class="muted" style="font-size:12px">${teamLogo(info.teamId,15)} ${teamZh(info.teamId)} · ${esc(info.pos||'')} · ${esc(logLabel(L))}</div></div></div>
+    ${ij?`<div class="err" style="margin-bottom:12px;background:var(--warn-bg);border-color:var(--warn);color:var(--text)">🩹 ${esc(statusZh(ij.status))}${ij.what?` · ${esc(translateReason(ij.what))}`:''}${ij.ret?` · 預計回歸 ${esc(ij.ret)}`:''}${ij.short?`<br><span class="muted">${esc(ij.short)}</span>`:''}</div>`:''}
+    <div class="statbox" style="margin-bottom:12px">${boxes}</div>
+    <div class="seclabel" style="margin-top:0">近 ${Math.min(games.length,15)} 場 FP（黑＝爆發、紅＝低於平均 20%）</div>${sparkFP(games.slice(0,15))}
+    <div class="plist" style="margin-top:6px">${logTable(games,10)}</div>
+    <div class="row" style="gap:8px;margin-top:12px;flex-wrap:wrap"><a class="btn ghost" style="text-decoration:none" href="https://www.espn.com/nba/player/_/id/${id}" target="_blank" rel="noopener">ESPN 頁面</a>
+      ${inR?'<span class="chip">已在隊上</span>':`<button class="btn ghost" onclick="addRoster(PNAME[${id}]&&{id:${id},fullName:PNAME[${id}].fullName,pos:PNAME[${id}].pos,teamId:PNAME[${id}].teamId});this.textContent='✓ 已加入'">＋ 加入陣容</button>`}
+      ${inW?'':`<button class="btn ghost" onclick="toggleWatch({id:${id},fullName:PNAME[${id}].fullName,pos:PNAME[${id}].pos,teamId:PNAME[${id}].teamId});this.textContent='★ 已收藏'">☆ 收藏</button>`}
+      <button class="btn" onclick="openFullPlayer(${id})">完整數據 ›</button></div>`,'球員近況');
+}
+function openFullPlayer(id){const i=PNAME[id]||{};STATS_MAIN={id,fullName:i.fullName||'',pos:i.pos||'',teamId:i.teamId};STATS_CMP=null;closeModal();goTo('stats');const c=$('#cmpSearch');if(c)c.disabled=false;}
+
+// ---------- 球員顯微鏡 ----------
+let STATS_MAIN=null,STATS_CMP=null,STATS_RANGE='season';
+attachSearch('#statsSearch','#statsResults',p=>{STATS_MAIN=p;STATS_CMP=null;$('#cmpSearch').disabled=false;$('#cmpSearch').value='';renderStats();});
+attachSearch('#cmpSearch','#cmpResults',p=>{STATS_CMP=p;renderStats();});
+$$('#statsRange button').forEach(b=>b.onclick=()=>{$$('#statsRange button').forEach(x=>x.classList.remove('on'));b.classList.add('on');STATS_RANGE=b.dataset.r;if(STATS_MAIN)renderStats();});
+function rangeGames(L){const g=logGames(L);return STATS_RANGE==='season'?g:g.slice(0,+STATS_RANGE);}
+function rangeLabel(L){return STATS_RANGE==='season'?logLabel(L):`近 ${STATS_RANGE} 場`;}
+const CMP_METRICS=[{k:'fpg',l:'FP/G',hi:1,d:1},{k:'pts',l:'得分',hi:1,d:1},{k:'reb',l:'籃板',hi:1,d:1},{k:'ast',l:'助攻',hi:1,d:1},{k:'stl',l:'抄截',hi:1,d:1},{k:'blk',l:'火鍋',hi:1,d:1},{k:'tpm',l:'三分',hi:1,d:1},{k:'to',l:'失誤',hi:0,d:1},{k:'min',l:'分鐘',hi:1,d:1},{k:'fgp',l:'FG%',hi:1,d:3},{k:'ftp',l:'FT%',hi:1,d:3}];
+function barChart(rows,aName,bName){
+  const rowH=42,top=8,W=460,labelX=8,barX=110,barMax=W-barX-58;const H=top+rows.length*rowH+6;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" font-family="inherit">`;
+  rows.forEach((r,i)=>{const y=top+i*rowH;const a=isNaN(r.a)?0:r.a,b=isNaN(r.b)?0:r.b;const mx=Math.max(a,b)||1;
+    const aw=Math.max(2,a/mx*barMax),bw=Math.max(2,b/mx*barMax);const betterA=r.hi?a>b:a<b,betterB=r.hi?b>a:b<a;
+    svg+=`<text x="${labelX}" y="${y+rowH/2+1}" fill="var(--muted)" font-size="12">${r.l}</text>`;
+    svg+=`<rect x="${barX}" y="${y+3}" width="${aw}" height="13" rx="3" fill="#141414"/><text x="${barX+aw+4}" y="${y+13}" fill="${betterA?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterA?'700':'400'}">${fmt(a,r.d)}</text>`;
+    svg+=`<rect x="${barX}" y="${y+20}" width="${bw}" height="13" rx="3" fill="#d9a300"/><text x="${barX+bw+4}" y="${y+30}" fill="${betterB?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterB?'700':'400'}">${fmt(b,r.d)}</text>`;});
+  return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#d9a300"></span> ${esc(bName)}</span></div>`+svg+'</svg>';}
+function radarChart(rows,aName,bName){
+  const n=rows.length,cx=150,cy=145,R=98,W=300,H=285;
+  const pt=(i,r)=>{const ang=(-90+i*360/n)*Math.PI/180;return [cx+Math.cos(ang)*R*r,cy+Math.sin(ang)*R*r];};
+  let grid='';[0.25,0.5,0.75,1].forEach(g=>{grid+=`<polygon points="${rows.map((_,i)=>pt(i,g).join(',')).join(' ')}" fill="none" stroke="var(--border)" stroke-width="1"/>`;});
+  let axes='',labels='';
+  rows.forEach((r,i)=>{const[e1,e2]=pt(i,1);axes+=`<line x1="${cx}" y1="${cy}" x2="${e1}" y2="${e2}" stroke="var(--border)"/>`;
+    const[lx,ly]=pt(i,1.16);labels+=`<text x="${lx}" y="${ly}" font-size="10" fill="var(--muted)" text-anchor="middle" dominant-baseline="middle">${r.l}</text>`;});
+  const nm=r=>{const a=isNaN(r.a)?0:r.a,b=isNaN(r.b)?0:r.b,mx=Math.max(a,b)||1,mn=Math.min(a,b);let ra,rb;if(r.hi){ra=a/mx;rb=b/mx;}else{ra=a?mn/a:1;rb=b?mn/b:1;}return [Math.max(.1,ra),Math.max(.1,rb)];};
+  const pA=rows.map((r,i)=>pt(i,nm(r)[0]).join(',')).join(' '),pB=rows.map((r,i)=>pt(i,nm(r)[1]).join(',')).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:330px;height:auto;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">${grid}${axes}${labels}
+    <polygon points="${pB}" fill="#d9a300" fill-opacity="0.15" stroke="#d9a300" stroke-width="2"/><polygon points="${pA}" fill="#141414" fill-opacity="0.16" stroke="#141414" stroke-width="2"/></svg>
+  <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-top:2px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#d9a300"></span> ${esc(bName)}</span></div>`;}
+async function renderStats(){
+  const panel=$('#statsPanel');if(!STATS_MAIN)return;
+  panel.innerHTML='<div class="loading"><span class="spin"></span>載入逐場數據…</div>';
+  try{
+    remember(STATS_MAIN.id,STATS_MAIN.fullName,STATS_MAIN.teamId,STATS_MAIN.pos);
+    const L=await getGameLog(STATS_MAIN.id);const G=rangeGames(L);const a=avgOf(G);
+    const ij=(await injMap())[STATS_MAIN.id];
+    const inRoster=ROSTER.some(r=>r.id===STATS_MAIN.id);
+    const A14=aggFromCache(14);const rk=leagueRanks(A14.P)[STATS_MAIN.id];
+    const grid=[['FP/G',f1(a.fpg)],['出賽',a.gp||0],['分鐘',f1(a.min)],['得分',f1(a.pts)],['籃板',f1(a.reb)],['助攻',f1(a.ast)],['抄截',f1(a.stl)],['火鍋',f1(a.blk)],['三分',f1(a.tpm)],['失誤',f1(a.to)],['FG%',fmt(a.fgp)],['FT%',fmt(a.ftp)]];
+    let html=`<div class="card">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div class="row" style="gap:14px">${playerPhoto(STATS_MAIN.id,72,'big')}
+          <div><h2 class="sec" style="margin:0">${esc(STATS_MAIN.fullName)} ${teamLogo(STATS_MAIN.teamId,24)} ${ij?statusChip(ij.status):''}</h2>
+          <span class="muted">${esc(STATS_MAIN.pos||'')} · ${teamZh(STATS_MAIN.teamId)||'FA'} · ${esc(rangeLabel(L))}${rk?` · 近 14 天 FP/G 聯盟第 <b style="color:var(--text)">${rk}</b>${rk>faCut()?'（10 隊排名外）':''}`:''}</span></div></div>
+        <div class="row"><a class="btn ghost" style="text-decoration:none" href="https://www.espn.com/nba/player/_/id/${STATS_MAIN.id}" target="_blank" rel="noopener">ESPN</a>
+          <button class="btn" id="addFromStats">${inRoster?'✓ 已在隊上':'＋ 加入我的球隊'}</button></div></div>
+      <div class="statbox" style="margin-top:14px">${grid.map(([k,v])=>`<div class="stat"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('')}</div>
+      ${!G.length?'<p class="muted" style="margin-bottom:0">這個範圍沒有出賽紀錄。</p>':''}</div>`;
+    const lg=logGames(L);
+    if(lg.length){const r5=avgOf(lg.slice(0,5)),s=avgOf(lg);
+      const cells=[['FP/G','fpg',1],['得分','pts',1],['籃板','reb',1],['助攻','ast',1],['分鐘','min',1],['失誤','to',0]].map(([l,k,hi])=>{const rv=r5[k],sv=s[k];if(isNaN(rv)||isNaN(sv))return '';
+        const up=rv>sv+0.05,dn=rv<sv-0.05;const better=up?hi:dn?!hi:null;const cls=better==null?'muted':better?'tag-good':'tag-bad';
+        return `<div class="stat"><div class="v ${cls}" style="font-size:18px">${f1(rv)} <span style="font-size:12px">${up?'▲':dn?'▼':'—'}</span></div><div class="k">${l}　整段 ${f1(sv)}</div></div>`;}).join('');
+      html+=`<div class="card" style="margin-top:14px"><h2 class="sec" style="margin-top:0">近 5 場 vs 整段 <span class="pill">熱/冷判斷</span></h2><div class="statbox">${cells}</div>
+        <div class="seclabel">近 ${Math.min(lg.length,15)} 場 FP 走勢</div>${sparkFP(lg.slice(0,15),420)}
+        <div class="seclabel">逐場</div>${logTable(lg,10)}
+        <p class="muted" style="font-size:11.5px;margin-bottom:0">綠▲ 手感熱、紅▼ 手感冷；分鐘數上升通常是角色變重的第一個訊號。</p></div>`;}
+    if(STATS_CMP){remember(STATS_CMP.id,STATS_CMP.fullName,STATS_CMP.teamId,STATS_CMP.pos);
+      const LB=await getGameLog(STATS_CMP.id);const b=avgOf(rangeGames(LB));
+      const rows=CMP_METRICS.map(m=>({l:m.l,a:a[m.k],b:b[m.k],hi:m.hi,d:m.d}));
+      const tbl=rows.map(r=>{const ab=!isNaN(r.a)&&!isNaN(r.b)&&(r.hi?r.a>r.b:r.a<r.b),bb=!isNaN(r.a)&&!isNaN(r.b)&&(r.hi?r.b>r.a:r.b<r.a);
+        return `<tr><td class="num ${ab?'tag-good':''}" style="${ab?'font-weight:800':''}">${fmt(r.a,r.d)}</td><td style="text-align:center;color:var(--muted);font-size:12px">${r.l}</td><td class="num ${bb?'tag-good':''}" style="${bb?'font-weight:800':''}">${fmt(r.b,r.d)}</td></tr>`;}).join('');
+      html+=`<div class="card" style="margin-top:14px"><h2 class="sec" style="margin-top:0">正面單挑 <span class="pill">${esc(STATS_RANGE==='season'?'各自整季':'近 '+STATS_RANGE+' 場')}</span></h2>
+        <div class="row" style="justify-content:space-around;gap:8px;margin-bottom:10px"><div style="text-align:center">${playerPhoto(STATS_MAIN.id,44,'big')}<div style="font-weight:700;font-size:13px">${esc(STATS_MAIN.fullName)}</div></div><div class="muted">vs</div><div style="text-align:center">${playerPhoto(STATS_CMP.id,44,'big')}<div style="font-weight:700;font-size:13px">${esc(STATS_CMP.fullName)}</div></div></div>
+        <div class="seclabel" style="margin-top:0">能力雷達</div>${radarChart(rows.slice(1,8),STATS_MAIN.fullName,STATS_CMP.fullName)}
+        <div class="seclabel">逐項長條</div>${barChart(rows.slice(0,7),STATS_MAIN.fullName,STATS_CMP.fullName)}
+        <table class="fit" style="margin-top:6px"><thead><tr><th class="num">${esc(STATS_MAIN.fullName)}</th><th style="text-align:center">項目</th><th class="num">${esc(STATS_CMP.fullName)}</th></tr></thead><tbody>${tbl}</tbody></table>
+        <p class="muted" style="font-size:11.5px;margin-bottom:0">綠色＝該項較佳（失誤越少越好）。</p></div>`;}
+    panel.innerHTML=html;
+    if(!inRoster){const btn=$('#addFromStats');if(btn)btn.onclick=()=>{addRoster(STATS_MAIN);btn.textContent='✓ 已加入';};}
+  }catch(e){panel.innerHTML=`<div class="err">無法載入數據。${errText(e)}</div>`;}
+}
+
+// ========== RADAR (市場) ==========
+let rDays=7,rPos='ALL',rSort='fpg',rHideMine=false,rFA=false;
+const R_SORTS=[['fpg','FP/G'],['stream','本週剩餘價值'],['fp','總 FP'],['pts','得分'],['reb','籃板'],['ast','助攻'],['stocks','抄截+火鍋'],['tpm','三分'],['min','上場分鐘']];
+$('#radarSort').innerHTML=R_SORTS.map(([k,l])=>`<option value="${k}">${l}</option>`).join('');
+$$('#radarRange button').forEach(b=>b.onclick=()=>{$$('#radarRange button').forEach(x=>x.classList.remove('on'));b.classList.add('on');rDays=+b.dataset.d;renderRadar();});
+$$('#radarPos button').forEach(b=>b.onclick=()=>{$$('#radarPos button').forEach(x=>x.classList.remove('on'));b.classList.add('on');rPos=b.dataset.p;renderRadar();});
+$('#radarSort').onchange=e=>{rSort=e.target.value;renderRadar();};
+$('#radarHideMine').onchange=e=>{rHideMine=e.target.checked;renderRadar();};
+$('#radarFA').onchange=e=>{rFA=e.target.checked;renderRadar();};
+$('#radarRefresh').onclick=()=>{BOXP={};WEEKP={};SB_CACHE={};renderRadar();toast('已重新整理市場');};
+function posMatch(pos,want){if(want==='ALL')return true;return String(pos||'').toUpperCase().includes(want);}
+async function renderRadar(){
+  renderWatch();
+  const box=$('#radarTable');box.innerHTML=loadingHTML(`掃描近 ${rDays} 天 box score…`);
+  let games;try{games=await loadBoxWindow(rDays);}catch(e){box.innerHTML=`<div class="err">市場載入失敗：${errText(e)}</div>`;return;}
+  let W={};try{W=await weekGames();}catch(e){}
+  const A=aggregate(games).P;const minGp=rDays>=14?3:2;const ranks=leagueRanks(A,minGp);const cut=faCut();
+  const idxPos={};(PLAYER_INDEX||load('pfbk_index',null)?.p||[]).forEach(p=>idxPos[p.id]=p.pos);
+  const mine=new Set(ROSTER.map(r=>r.id));
+  let list=Object.values(A).filter(p=>p.gp>=minGp).map(p=>Object.assign(p,{posX:idxPos[p.id]||p.pos,left:W[p.teamId]?.left??null,rank:ranks[p.id]}));
+  list=list.filter(p=>posMatch(p.posX,rPos));
+  if(rHideMine)list=list.filter(p=>!mine.has(p.id));
+  if(rFA)list=list.filter(p=>p.rank>cut);
+  const val=p=>rSort==='fpg'?p.fpg:rSort==='fp'?p.fp:rSort==='stream'?p.fpg*(p.left||0):rSort==='stocks'?p.avg.stl+p.avg.blk:p.avg[rSort]||0;
+  list.sort((a,b)=>val(b)-val(a));const total=list.length;list=list.slice(0,60);
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">📡</div>${games.length?'翻遍市場也沒找到。放寬守位、天數，或關掉篩選再試一次。':'這段時間沒有打完的比賽（季前賽空檔或休賽期）。換長一點的天數，或把日期調回球季中。'}</div>`;stamp();return;}
+  const sortL=(R_SORTS.find(x=>x[0]===rSort)||[])[1];
+  const hlv=p=>rSort==='stream'?f1(val(p)):rSort==='fpg'?f1(p.fpg):rSort==='fp'?Math.round(p.fp):f1(val(p));
+  const rows=list.map(p=>{const w=WATCH.some(x=>x.id===p.id);const inR=mine.has(p.id);const fa=p.rank>cut;
+    return `<tr><td><span class="tcell">${playerPhoto(p.id,30)}<b class="linkish" onclick="openPlayerMini(${p.id})">${esc(p.name)}</b>${inR?' <span class="chip">我隊</span>':fa?' <span class="chip fa">可能 FA</span>':''}</span><span class="hl"><span class="m"><span class="ml">FP/G</span>${f1(p.fpg)}</span>${rSort!=='fpg'?`<span class="m" style="color:var(--text)"><span class="ml">${sortL}</span>${hlv(p)}</span>`:''}</span></td>
+      <td class="det" data-l="隊/守位"><span class="tcell">${teamLogo(p.teamId,18)}<span class="muted">${teamAbbr(p.teamId)} · ${esc(p.posX||'')}</span></span></td>
+      <td class="num det" data-l="場">${p.gp}</td><td class="num det" data-l="分鐘">${f1(p.avg.min)}</td>
+      <td class="num det" data-l="FP/G"${rSort==='fpg'?' style="font-weight:800"':''}>${f1(p.fpg)}</td>
+      <td class="num det" data-l="分">${f1(p.avg.pts)}</td><td class="num det" data-l="板">${f1(p.avg.reb)}</td><td class="num det" data-l="助">${f1(p.avg.ast)}</td>
+      <td class="num det" data-l="抄+帽">${f1(p.avg.stl+p.avg.blk)}</td><td class="num det" data-l="三分">${f1(p.avg.tpm)}</td><td class="num det" data-l="失誤">${f1(p.avg.to)}</td>
+      <td class="num det" data-l="本週剩">${p.left??'–'}${p.left>=4?' 🔥':''}</td>
+      <td class="num det" data-l="名次">${p.rank||'–'}</td>
+      <td class="det" data-l=""><button class="btn ghost wbtn" data-id="${p.id}" style="padding:5px 9px">${w?'★ 已收藏':'☆ 收藏'}</button></td></tr>`;}).join('');
+  box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>隊</th><th class="num">場</th><th class="num">分鐘</th><th class="num">FP/G</th><th class="num">分</th><th class="num">板</th><th class="num">助</th><th class="num">抄+帽</th><th class="num">三分</th><th class="num">失誤</th><th class="num">本週剩</th><th class="num">名次</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="muted" style="font-size:11.5px;padding:8px 12px">近 ${rDays} 天打完 ${games.length} 場 · 顯示 ${list.length} 位（符合門檻共 ${total} 位，至少 ${minGp} 場）· 依${sortL}排序 · 「名次」為 FP/G 聯盟排名，${cut} 名外標「可能 FA」</div>`;
+  box.querySelectorAll('.wbtn').forEach(b=>b.onclick=()=>{const id=+b.dataset.id;const i=PNAME[id]||{};const added=toggleWatch({id,fullName:i.fullName,teamId:i.teamId,pos:i.pos});b.textContent=added?'★ 已收藏':'☆ 收藏';renderWatch();});
+  stamp();
+}
+function gotoRadar(sortKey){goTo('radar');if(sortKey){rSort=sortKey;$('#radarSort').value=sortKey;renderRadar();}}
+
+// ========== 傷兵 ==========
+let injFilter='all',injMine=false,injQuery='';
+$$('#injFilter button').forEach(b=>b.onclick=()=>{$$('#injFilter button').forEach(x=>x.classList.remove('on'));b.classList.add('on');injFilter=b.dataset.f;drawInj();});
+$('#injMine').onchange=e=>{injMine=e.target.checked;drawInj();};
+$('#injRefresh').onclick=()=>{INJ=null;renderInj();toast('已重新整理傷兵報告');};
+{let t;$('#injSearch').addEventListener('input',e=>{clearTimeout(t);t=setTimeout(()=>{injQuery=e.target.value.trim();drawInj();},150);});}
+async function renderInj(){
+  const box=$('#newsTable');if(!INJ)box.innerHTML='<div class="loading"><span class="spin"></span>翻傷兵報告中…</div>';
+  try{await getInjuries();}catch(e){box.innerHTML=`<div class="err">傷兵報告載入失敗：${errText(e)}</div>`;return;}
+  drawInj();stamp();
+}
+function drawInj(){
+  const box=$('#newsTable');if(!INJ)return;
+  const myIds=new Set(ROSTER.map(r=>r.id));
+  let list=INJ.slice();
+  if(injFilter==='out')list=list.filter(x=>statusLevel(x.status)==='bad');
+  if(injFilter==='dtd')list=list.filter(x=>/day/i.test(x.status));
+  if(injFilter==='q')list=list.filter(x=>/question|doubt|game time|probable/i.test(x.status));
+  if(injMine)list=list.filter(x=>myIds.has(x.id));
+  if(injQuery)list=list.filter(x=>fuzzyScore(injQuery,x.name)!=null);
+  list.sort((a,b)=>(myIds.has(b.id)?1:0)-(myIds.has(a.id)?1:0)||String(b.date).localeCompare(String(a.date)));
+  $('#injCount').textContent=`共 ${INJ.length} 人 · 你的 ${INJ.filter(x=>myIds.has(x.id)).length} 人`;
+  if(!list.length){box.innerHTML=`<div class="empty"><div class="big">🩹</div>${injMine?'你的球員目前全員健康，讚。':'沒有符合條件的紀錄。'}${injQuery?`找不到「${esc(injQuery)}」。`:''}</div>`;return;}
+  box.innerHTML=`<table class="rtable"><thead><tr><th>球員</th><th>球隊</th><th>狀態</th><th>傷況</th><th>預計回歸</th><th>最新消息</th></tr></thead><tbody>`+list.map(x=>{
+    const mine=myIds.has(x.id);const lv=statusLevel(x.status);
+    const what=x.what?`${translateReason(x.what)}`:'';
+    return `<tr style="${mine?'background:var(--mine)':''}">
+      <td><span class="tcell">${playerPhoto(x.id,26)}<span class="${x.id?'linkish':''}" ${x.id?`onclick="openPlayerMini(${x.id})"`:''}>${mine?'<b>':''}${esc(x.name)}${mine?' ⭐</b>':''}</span> <span class="muted" style="font-size:11px">${esc(x.pos)}</span></span><span class="hl" style="color:${lv==='bad'?'var(--bad)':'var(--warn)'}"><span class="m" style="min-width:auto">${esc(statusZh(x.status))}</span></span></td>
+      <td class="det" data-l="球隊"><span class="tcell">${teamLogo(x.teamId,18)}<span class="muted">${teamZh(x.teamId)}</span></span></td>
+      <td class="det" data-l="狀態">${statusChip(x.status)}</td>
+      <td class="det" data-l="傷況">${esc(what)||'<span class="muted">–</span>'}${x.what?`<br><span class="muted" style="font-size:11px">${esc(x.what)}</span>`:''}</td>
+      <td class="det" data-l="預計回歸" style="white-space:nowrap">${x.ret?`<span class="tag-warn">⏱ ${esc(x.ret)}</span>`:'<span class="muted">未定</span>'}</td>
+      <td class="long det" data-l="最新消息" style="font-size:12.5px;text-align:left">${esc(x.short||x.long||'')}${x.date?`<br><span class="muted" style="font-size:11px">更新 ${esc(String(x.date).slice(0,10))}</span>`:''}${x.name?`<br><a href="https://www.google.com/search?q=${encodeURIComponent(x.name+' injury update')}" target="_blank" rel="noopener">📰 查最新消息</a>`:''}</td>
+    </tr>`;}).join('')+'</tbody></table>';
+}
+
+// ========== ROSTER ==========
+attachSearch('#rosterSearch','#rosterResults',p=>addRoster(p));
+function addRoster(p){if(!p||!p.id)return;
+  if(ROSTER.some(r=>r.id===p.id)){toast(p.fullName+' 已在隊上');return;}
+  ROSTER.push({id:p.id,fullName:p.fullName,pos:p.pos||'',teamId:p.teamId});remember(p.id,p.fullName,p.teamId,p.pos);
+  save('pfbk_roster',ROSTER);renderRosterBar();toast('✓ 已加入 '+p.fullName);}
+function removeRoster(id){const r=ROSTER.find(x=>x.id===id);ROSTER=ROSTER.filter(r=>r.id!==id);save('pfbk_roster',ROSTER);renderRosterBar();if(r)toast('已移除 '+r.fullName);}
+async function renderRosterBar(){
+  const bar=$('#rosterBar');const cnt=$('#rosterCount');if(cnt)cnt.textContent=ROSTER.length;if(!bar)return;
+  if(!ROSTER.length){bar.innerHTML='<div class="empty" style="padding:22px"><div class="big">⭐</div>休息室還沒人。用上面的搜尋把你的 Yahoo 陣容一個個叫進來。</div>';return;}
+  const inj=INJ?Object.fromEntries(INJ.filter(x=>x.id).map(x=>[x.id,x])):{};
+  const grp=r=>{const p=String(r.pos||'').toUpperCase();return p.includes('C')&&!p.includes('G')?'C':p.includes('G')?'G':'F';};
+  const row=r=>`<div class="prow">${playerPhoto(r.id,34)}${teamLogo(r.teamId,18)}
+    <div style="flex:1;min-width:0"><div class="nm"><span class="linkish" onclick="openPlayerMini(${r.id})">${esc(r.fullName)}</span> ${inj[r.id]?statusChip(inj[r.id].status):''}</div><div class="meta">${teamZh(r.teamId)||'FA'}</div></div>
+    <span class="posbadge">${esc(r.pos||'?')}</span>
+    <div class="rt"><button class="rm" title="移除" onclick="removeRoster(${r.id})">×</button></div></div>`;
+  let html='<div class="plist">';
+  [['G','後衛'],['F','前鋒'],['C','中鋒']].forEach(([k,l])=>{const list=ROSTER.filter(r=>grp(r)===k);if(list.length)html+=`<div class="seclabel">${l} ${list.length}</div>`+list.map(row).join('');});
+  bar.innerHTML=html+'</div>';
+  if(!INJ)getInjuries().then(()=>{if(INJ&&INJ.length)renderRosterBar();}).catch(()=>{});
+}
+// 收藏
+function toggleWatch(p){const i=WATCH.findIndex(w=>w.id===p.id);
+  if(i>=0){WATCH.splice(i,1);save('pfbk_watch',WATCH);toast('已從收藏移除 '+(p.fullName||''));return false;}
+  WATCH.push({id:p.id,fullName:p.fullName||'',teamId:p.teamId,pos:p.pos||''});save('pfbk_watch',WATCH);toast('★ 已收藏 '+(p.fullName||''));return true;}
+function removeWatch(id){const w=WATCH.find(x=>x.id===id);WATCH=WATCH.filter(x=>x.id!==id);save('pfbk_watch',WATCH);renderWatch();
+  const b=document.querySelector('.wbtn[data-id="'+id+'"]');if(b)b.textContent='☆ 收藏';if(w)toast('已移除 '+w.fullName);}
+function promoteWatch(id){const w=WATCH.find(x=>x.id===id);if(!w)return;addRoster(w);renderWatch();}
+function renderWatch(){
+  const bar=$('#watchBar');if(!bar)return;const cnt=$('#watchCount');if(cnt)cnt.textContent=WATCH.length;
+  if(!WATCH.length){bar.innerHTML='<div class="empty" style="padding:20px"><div class="big">👁</div>還沒盯上任何人。到「市場」頁用 ☆ 收藏，想偷偷觀察的球員會出現在這裡。</div>';return;}
+  bar.innerHTML='<div class="plist">'+WATCH.map(w=>{const inR=ROSTER.some(r=>r.id===w.id);
+    return `<div class="prow">${playerPhoto(w.id,34)}${teamLogo(w.teamId,18)}
+      <div style="flex:1;min-width:0"><div class="nm"><span class="linkish" onclick="openPlayerMini(${w.id})">${esc(w.fullName)}</span></div><div class="meta">${teamZh(w.teamId)||'FA'}${w.pos?` · ${esc(w.pos)}`:''}</div></div>
+      <div class="rt">${inR?'<span class="chip">已在隊</span>':`<button class="act" style="color:var(--good);border-color:var(--good)" onclick="promoteWatch(${w.id})">＋ 加入陣容</button>`}
+      <button class="rm" title="移除" onclick="removeWatch(${w.id})">×</button></div></div>`;}).join('')+'</div>';
+}
+// 本週出賽表
+async function weekPlan(){
+  const W=await weekGames();let agg={P:{}};try{agg=aggregate(await loadBoxWindow(14));}catch(e){}
+  const inj=await injMap();
+  return ROSTER.map(r=>{const a=agg.P[r.id];const tid=a?.teamId||r.teamId;const w=W[tid]||{total:0,left:0};const ij=inj[r.id];const out=statusLevel(ij?.status)==='bad';
+    return {r,tid,total:w.total,left:w.left,fpg:a?a.fpg:null,inj:ij,out,exp:(!out&&a)?a.fpg*w.left:0};});
+}
+async function analyzeWeek(){
+  const box=$('#rotResult');
+  if(!ROSTER.length){box.innerHTML='你的陣容還沒有球員，先到上方加入。';return;}
+  box.innerHTML='<div class="loading"><span class="spin"></span>抓本週賽程…<span class="boxprog"></span></div>';
+  let rows;try{rows=await weekPlan();}catch(e){box.innerHTML=`<div class="err">載入失敗：${errText(e)}</div>`;return;}
+  rows.sort((a,b)=>b.exp-a.exp||b.left-a.left);
+  const sum=rows.reduce((s,x)=>s+x.exp,0),games=rows.filter(x=>!x.out).reduce((s,x)=>s+x.left,0);
+  box.innerHTML='<div class="plist">'+rows.map(x=>{
+    const badge=x.total>=4?'<span class="rec START">★ 4 場週</span>':`<span class="chip">本週 ${x.total} 場</span>`;
+    return `<div class="prow" style="align-items:flex-start"><div style="flex:1;min-width:0"><div class="nm"><span class="tcell">${playerPhoto(x.r.id,24)}${teamLogo(x.tid,16)}${esc(x.r.fullName)} ${x.inj?statusChip(x.inj.status):''}</span></div>
+      <div class="meta" style="margin-top:3px">剩 ${x.left} 場 · 近 14 天 ${x.fpg!=null?f1(x.fpg)+' FP/G':'無資料'}${x.out?' · 缺陣中不計':x.fpg!=null?` · 預估再拿 <b style="color:var(--text)">${f1(x.exp)}</b>`:''}</div></div>${badge}</div>`;}).join('')+
+    `</div><div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:12px"><span style="font-size:13px">本週還有 <b>${games}</b> 場出賽，預估再拿 <b>${f1(sum)}</b> FP</span><button class="btn" onclick="goTo('h2h');autoFillH2H()">帶入對戰頁 →</button></div>
+    <div class="muted" style="font-size:11px;margin-top:8px">預估＝近 14 天 FP/G × 本週剩餘場次，沒扣掉先發位滿出來的情況（同一天上場人數超過 ${SETTINGS.slots} 個先發位時，多的人不計分）。</div>`;
+}
+if($('#rotBtn'))$('#rotBtn').onclick=analyzeWeek;
+
+// ========== SHARE ROSTER ==========
+const SHARE_MAX=30;
+function b64urlEncode(str){const bytes=new TextEncoder().encode(str);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function b64urlDecode(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)));}
+function cleanText(v,max=60){return String(v??'').replace(/[<>&"'`\\]/g,'').trim().slice(0,max);}
+function cleanCode(v){v=String(v??'').toUpperCase();return /^[A-Z0-9-]{1,4}$/.test(v)?v:'';}
+function cleanShared(list){if(!Array.isArray(list))return[];const seen=new Set();const out=[];
+  for(const a of list.slice(0,SHARE_MAX)){if(!Array.isArray(a))continue;const id=Number(a[0]);if(!Number.isInteger(id)||id<=0||seen.has(id))continue;
+    const fullName=cleanText(a[1]);if(!fullName)continue;const tid=Number(a[3]);seen.add(id);
+    out.push({id,fullName,pos:cleanCode(a[2]),teamId:TEAMS[tid]?tid:undefined});}
+  return out;}
+function shareUrl(){const data={v:1,s:'nba',n:cleanText(MATCHUP.me,30),p:ROSTER.slice(0,SHARE_MAX).map(r=>[r.id,r.fullName,r.pos||'',r.teamId||0])};
+  return location.href.split('#')[0]+'#share='+b64urlEncode(JSON.stringify(data));}
+function shareRoster(){
+  if(!ROSTER.length){toast('陣容是空的，先叫幾個球員報到再分享吧。');return;}
+  const url=shareUrl();
+  showModal(`<p style="margin:0 0 12px">把這個連結傳給朋友，他打開就會看到你的 <b>${ROSTER.length}</b> 位球員，也能一鍵複製成他自己的陣容。</p>
+    <input class="search" id="shareUrlBox" readonly value="${esc(url)}" style="font-size:12px">
+    <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn" id="copyShareBtn">複製連結</button><span class="muted" style="font-size:12px">只有球員名單，不含你的對戰數字。之後改了陣容，要重新分享一次。</span></div>`,'分享我的陣容');
+  const box=$('#shareUrlBox');
+  $('#copyShareBtn').onclick=()=>{const done=()=>toast('連結已複製，快去炫耀你的陣容。');const fb=()=>{box.focus();box.select();toast('已選取連結，按 Ctrl+C（手機長按）複製。');};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,fb);else fb();};
+}
+let SHARED=null;
+function clearShareHash(){try{history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}}
+function importShared(mode){if(!SHARED)return;
+  if(mode==='replace'){ROSTER=SHARED.p.slice();}else{const have=new Set(ROSTER.map(r=>r.id));SHARED.p.forEach(r=>{if(!have.has(r.id))ROSTER.push(r);});}
+  ROSTER.forEach(r=>remember(r.id,r.fullName,r.teamId,r.pos));save('pfbk_roster',ROSTER);
+  const n=SHARED.p.length;SHARED=null;clearShareHash();closeModal();renderRosterBar();goTo('roster');
+  toast(mode==='replace'?`已換成這份陣容（${n} 人）。`:'已把新球員加進你的陣容。');}
+function dismissShared(){SHARED=null;clearShareHash();closeModal();}
+function handleShareLink(){
+  const h=location.hash||'';if(!h.startsWith('#share='))return false;
+  let data=null;try{data=JSON.parse(b64urlDecode(h.slice(7)));}catch(e){}
+  const players=cleanShared(data&&data.p);
+  if(!players.length||(data&&data.s&&data.s!=='nba')){clearShareHash();toast('這個分享連結讀不出球員，請朋友重新分享一次。');return true;}
+  SHARED={n:cleanText(data.n,30),p:players};
+  const who=SHARED.n?`「${esc(SHARED.n)}」`:'朋友';const mine=ROSTER.length;
+  showModal(`<p style="margin:0 0 10px">${who}傳了 <b>${players.length}</b> 位球員給你看。</p>
+    <div class="rosterbar" style="margin-top:6px">${players.map(r=>`<span class="pchip" style="padding:4px 12px">${esc(r.fullName)} <span class="posbadge">${esc(r.pos||'?')}</span></span>`).join('')}</div>
+    <div class="row" style="margin-top:18px;flex-wrap:wrap">
+      <button class="btn" onclick="importShared('replace')">換成這份陣容</button>
+      ${mine?`<button class="btn ghost" onclick="importShared('merge')">加進我的陣容</button>`:''}
+      <button class="btn ghost" onclick="dismissShared()">只是看看</button></div>
+    ${mine?`<p class="muted" style="font-size:12px;margin:10px 0 0">「換成這份陣容」會取代你目前的 ${mine} 位球員；「加進我的陣容」只補上你還沒有的人。</p>`:''}`,'朋友的陣容');
+  return true;
+}
+
+// ========== H2H POINTS ==========
+let MATCHUP=Object.assign({week:'',me:'',opp:'',mv:{},ov:{}},load('pfbk_matchup',{}));
+function saveM(){save('pfbk_matchup',MATCHUP);}
+let H2H_HIST=load('pfbk_h2h_hist',{});
+const H2H_ROWS=[{k:'pts',l:'目前得分',hint:'Yahoo 對戰頁上的即時總分'},{k:'left',l:'本週剩餘出賽',hint:'全隊還有幾「人次」會上場'},{k:'avg',l:'平均每場 FP',hint:'上場一次大約拿幾分'}];
+['h2hWeek','h2hMe','h2hOpp'].forEach(id=>{const key=id==='h2hWeek'?'week':id==='h2hMe'?'me':'opp';const el=$('#'+id);el.value=MATCHUP[key]||'';
+  el.addEventListener('input',()=>{MATCHUP[key]=el.value;saveM();renderH2HHeader();renderLeague();});});
+$('#h2hClear').onclick=()=>{if(confirm('清空本週對戰數據？')){MATCHUP={week:'',me:'',opp:'',mv:{},ov:{}};saveM();$('#h2hWeek').value='';$('#h2hMe').value='';$('#h2hOpp').value='';renderH2H();}};
+$('#h2hAuto').onclick=autoFillH2H;
+function renderH2HHeader(){$('#h2hMeName').textContent=MATCHUP.me||'我';$('#h2hOppName').textContent=MATCHUP.opp||'對手';}
+function renderH2H(){
+  renderH2HHeader();
+  const tbl=$('#h2hTable');
+  tbl.innerHTML=`<thead><tr><th>項目</th><th class="num">${esc(MATCHUP.me||'我')}</th><th class="num">${esc(MATCHUP.opp||'對手')}</th></tr></thead><tbody>`+
+    H2H_ROWS.map(r=>`<tr><td><b>${r.l}</b><div class="muted" style="font-size:11px">${r.hint}</div></td>
+      <td class="num"><input class="h2hin" data-side="mv" data-k="${r.k}" value="${esc(MATCHUP.mv[r.k]??'')}" inputmode="decimal" aria-label="我 ${r.l}"></td>
+      <td class="num"><input class="h2hin" data-side="ov" data-k="${r.k}" value="${esc(MATCHUP.ov[r.k]??'')}" inputmode="decimal" aria-label="對手 ${r.l}"></td></tr>`).join('')+
+    `<tr><td><b>預估終場</b><div class="muted" style="font-size:11px">目前得分 + 剩餘 × 場均</div></td><td class="num" id="projMe"><b class="fpbig">–</b></td><td class="num" id="projOpp"><b class="fpbig">–</b></td></tr></tbody>`;
+  tbl.querySelectorAll('.h2hin').forEach(inp=>inp.addEventListener('input',()=>{const v=inp.value.trim();MATCHUP[inp.dataset.side][inp.dataset.k]=v===''?undefined:v;saveM();recalcH2H();}));
+  recalcH2H();renderLeague();renderScoring();
+}
+function erf(x){const t=1/(1+0.3275911*Math.abs(x));const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x>=0?y:-y;}
+function phi(z){return 0.5*(1+erf(z/Math.SQRT2));}
+function h2hNums(){const n=v=>v===undefined||v===''||isNaN(+v)?null:+v;const M=MATCHUP;
+  const me={pts:n(M.mv.pts),left:n(M.mv.left),avg:n(M.mv.avg)},op={pts:n(M.ov.pts),left:n(M.ov.left),avg:n(M.ov.avg)};
+  const proj=s=>(s.pts??0)+(s.left??0)*(s.avg??0);
+  const has=me.pts!=null||op.pts!=null||me.left!=null||op.left!=null;
+  const pm=proj(me),po=proj(op);
+  const sd=Math.sqrt(((me.left||0)+(op.left||0)))*10; // 每人次 FP 標準差約 10
+  const p=!has?null:sd>0?phi((pm-po)/sd):pm>po?1:pm<po?0:.5;
+  return {me,op,pm,po,p,has,sd};}
+function recalcH2H(){
+  const {me,op,pm,po,p,has}=h2hNums();
+  $('#h2hScore').textContent=`${Math.round(me.pts||0)} – ${Math.round(op.pts||0)}`;
+  const pjm=$('#projMe'),pjo=$('#projOpp');
+  if(pjm){pjm.innerHTML=`<b class="fpbig">${has?Math.round(pm):'–'}</b>`;pjo.innerHTML=`<b class="fpbig">${has?Math.round(po):'–'}</b>`;
+    pjm.classList.toggle('tag-good',has&&pm>po);pjo.classList.toggle('tag-good',has&&po>pm);}
+  const tot=(pm+po)||1;$('#h2hBarW').style.width=(has?pm/tot*100:50)+'%';$('#h2hBarL').style.width=(has?po/tot*100:50)+'%';
+  $('#h2hProjLine').textContent=has?`預估終場 ${Math.round(pm)} – ${Math.round(po)}`:'預估終場 –';
+  const wp=$('#h2hWinp');wp.textContent=p==null?'勝率 –':`勝率 ${Math.round(p*100)}%`;wp.style.color=p==null?'':p>=.6?'var(--good)':p<=.4?'var(--bad)':'var(--warn)';
+  const v=$('#h2hVerdict');const gap=Math.round(Math.abs(pm-po));
+  if(!has)v.innerHTML='<span class="muted">填入兩隊目前得分、剩餘場次和場均，即時估算終場。</span>';
+  else if(p>=.85)v.innerHTML=`<span class="tag-good">🎉 預估領先 ${gap} 分，勝率 ${Math.round(p*100)}%，大概穩了！</span>`;
+  else if(p>=.55)v.innerHTML=`<span class="tag-good">預估小贏 ${gap} 分，守住別讓空位上場 💪</span>`;
+  else if(p>.45)v.innerHTML=`<span class="tag-warn">五五波，差 ${gap} 分以內，每一場都要算 🔥</span>`;
+  else v.innerHTML=`<span class="tag-bad">預估落後 ${gap} 分，還有機會，串流補場次！</span>`;
+  const kp=$('#kpiH2H');if(kp)kp.textContent=has?`${Math.round(me.pts||0)}–${Math.round(op.pts||0)}`:'–';
+  const q=$('#heroQuip');if(q)q.innerHTML=!has?'本週對戰還沒填。<br>到「對戰」頁抄一下兩隊分數，我幫你算勝率。':p>=.85?`預估勝率 ${Math.round(p*100)}%。<br>可以準備慶祝了（先別開香檳）。`:p>=.55?`預估勝率 ${Math.round(p*100)}%，小幅領先。<br>別鬆懈，對手正在撿串流。`:p>.45?'五五波！<br>今晚誰上場很重要。':`預估勝率 ${Math.round(p*100)}%，暫時落後。<br>去市場找本週還有很多場的人。`;
+  // 每日快照：比昨天進步多少
+  const de=$('#h2hDelta');
+  if(de){const today=todayStr(new Date());let prev=null;for(const d in H2H_HIST){if(d<today&&(H2H_HIST[d].week||'')===(MATCHUP.week||'')&&(!prev||d>prev.date))prev=Object.assign({date:d},H2H_HIST[d]);}
+    if(prev&&has){const dd=Math.round((pm-po)-prev.diff);de.innerHTML=`較 ${prev.date.slice(5).replace('-','/')}：預估差距 <b style="color:${dd>0?'var(--good)':dd<0?'var(--bad)':'var(--muted)'}">${dd>0?'+':''}${dd}</b> ${dd>0?'⬆':dd<0?'⬇':'―'}`;}else de.textContent='';
+    if(has){H2H_HIST[today]={diff:pm-po,week:MATCHUP.week||''};const ks=Object.keys(H2H_HIST).sort();while(ks.length>40)delete H2H_HIST[ks.shift()];save('pfbk_h2h_hist',H2H_HIST);}}
+  // 教練錦囊
+  const adv=$('#h2hAdvice');if(!adv)return;
+  if(!has){adv.innerHTML='填入數字後，這裡告訴你要追幾分、該不該串流。';return;}
+  const need=po-pm;const perGame=Math.max(15,(me.avg||25));
+  let html='';
+  if(need>0){const g=Math.ceil(need/perGame);
+    html+=`<div class="stratrow"><b class="tag-bad">🔥 追分</b><div class="tx">預估還差 <b>${Math.round(need)}</b> 分 ≈ 以每場 ${f1(perGame)} FP 算，要多 <b>${g}</b> 人次上場</div></div>
+      <div class="stratrow"><b class="tag-good">🛒 串流</b><span><button class="catbtn" onclick="gotoRadar('stream')">找本週剩很多場的 FA ›</button><button class="catbtn" onclick="goTo('schedule');renderWeekTable()">看哪隊打 4 場 ›</button></span></div>`;
+  }else{
+    html+=`<div class="stratrow"><b class="tag-good">✅ 守住</b><div class="tx">預估領先 <b>${Math.round(-need)}</b> 分；確認先發位沒有缺陣球員佔著。</div></div>
+      <div class="stratrow"><b class="tag-warn">⚠️ 檢查</b><span><button class="catbtn" onclick="goTo('news');$('#injMine').checked=true;injMine=true;drawInj()">看我的傷兵 ›</button></span></div>`;
+  }
+  if(me.left!=null&&op.left!=null&&me.left<op.left)html+=`<div class="stratrow"><b class="tag-warn">📅 場次</b><div class="tx">你比對手少 <b>${op.left-me.left}</b> 人次可上場，場次劣勢比手感更致命。</div></div>`;
+  adv.innerHTML=html+'<div class="muted" style="font-size:11px;margin-top:6px">勝率用常態分布粗估：每人次 FP 的波動約 ±10 分。</div>';
+}
+async function autoFillH2H(){
+  if(!ROSTER.length){toast('先到「陣容」頁加入你的球員。');return;}
+  toast('估算你的本週剩餘場次與場均…');
+  let rows;try{rows=await weekPlan();}catch(e){toast('賽程載入失敗，等一下再試。');return;}
+  const ok=rows.filter(x=>!x.out);const left=ok.reduce((s,x)=>s+x.left,0);const w=ok.filter(x=>x.fpg!=null);
+  const wl=w.reduce((s,x)=>s+x.left,0);const avg=wl?w.reduce((s,x)=>s+x.fpg*x.left,0)/wl:(w.length?w.reduce((s,x)=>s+x.fpg,0)/w.length:null);
+  MATCHUP.mv.left=String(left);if(avg!=null)MATCHUP.mv.avg=avg.toFixed(1);saveM();
+  if(activeView()==='h2h')renderH2H();else recalcH2H();
+  toast(avg!=null?`已帶入：剩 ${left} 人次、場均 ${avg.toFixed(1)} FP`:`已帶入剩 ${left} 人次（近 14 天沒有數據可算場均）`);
+}
+
+// 10 隊聯盟戰績
+let LEAGUE=load('pfbk_league',null);
+if(!Array.isArray(LEAGUE)||LEAGUE.length!==10)LEAGUE=Array.from({length:10},()=>({name:'',w:'',l:'',pf:''}));
+let PLAYOFF_N=+load('pfbk_playoffN',6)||6;
+$('#playoffN').value=String(PLAYOFF_N);
+$('#playoffN').onchange=e=>{PLAYOFF_N=+e.target.value;save('pfbk_playoffN',PLAYOFF_N);renderLeague();};
+function leagueOrder(){const pct=t=>{const w=+t.w||0,l=+t.l||0;return w+l?w/(w+l):-1;};
+  return LEAGUE.map((t,i)=>({t,i})).filter(x=>x.t.name.trim()).sort((a,b)=>pct(b.t)-pct(a.t)||(+b.t.pf||0)-(+a.t.pf||0));}
+function renderLeague(){
+  const tbl=$('#leagueTable');if(!tbl)return;
+  const ord=leagueOrder();const rank={};ord.forEach((x,k)=>rank[x.i]=k+1);
+  const me=(MATCHUP.me||'').trim().toLowerCase();
+  tbl.innerHTML=`<thead><tr><th class="num">名次</th><th>隊名</th><th class="num">勝</th><th class="num">敗</th><th class="num">總得分 PF</th></tr></thead><tbody>`+
+    LEAGUE.map((t,i)=>`<tr class="${me&&t.name.trim().toLowerCase()===me?'me':''}"><td class="num"><b>${rank[i]||'–'}</b>${rank[i]&&rank[i]<=PLAYOFF_N?' 🏆':''}</td>
+      <td><input class="h2hin" data-i="${i}" data-k="name" value="${esc(t.name)}" placeholder="第 ${i+1} 隊" aria-label="第 ${i+1} 隊隊名"></td>
+      <td class="num"><input class="h2hin n" data-i="${i}" data-k="w" value="${esc(t.w)}" inputmode="numeric" aria-label="勝"></td>
+      <td class="num"><input class="h2hin n" data-i="${i}" data-k="l" value="${esc(t.l)}" inputmode="numeric" aria-label="敗"></td>
+      <td class="num"><input class="h2hin n" data-i="${i}" data-k="pf" value="${esc(t.pf)}" inputmode="decimal" aria-label="總得分"></td></tr>`).join('')+'</tbody>';
+  tbl.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{LEAGUE[+inp.dataset.i][inp.dataset.k]=inp.value;save('pfbk_league',LEAGUE);leagueNote(true);}));
+  leagueNote(false);
+}
+function leagueNote(liveUpdate){
+  const ord=leagueOrder();const note=$('#leagueNote');if(!note)return;
+  if(liveUpdate){const rank={};ord.forEach((x,k)=>rank[x.i]=k+1);$$('#leagueTable tbody tr').forEach((tr,i)=>{const td=tr.firstElementChild;td.innerHTML=`<b>${rank[i]||'–'}</b>${rank[i]&&rank[i]<=PLAYOFF_N?' 🏆':''}`;const me=(MATCHUP.me||'').trim().toLowerCase();tr.classList.toggle('me',!!me&&LEAGUE[i].name.trim().toLowerCase()===me);});}
+  const me=(MATCHUP.me||'').trim().toLowerCase();const k=ord.findIndex(x=>x.t.name.trim().toLowerCase()===me);
+  if(!ord.length){note.textContent='還沒填。前 '+PLAYOFF_N+' 名進季後賽（🏆）。';return;}
+  if(k<0){note.textContent=`依勝率排名，同勝率比總得分。前 ${PLAYOFF_N} 名進季後賽（🏆）。隊名填成跟「我的隊名」一樣，就會幫你算差距。`;return;}
+  const mine=ord[k].t;
+  if(k<PLAYOFF_N){const chase=ord[PLAYOFF_N]?.t;note.innerHTML=`你目前第 <b>${k+1}</b> 名，在季後賽線內 🏆${chase?`；第 ${PLAYOFF_N+1} 名「${esc(chase.name)}」${(+mine.w||0)-(+chase.w||0)>0?`落後你 ${(+mine.w||0)-(+chase.w||0)} 勝`:'跟你同勝，靠總得分分高下'}。`:''}`;}
+  else{const line=ord[PLAYOFF_N-1].t;note.innerHTML=`你目前第 <b>${k+1}</b> 名，離季後賽線（第 ${PLAYOFF_N} 名「${esc(line.name)}」）差 <b>${Math.max(0,(+line.w||0)-(+mine.w||0))}</b> 勝${(+line.pf||0)>(+mine.pf||0)?`、總得分差 ${Math.round((+line.pf||0)-(+mine.pf||0))}`:''}。`;}
+}
+
+// 計分規則
+function renderScoring(){
+  const g=$('#scoreGrid');if(!g)return;
+  g.innerHTML=SCORE_KEYS.map(([k,l])=>`<label>${l} <span class="muted" style="font-weight:500">${k}</span><input class="h2hin" data-k="${k}" value="${SCORING[k]??''}" placeholder="0" inputmode="decimal"></label>`).join('');
+  g.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{const v=inp.value.trim();if(v===''||isNaN(+v))delete SCORING[inp.dataset.k];else SCORING[inp.dataset.k]=+v;scoringChanged();}));
+  markPreset();
+  $('#slotsIn').value=SETTINGS.slots;$('#rosterSizeIn').value=SETTINGS.rosterSize;
+}
+function markPreset(){const p=presetName();$$('#scorePreset button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
+function scoringChanged(){save('pfbk_scoring',SCORING);GLOG={};markPreset();}
+$$('#scorePreset button').forEach(b=>b.onclick=()=>{const p=b.dataset.p;if(!PRESETS[p])return;SCORING=Object.assign({},PRESETS[p]);scoringChanged();renderScoring();toast('已套用 '+b.textContent+' 計分');});
+['slotsIn','rosterSizeIn'].forEach(id=>$('#'+id).addEventListener('input',e=>{const v=parseInt(e.target.value,10);if(!v||v<1||v>30)return;SETTINGS[id==='slotsIn'?'slots':'rosterSize']=v;save('pfbk_settings',SETTINGS);}));
+
+// ---------- modal ----------
+function showModal(html,title){$('#modalBody').innerHTML=html;if(title)$('#modalTitle').textContent=title;$('#modalBack').classList.add('show');}
+function closeModal(){$('#modalBack').classList.remove('show');}
+$('#modalBack').addEventListener('click',e=>{if(e.target.id==='modalBack')closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+// 手機：點卡片展開/收合次要欄位
+document.addEventListener('click',e=>{
+  if(!window.matchMedia('(max-width:680px)').matches)return;
+  const tr=e.target.closest('.rtable tbody tr');
+  if(!tr||e.target.closest('button,a,input,select,.linkish'))return;
+  tr.classList.toggle('open');
+});
+
+// ========== INIT ==========
+(function(){
+  renderRosterBar();renderWatch();renderH2HHeader();recalcH2H();
+  renderDash();
+  if(!handleShareLink()){const hv=(location.hash||'').slice(1);if(/^[a-z0-9]+$/.test(hv)&&hv!=='dash'&&$('#view-'+hv))goTo(hv);}
+})();
+</script>
+</body>
+</html>
