@@ -873,7 +873,7 @@ function teamId(x){if(x==null)return null;const n=+x;if(TEAMS[n])return n;return
 function teamAbbr(id){return TEAMS[id]?.[0]||'';}
 function teamZh(id){return TEAMS[id]?.[1]||'';}
 function teamLogo(id,size=18){const a=TEAMS[id]?.[0];if(!a)return '';
-  return `<img class="tlogo" src="https://a.espncdn.com/i/teamlogos/nba/500/${a.toLowerCase()}.png" width="${size}" height="${size}" loading="lazy" alt="">`;}
+  return `<img class="tlogo" src="https://a.espncdn.com/i/teamlogos/nba/500/${a.toLowerCase()}.png" width="${size}" height="${size}" loading="lazy" alt="" onerror="this.onerror=null;this.style.visibility='hidden'">`;}
 function playerPhoto(id,size=28,cls=''){if(!id)return '';
   return `<img class="phead ${cls}" src="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${id}.png&w=110&h=80" width="${size}" height="${size}" loading="lazy" alt="" onerror="this.onerror=null;this.style.visibility='hidden'">`;}
 
@@ -1115,7 +1115,7 @@ async function renderNewsFeed(){
     const img=(a.images||[]).find(i=>i.url)?.url;const href=a.links?.web?.href||a.links?.mobile?.href||'#';
     const mine=(a.categories||[]).some(c=>c.type==='athlete'&&myIds.has(String(c.athleteId||c.athlete?.id||'')));
     return `<a href="${esc(href)}" target="_blank" rel="noopener" class="newsitem">
-      ${img?`<img class="nthumb" src="${esc(img)}" loading="lazy" alt="">`:'<div class="nthumb"></div>'}
+      ${img?`<img class="nthumb" src="${esc(img)}" loading="lazy" alt="" onerror="this.onerror=null;this.style.visibility='hidden'">`:'<div class="nthumb"></div>'}
       <div style="flex:1;min-width:0"><div class="nhead">${mine?'⭐ ':''}${esc(a.headline)}</div>
       <div class="nmeta"><span class="chip">${esc(NEWS_TYPE[a.type]||a.type||'')}</span> ${a.published?timeAgo(a.published):''}</div></div></a>`;
   }).join('')||'<div class="muted" style="font-size:12px">目前沒有頭條。</div>';
@@ -1679,7 +1679,10 @@ let H2H_HIST=load('pfbk_h2h_hist',{});
 const H2H_ROWS=[{k:'pts',l:'目前得分',hint:'Yahoo 對戰頁上的即時總分'},{k:'left',l:'本週剩餘出賽',hint:'全隊還有幾「人次」會上場'},{k:'avg',l:'平均每場 FP',hint:'上場一次大約拿幾分'}];
 ['h2hWeek','h2hMe','h2hOpp'].forEach(id=>{const key=id==='h2hWeek'?'week':id==='h2hMe'?'me':'opp';const el=$('#'+id);el.value=MATCHUP[key]||'';
   el.addEventListener('input',()=>{MATCHUP[key]=el.value;saveM();renderH2HHeader();renderLeague();});});
-$('#h2hClear').onclick=()=>{if(confirm('清空本週對戰數據？')){MATCHUP={week:'',me:'',opp:'',mv:{},ov:{}};saveM();$('#h2hWeek').value='';$('#h2hMe').value='';$('#h2hOpp').value='';renderH2H();}};
+{let armed=0;$('#h2hClear').onclick=e=>{const b=e.currentTarget;
+  if(!armed){armed=setTimeout(()=>{armed=0;b.textContent='清空';},3000);b.textContent='再按一次確認';return;}
+  clearTimeout(armed);armed=0;b.textContent='清空';
+  MATCHUP={week:'',me:'',opp:'',mv:{},ov:{}};saveM();$('#h2hWeek').value='';$('#h2hMe').value='';$('#h2hOpp').value='';renderH2H();toast('本週對戰已清空');};}
 $('#h2hAuto').onclick=autoFillH2H;
 function renderH2HHeader(){$('#h2hMeName').textContent=MATCHUP.me||'我';$('#h2hOppName').textContent=MATCHUP.opp||'對手';}
 function renderH2H(){
