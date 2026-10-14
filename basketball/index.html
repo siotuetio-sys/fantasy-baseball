@@ -4,18 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>The Perfect Fantasy Basketball Draft</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox=%220 0 40 40%22 fill=%22none%22 stroke=%22%23141414%22 stroke-width=%222%22 stroke-linecap=%22round%22><circle cx=%2220%22 cy=%2220%22 r=%2217%22 fill=%22%23fff04f%22/><path d=%22M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24%22 stroke-width=%221.8%22/></svg>"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox=%220 0 40 40%22 fill=%22none%22 stroke=%22%23141414%22 stroke-width=%222%22 stroke-linecap=%22round%22><circle cx=%2220%22 cy=%2220%22 r=%2217%22 fill=%22%23c4dd8c%22/><path d=%22M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24%22 stroke-width=%221.8%22/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@500&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* Paper + ink + one lemon pop. Ink lines draw the shapes; lemon sets the mood. */
+    /* Paper + ink + one pop of leaf green. Ink lines draw the shapes; green sets the mood. */
     --bg:#fbf8f1; --panel:#ffffff; --panel2:#f6f2e8; --border:#e4dfd3; --line:#141414;
     --text:#141414; --muted:#5f5a50; --accent:#141414; --accent2:#141414;
-    --pop:#fff04f; --pop-soft:#fffbd1;
+    --pop:#c4dd8c; --pop-soft:#eef6dc;
     --good:#1f7a4d; --warn:#8a5f00; --bad:#c8372d; --chip:#f3efe4;
-    --hover:#fffbd1; --mine:#fffbd1;
+    --hover:#eef6dc; --mine:#eef6dc;
     --good-bg:#e3f2e8; --bad-bg:#fbe6e3; --warn-bg:#fbf1cf;
     --navbg:#fbf8f1; --navmut:#5f5a50;
     --shadow:none;
@@ -381,7 +381,7 @@
 
   /* empty states get the mascot instead of an emoji */
   .empty{color:var(--muted)}
-  .empty .big{font-size:0;width:92px;height:86px;margin:0 auto 12px;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23fff04f'/><path d='M33 37q17 29 0 58M87 37q-17 29 0 58' stroke-width='2.4'/><path d='M22 46q2-34 38-36q34 2 38 34' fill='%23141414'/><path d='M22 46q-16 1-24 8q20 4 44-4' fill='%23141414'/><path d='M45 64q4-4 8 0M67 64q4-4 8 0'/><path d='M52 80q8 6 16 0'/><path d='M100 18q6-2 8 3t-4 7M106 34q4 0 5 3' stroke-width='2.2'/></svg>") center/contain no-repeat}
+  .empty .big{font-size:0;width:92px;height:86px;margin:0 auto 12px;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23c4dd8c'/><path d='M33 37q17 29 0 58M87 37q-17 29 0 58' stroke-width='2.4'/><path d='M22 46q2-34 38-36q34 2 38 34' fill='%23141414'/><path d='M22 46q-16 1-24 8q20 4 44-4' fill='%23141414'/><path d='M45 64q4-4 8 0M67 64q4-4 8 0'/><path d='M52 80q8 6 16 0'/><path d='M100 18q6-2 8 3t-4 7M106 34q4 0 5 3' stroke-width='2.2'/></svg>") center/contain no-repeat}
 
   /* overlays */
   #modalBack{background:rgba(20,20,20,.45)}
@@ -468,7 +468,7 @@
     input.h2hin{height:40px;font-size:17px}
   }
   /* ===== Hoops edition: same paper + ink + lemon, basketball props ===== */
-  .empty .big{background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23fff04f'/><path d='M36 38q16 28 0 56M84 38q-16 28 0 56M60 26v12M60 96v10M20 66h9M91 66h9' stroke-width='2.4'/><path d='M26 46q34-26 68 0l-2 11q-32-24-64 0z' fill='%23141414'/><path d='M92 46l12-6l-2 10l9 2' stroke-width='2.2'/><path d='M45 68q4-4 8 0M67 68q4-4 8 0'/><path d='M52 82q8 6 16 0'/><path d='M104 20q5 7 0 11q-5-4 0-11z' stroke-width='2'/></svg>") center/contain no-repeat}
+  .empty .big{background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 112' fill='none' stroke='%23141414' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='60' cy='66' r='40' fill='%23c4dd8c'/><path d='M36 38q16 28 0 56M84 38q-16 28 0 56M60 26v12M60 96v10M20 66h9M91 66h9' stroke-width='2.4'/><path d='M26 46q34-26 68 0l-2 11q-32-24-64 0z' fill='%23141414'/><path d='M92 46l12-6l-2 10l9 2' stroke-width='2.2'/><path d='M45 68q4-4 8 0M67 68q4-4 8 0'/><path d='M52 82q8 6 16 0'/><path d='M104 20q5 7 0 11q-5-4 0-11z' stroke-width='2'/></svg>") center/contain no-repeat}
   .phead{object-fit:cover;object-position:50% 12%;background:var(--pop-soft)}
   .chip.inj-bad{color:var(--bad);border-color:var(--bad);background:var(--panel)}
   .chip.inj-warn{color:var(--warn);border-color:var(--warn);background:var(--panel)}
@@ -510,7 +510,7 @@
 </head>
 <body>
 <header>
-  <div class="brandmark"><svg viewBox="0 0 40 40" fill="none" stroke="#141414" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#fff04f"/><path d="M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24" stroke-width="1.8"/></svg></div>
+  <div class="brandmark"><svg viewBox="0 0 40 40" fill="none" stroke="#141414" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#c4dd8c"/><path d="M20 3v34M3 20h34M8.5 8q8 12 0 24M31.5 8q-8 12 0 24" stroke-width="1.8"/></svg></div>
   <div class="wordmark">
     <h1>PERFECT DRAFT</h1>
     <span class="sub">你的夢幻籃球軍師 · Points 制</span>
@@ -619,7 +619,7 @@
   <!-- SCHEDULE -->
   <section class="view doodled" id="view-schedule">
     <h2 class="sec">今晚誰跟誰打 <span class="sticker">tonight's games</span> <span class="pill" id="schDate"></span></h2>
-    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="運球中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><path d="M138 92l14-6l-3 10l10 2" stroke-width="2"/><ellipse cx="90" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="111" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><path d="M92 126q8 6 16 0"/><path d="M144 118q16 6 18 24"/><circle cx="164" cy="158" r="11" fill="#fff04f"/><path d="M164 147v22M153 158h22" stroke-width="1.6"/><path d="M152 136l-4-7M176 136l4-7M164 132v-8" stroke-width="2"/><path d="M56 118q-14 4-14 16q8 2 16-6"/><path d="M88 154v14M112 154v14"/><path d="M88 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="運球中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><path d="M138 92l14-6l-3 10l10 2" stroke-width="2"/><ellipse cx="90" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="111" cy="112" rx="3.4" ry="5" fill="#141414" stroke="none"/><path d="M92 126q8 6 16 0"/><path d="M144 118q16 6 18 24"/><circle cx="164" cy="158" r="11" fill="#c4dd8c"/><path d="M164 147v22M153 158h22" stroke-width="1.6"/><path d="M152 136l-4-7M176 136l4-7M164 132v-8" stroke-width="2"/><path d="M56 118q-14 4-14 16q8 2 16-6"/><path d="M88 154v14M112 154v14"/><path d="M88 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
     <div id="scheduleList" class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px">
       <div class="loading"><span class="spin"></span>載入賽程中…</div>
     </div>
@@ -643,7 +643,7 @@
   <!-- H2H POINTS -->
   <section class="view doodled" id="view-h2h">
     <h2 class="sec">本週對決 <span class="sticker">head to head</span> <span class="pill">H2H Points · 10 隊聯盟</span></h2>
-    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="跳投中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><ellipse cx="92" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="113" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><circle cx="103" cy="126" r="4.5"/><path d="M140 100q20-26 10-58"/><path d="M62 100q-16-22-4-48"/><circle cx="150" cy="30" r="14" fill="#fff04f"/><path d="M150 16v28M136 30h28M141 20q6 10 0 20M159 20q-6 10 0 20" stroke-width="1.6"/><path d="M58 52q30-26 78-26" stroke-width="2" stroke-dasharray="4 5"/><path d="M174 18l8-7M178 34h10" stroke-width="2.2"/><path d="M88 154l-6 14M112 154l6 14"/><path d="M82 168h-14q-5 0-5 5h19zM118 168h14q5 0 5 5h-19z" fill="#141414"/></svg></div>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="跳投中的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 64v12M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M61 90Q100 68 139 90L138 101Q100 79 62 101Z" fill="#141414"/><ellipse cx="92" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><ellipse cx="113" cy="108" rx="3.4" ry="5" fill="#141414" stroke="none"/><circle cx="103" cy="126" r="4.5"/><path d="M140 100q20-26 10-58"/><path d="M62 100q-16-22-4-48"/><circle cx="150" cy="30" r="14" fill="#c4dd8c"/><path d="M150 16v28M136 30h28M141 20q6 10 0 20M159 20q-6 10 0 20" stroke-width="1.6"/><path d="M58 52q30-26 78-26" stroke-width="2" stroke-dasharray="4 5"/><path d="M174 18l8-7M178 34h10" stroke-width="2.2"/><path d="M88 154l-6 14M112 154l6 14"/><path d="M82 168h-14q-5 0-5 5h19zM118 168h14q5 0 5 5h-19z" fill="#141414"/></svg></div>
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:14px;align-items:flex-end">
         <label class="sub" style="display:flex;flex-direction:column;gap:4px">週次
@@ -779,7 +779,7 @@
   <!-- INJURIES -->
   <section class="view doodled" id="view-news">
     <h2 class="sec">誰能打誰不能打 <span class="sticker">injury report</span> <span class="pill" id="injCount"></span></h2>
-    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="頭上冰敷的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M84 104l9 4l-9 4M117 104l-9 4l9 4"/><path d="M92 126q4-4 8 0q4 4 8 0"/><rect x="70" y="50" width="60" height="22" rx="10" fill="#fff04f"/><path d="M130 57q8-2 10 4q-4 6-10 4" fill="#fff04f"/><path d="M82 57h8M94 63h6M106 56h8M116 64h6" stroke-width="2"/><path d="M146 104q12-26-8-46"/><path d="M54 116q-12 6-14 18"/><g transform="rotate(-28 70 132)"><rect x="56" y="126" width="28" height="11" rx="4" fill="#fbf8f1"/><path d="M66 129v5M74 129v5" stroke-width="1.6"/></g><path d="M158 62q7 9 0 14q-7-5 0-14z" fill="#fbf8f1" stroke-width="2"/><path d="M170 80q5 6 0 10q-5-4 0-10z" fill="#fbf8f1" stroke-width="2"/><path d="M90 154v14M112 154v14"/><path d="M90 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
+    <div class="page-doodle"><svg class="pose" viewBox="0 0 200 180" fill="none" stroke="#141414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="頭上冰敷的籃球吉祥物"><circle cx="100" cy="110" r="46" fill="#fbf8f1"/><path d="M72 80q19 30 0 60M128 80q-19 30 0 60" stroke-width="2.2"/><path d="M100 142v14M54 110h9M137 110h9" stroke-width="2.2"/><path d="M84 104l9 4l-9 4M117 104l-9 4l9 4"/><path d="M92 126q4-4 8 0q4 4 8 0"/><rect x="70" y="50" width="60" height="22" rx="10" fill="#c4dd8c"/><path d="M130 57q8-2 10 4q-4 6-10 4" fill="#c4dd8c"/><path d="M82 57h8M94 63h6M106 56h8M116 64h6" stroke-width="2"/><path d="M146 104q12-26-8-46"/><path d="M54 116q-12 6-14 18"/><g transform="rotate(-28 70 132)"><rect x="56" y="126" width="28" height="11" rx="4" fill="#fbf8f1"/><path d="M66 129v5M74 129v5" stroke-width="1.6"/></g><path d="M158 62q7 9 0 14q-7-5 0-14z" fill="#fbf8f1" stroke-width="2"/><path d="M170 80q5 6 0 10q-5-4 0-10z" fill="#fbf8f1" stroke-width="2"/><path d="M90 154v14M112 154v14"/><path d="M90 168h-15q-5 0-5 5h20zM112 168h15q5 0 5 5h-20z" fill="#141414"/></svg></div>
     <div class="card">
       <div class="row" style="flex-wrap:wrap;gap:10px;align-items:center">
         <div class="seg" id="injFilter">
@@ -1378,7 +1378,7 @@ function sparkFP(games,W=280){const chron=games.slice().reverse();if(!chron.leng
   const vals=chron.map(g=>fp(g.s));const mx=Math.max(...vals,1);const bw=Math.max(8,Math.floor(W/chron.length)-3);
   const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
   return `<svg viewBox="0 0 ${chron.length*(bw+3)} 50" style="width:100%;max-width:${chron.length*(bw+3)}px;height:48px;margin:2px 0 4px">`+
-    chron.map((g,i)=>{const v=vals[i];const bh=Math.max(3,v/mx*40);const col=v>=avg*1.2?'#141414':v<=avg*0.8?'var(--bad)':'#d9a300';
+    chron.map((g,i)=>{const v=vals[i];const bh=Math.max(3,v/mx*40);const col=v>=avg*1.2?'#141414':v<=avg*0.8?'var(--bad)':'#8fae4e';
       return `<rect x="${i*(bw+3)}" y="${44-bh}" width="${bw}" height="${bh}" rx="2" fill="${col}"><title>${(g.date||'').slice(5,10)} ${f1(v)} FP</title></rect>`;}).join('')+
     `<line x1="0" x2="${chron.length*(bw+3)}" y1="${44-avg/mx*40}" y2="${44-avg/mx*40}" stroke="var(--muted)" stroke-dasharray="3 3"/></svg>`;}
 function logTable(games,n=10){const g=games.slice(0,n);if(!g.length)return '<div class="muted" style="font-size:12px;padding:6px">沒有出賽資料。</div>';
@@ -1425,8 +1425,8 @@ function barChart(rows,aName,bName){
     const aw=Math.max(2,a/mx*barMax),bw=Math.max(2,b/mx*barMax);const betterA=r.hi?a>b:a<b,betterB=r.hi?b>a:b<a;
     svg+=`<text x="${labelX}" y="${y+rowH/2+1}" fill="var(--muted)" font-size="12">${r.l}</text>`;
     svg+=`<rect x="${barX}" y="${y+3}" width="${aw}" height="13" rx="3" fill="#141414"/><text x="${barX+aw+4}" y="${y+13}" fill="${betterA?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterA?'700':'400'}">${fmt(a,r.d)}</text>`;
-    svg+=`<rect x="${barX}" y="${y+20}" width="${bw}" height="13" rx="3" fill="#d9a300"/><text x="${barX+bw+4}" y="${y+30}" fill="${betterB?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterB?'700':'400'}">${fmt(b,r.d)}</text>`;});
-  return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#d9a300"></span> ${esc(bName)}</span></div>`+svg+'</svg>';}
+    svg+=`<rect x="${barX}" y="${y+20}" width="${bw}" height="13" rx="3" fill="#8fae4e"/><text x="${barX+bw+4}" y="${y+30}" fill="${betterB?'var(--good)':'var(--muted)'}" font-size="11" font-weight="${betterB?'700':'400'}">${fmt(b,r.d)}</text>`;});
+  return `<div style="display:flex;gap:14px;font-size:12px;margin:4px 0 10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8fae4e"></span> ${esc(bName)}</span></div>`+svg+'</svg>';}
 function radarChart(rows,aName,bName){
   const n=rows.length,cx=150,cy=145,R=98,W=300,H=285;
   const pt=(i,r)=>{const ang=(-90+i*360/n)*Math.PI/180;return [cx+Math.cos(ang)*R*r,cy+Math.sin(ang)*R*r];};
@@ -1437,8 +1437,8 @@ function radarChart(rows,aName,bName){
   const nm=r=>{const a=isNaN(r.a)?0:r.a,b=isNaN(r.b)?0:r.b,mx=Math.max(a,b)||1,mn=Math.min(a,b);let ra,rb;if(r.hi){ra=a/mx;rb=b/mx;}else{ra=a?mn/a:1;rb=b?mn/b:1;}return [Math.max(.1,ra),Math.max(.1,rb)];};
   const pA=rows.map((r,i)=>pt(i,nm(r)[0]).join(',')).join(' '),pB=rows.map((r,i)=>pt(i,nm(r)[1]).join(',')).join(' ');
   return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:330px;height:auto;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">${grid}${axes}${labels}
-    <polygon points="${pB}" fill="#d9a300" fill-opacity="0.15" stroke="#d9a300" stroke-width="2"/><polygon points="${pA}" fill="#141414" fill-opacity="0.16" stroke="#141414" stroke-width="2"/></svg>
-  <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-top:2px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#d9a300"></span> ${esc(bName)}</span></div>`;}
+    <polygon points="${pB}" fill="#8fae4e" fill-opacity="0.15" stroke="#8fae4e" stroke-width="2"/><polygon points="${pA}" fill="#141414" fill-opacity="0.16" stroke="#141414" stroke-width="2"/></svg>
+  <div style="display:flex;gap:16px;justify-content:center;font-size:12px;margin-top:2px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#141414"></span> ${esc(aName)}</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8fae4e"></span> ${esc(bName)}</span></div>`;}
 async function renderStats(){
   const panel=$('#statsPanel');if(!STATS_MAIN)return;
   panel.innerHTML='<div class="loading"><span class="spin"></span>載入逐場數據…</div>';
