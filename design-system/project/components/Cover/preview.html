@@ -1,0 +1,51 @@
+<!-- @dsCard height=320 -->
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Perfect Draft</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-body); overflow:hidden; }
+  .cover { position:relative; height:320px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:320px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:320px; }
+  .pop { fill:var(--pop); }
+  .ink { fill:var(--text); }
+  .soft { fill:var(--pop-soft); }
+  .chip { fill:var(--chip); }
+  .edge { stroke:var(--line); stroke-width:var(--line-width); }
+  .card { rx:var(--radius-card); }
+  .kpi { rx:var(--radius-kpi); }
+  .seam { fill:none; stroke:var(--line); stroke-width:3; stroke-linecap:round; }
+  .stitch { fill:none; stroke:var(--line); stroke-width:2.4; stroke-linecap:round; }
+  .words { position:absolute; left:32px; bottom:30px; max-width:440px; }
+  .name { margin:0; font-family:var(--font-display); font-weight:400; font-size:100px; line-height:.95; letter-spacing:1px; color:var(--text); }
+  .tag { margin:14px 0 0 2px; font-size:14px; line-height:20px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 320" width="480" height="320">
+<!--
+  blocks      pop 240x272 (the lemon people know it by, largest) · text ink 160x200 bled off the top · pop-soft 160x104 · chip 80x236 bled off the right; all but ink outlined in line at line-width
+  arrangement one tall lemon slab with an ink slab and two paper satellites, gutters space-16
+  pattern     baseball seams with tick stitches drawn on the lemon slab, from "drawn, not shaded" and the brandmark
+  scales      gutters space-16; corners radius-card (slabs) and radius-kpi (soft block); stroke line-width, seams at line-art weight
+-->
+<rect class="pop edge card" x="16" y="24" width="240" height="272" rx="24"/>
+<path class="seam" d="M84 44Q150 160 84 276M188 44Q122 160 188 276"/>
+<path class="stitch" d="M88.9 64.2l12.0 3M98.1 87.4l12.0 3M104.7 110.6l12.0 3M108.7 133.8l12.0 3M110.0 157.0l12.0 3M108.7 180.2l12.0 3M104.7 203.4l12.0 3M98.1 226.6l12.0 3M88.9 249.8l12.0 3M183.1 64.2l-12.0 3M173.9 87.4l-12.0 3M167.3 110.6l-12.0 3M163.3 133.8l-12.0 3M162.0 157.0l-12.0 3M163.3 180.2l-12.0 3M167.3 203.4l-12.0 3M173.9 226.6l-12.0 3M183.1 249.8l-12.0 3"/>
+<rect class="ink card" x="272" y="-24" width="160" height="200" rx="24"/>
+<rect class="soft edge kpi" x="272" y="192" width="160" height="104" rx="22"/>
+<rect class="chip edge card" x="448" y="60" width="80" height="236" rx="24"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Perfect<br>Draft</h1>
+<p class="tag">紙、墨線、一點檸檬黃，還有一顆會說話的棒球。</p>
+</div>
+</div>
+</body>
+</html>
