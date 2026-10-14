@@ -1,0 +1,23 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": { "v": 1, "at": "2026-10-14T13:32:00Z" },
+  "title": "Perfect Draft",
+  "namespace": "PerfectDraft",
+  "libraries": [],
+  "sections": {},
+  "groups": ["Logos"],
+  "assetGroups": {
+    "Logos": {
+      "name": "Logos",
+      "tile": "m",
+      "order": ["brandmark.svg"],
+      "files": {
+        "brandmark.svg": { "name": "brandmark.svg", "blob": "32d398d5d67b90977ebdda77c2a50867", "size": 454, "type": "image/svg+xml" }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": { "readme": "project/README.md", "sections": [] },
+  "lastChange": { "by": "Claude", "at": "2026-10-14T13:32:00Z", "via": "GitHub · siotuetio-sys/fantasy-baseball@ee54e9c", "note": "Extracted from index.html: 26 colors, 15 text styles, 8 spacing, 10 radii, 6 shadows, 22 CSS components." }
+}

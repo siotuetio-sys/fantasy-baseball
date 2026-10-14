@@ -1,0 +1,53 @@
+<!-- @dsCard height=320 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Perfect Draft</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--text); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:320px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:320px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:320px; }
+  .navy { fill:var(--navbg); }
+  .brand { fill:var(--accent); }
+  .blue { fill:var(--accent2); }
+  .tint { fill:var(--navmut); }
+  .good { fill:var(--good); }
+  .card { rx:var(--radius-card); }
+  .tile { rx:var(--radius-tile); }
+  .pill { rx:7px; }
+  .seam { fill:none; stroke:var(--accent); stroke-width:5; stroke-linecap:round; stroke-dasharray:2 12; }
+  .seam-line { fill:none; stroke:var(--accent); stroke-width:2; opacity:.55; }
+  .words { position:absolute; left:28px; bottom:28px; max-width:440px; }
+  .name { margin:0; font-size:96px; line-height:.92; font-weight:800; letter-spacing:-.03em; color:var(--text); }
+  .tag { margin:14px 0 0 3px; font-size:14px; line-height:20px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 320" width="480" height="320">
+<!--
+  blocks      navbg 240×350 slab bleeding top and bottom (the chrome people know the app by) · accent 144×144 · accent2 144×88 · navmut 72×208 bleeding right · good 72×14 pill once (it only means START) — ≈40% of 960×320
+  arrangement one tall navy slab with satellites, like the app bar over its cards; satellites on a space-16 gutter
+  pattern     baseball seams from the brandmark: its two mirrored stitch curves scaled ×10 onto the slab, stitches as accent dashes on a 14px pitch
+  scales      gutters space-16; slab and orange block radius-card; blue block and tint radius-tile; pill rx = half its 14px height
+-->
+<rect class="blue tile" x="16" y="40" width="144" height="88" rx="10"/>
+<rect class="brand card" x="16" y="144" width="144" height="144" rx="15"/>
+<rect class="good pill" x="88" y="16" width="72" height="14" rx="7"/>
+<rect class="navy card" x="176" y="-15" width="240" height="350" rx="15"/>
+<path class="seam-line" d="M236 50 q60 110 0 220 M356 50 q-60 110 0 220"/>
+<path class="seam" d="M236 50 q60 110 0 220 M356 50 q-60 110 0 220"/>
+<rect class="tint tile" x="432" y="72" width="72" height="208" rx="10"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Perfect<br>Draft</h1>
+<p class="tag">即時 MLB 進階數據決策台 · the live fantasy baseball decision desk</p>
+</div>
+</div>
+</body>
+</html>
