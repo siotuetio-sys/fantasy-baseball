@@ -1,7 +1,7 @@
 # NewsItem
 
-A headline row with a thumbnail, for league news and buzz lists.
+A headline row with a thumbnail for league news and buzz lists.
 
-**Markup:** `a.newsitem` > `img.nthumb` + `div` (`div.nhead` headline, `div.nmeta` source · time). Rows stack inside a card; the last drops its rule.
+**Markup:** `a.newsitem` > `img.nthumb` + `div` (`.nhead`, `.nmeta`).
 
-- Thumb 66×46, `radius-input`; headline 13.5px/600 `text`, turning `accent` on hover; meta `caption` `muted`.
+- Thumb 66×46 with an ink outline and `radius-input-sm`; headline 13.5px/700, underlined on hover; meta `caption` `muted`.

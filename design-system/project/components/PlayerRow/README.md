@@ -1,10 +1,8 @@
 # PlayerRow
 
-One player in a roster or watch list: name, meta, verdict and actions. `PlayerChip` (`.pchip`) is the compact removable form.
+One player in a roster or watch list; `PlayerChip` (`.pchip`) is the removable pill form.
 
-**Markup:** `div.plist` > `div.prow` holding `div` (`.nm` name + `.meta` line), then `div.rt` with a `RecBadge`, `button.act` and/or `button.rm` (×). Chips: `div.rosterbar` > `span.pchip` with the name and a `button` ×.
+**Markup:** `div.plist` > `div.prow` with `div` (`.nm` + `.meta`) and `div.rt` (a `RecBadge`, `button.act`, `button.rm` ×). Chips: `div.rosterbar` > `span.pchip` with the name and a `button` ×.
 
-**Consumer provides:** the player, the meta line (team · position · key stat) and handlers.
-
-- Row `panel2`, 1px `border`, `radius-tile`, padding 8px 11px, gap `space-10`; rows stack `space-6` apart.
-- Name `player-name`; meta `caption` `muted`. Remove × is `bad`.
+- Row: `panel`, `border` hairline, `radius-tile`. Name `player-name`; meta `caption` `muted`; × in `bad` with a 32px target.
+- Chip: ink-outlined pill.

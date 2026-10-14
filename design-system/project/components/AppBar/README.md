@@ -1,12 +1,11 @@
 # AppBar
 
-The navy app bar that opens every screen: brandmark, title, live-update time, a date picker and a refresh button.
+The paper app bar: brandmark, PERFECT DRAFT wordmark with its tagline, update time, date field and a lemon refresh button.
 
-**Markup:** `header.appbar` > `.brandmark` (the brandmark SVG at 38px), a block with `h1` (wrap the word Fantasy in `span.baseball`) and `span.sub` tagline, `span.spacer`, `span.updated`, a `label` wrapping `input.datepick[type=date]`, and an `.iconbtn`.
+**Markup:** `header.appbar` > `.brandmark` (`assets/Logos/brandmark.svg` at 40px), `.wordmark` (`h1` + `span.sub`), `span.spacer`, `span.updated`, `input.datepick.pill-field[type=date]`, `button.iconbtn.pop` with the refresh icon.
 
-**Consumer provides:** title text, the tagline, the last-updated string, the date value and the refresh handler.
+**Consumer provides:** the update time, date value and refresh handler.
 
-- Ground is `navbg`; title `on-dark` in `app-title`; captions `navmut`.
-- Inside the bar, `.datepick` and `.iconbtn` switch to a translucent white fill (12%) with a 22% white border.
-- Below 680px: padding 11px 14px, title 15px, hide `.sub`.
-- Don't put a second orange element in the bar; the brandmark and the word Fantasy carry it.
+- `bg` ground with a `line` bottom rule. Wordmark in `wordmark`; tagline 你的夢幻棒球軍師 in `muted`.
+- The refresh button is the bar's only lemon.
+- Below 680px: 34px mark, 21px wordmark, hide the tagline, update time and date label.

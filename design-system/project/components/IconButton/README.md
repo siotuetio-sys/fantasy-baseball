@@ -1,8 +1,7 @@
 # IconButton
 
-A 36px square button holding one emoji glyph, for refresh and similar single actions.
+A 38px round button with one line icon.
 
-**Markup:** `button.iconbtn` with a `title` that says what it does (重新整理). Inside the `AppBar` it turns translucent automatically.
+**Markup:** `button.iconbtn` with `svg.ico`, a `title` and an `aria-label`. Add `.pop` for the app bar's refresh.
 
-- `panel2`, 1px `border`, `radius-btn`; hover border `accent2`.
-- Always set `title` and an `aria-label`; the emoji alone is not a name.
+- `panel` with an ink outline; hover fills `pop`.

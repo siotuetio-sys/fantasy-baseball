@@ -1,23 +1,87 @@
 {
   "v": 3,
   "layout": "files",
-  "createdOnFiles": { "v": 1, "at": "2026-10-14T13:32:00Z" },
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-14T13:32:00Z"
+  },
   "title": "Perfect Draft",
   "namespace": "PerfectDraft",
   "libraries": [],
   "sections": {},
-  "groups": ["Logos"],
+  "groups": [
+    "Logos",
+    "Illustrations"
+  ],
   "assetGroups": {
     "Logos": {
       "name": "Logos",
       "tile": "m",
-      "order": ["brandmark.svg"],
+      "order": [
+        "brandmark.svg"
+      ],
       "files": {
-        "brandmark.svg": { "name": "brandmark.svg", "blob": "32d398d5d67b90977ebdda77c2a50867", "size": 454, "type": "image/svg+xml" }
+        "brandmark.svg": {
+          "name": "brandmark.svg",
+          "blob": "7f82b15d6c732da248260990d6b11aff",
+          "size": 414,
+          "type": "image/svg+xml"
+        }
+      }
+    },
+    "Illustrations": {
+      "name": "Illustrations",
+      "tile": "l",
+      "order": [
+        "mascot-coach.svg",
+        "mascot-pitch.svg",
+        "mascot-bat.svg",
+        "mascot-ice.svg",
+        "mascot-head.svg"
+      ],
+      "files": {
+        "mascot-coach.svg": {
+          "name": "mascot-coach.svg",
+          "blob": "dfc7e7117a669d90c8365e271fa4feb6",
+          "size": 1604,
+          "type": "image/svg+xml"
+        },
+        "mascot-pitch.svg": {
+          "name": "mascot-pitch.svg",
+          "blob": "03c20a66999ca256ec0a37e50642a6f4",
+          "size": 1420,
+          "type": "image/svg+xml"
+        },
+        "mascot-bat.svg": {
+          "name": "mascot-bat.svg",
+          "blob": "b4e978009904d962b73f678224ed0022",
+          "size": 1277,
+          "type": "image/svg+xml"
+        },
+        "mascot-ice.svg": {
+          "name": "mascot-ice.svg",
+          "blob": "4eb4c7257800354689e158cd0cb2b819",
+          "size": 1452,
+          "type": "image/svg+xml"
+        },
+        "mascot-head.svg": {
+          "name": "mascot-head.svg",
+          "blob": "8316ee64b0b1cf72a8ee9fc7f46a3db7",
+          "size": 560,
+          "type": "image/svg+xml"
+        }
       }
     }
   },
   "blobs": {},
-  "docs": { "readme": "project/README.md", "sections": [] },
-  "lastChange": { "by": "Claude", "at": "2026-10-14T13:32:00Z", "via": "GitHub · siotuetio-sys/fantasy-baseball@ee54e9c", "note": "Extracted from index.html: 26 colors, 15 text styles, 8 spacing, 10 radii, 6 shadows, 22 CSS components." }
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Claude",
+    "at": "2026-10-14T15:20:00Z",
+    "via": "GitHub · siotuetio-sys/fantasy-baseball@62cc0de",
+    "note": "Lemon paper-and-ink theme: new palette, four type families, mascot illustrations, 26 components, new cover."
+  }
 }

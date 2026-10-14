@@ -1,3 +1,3 @@
 # Logos
 
-- `brandmark.svg` — the app mark: an `accent` (#ff5a1f) rounded square (`radius-logo` on a 40px box), a white baseball with `accent` seams, and a navy (`text`, #0b1f3a) **P** set in Arial Black. Full color only; it carries its own inks and does not inherit color. Show it at 38px in the app bar and as the favicon, on `navbg` or `panel`. Do not redraw, recolor or crop it.
+- `brandmark.svg` — a lemon (`pop`, #fff04f) baseball with ink (`line`, #141414) seams and tick stitches, 1.5px stroke on a 40px box. It carries its own inks and does not inherit colour. Show it at 40px (34px on phone) beside the PERFECT DRAFT wordmark set in `wordmark`, and as the favicon. Place it on `bg` or `panel`; never on `pop`, where the ball disappears.

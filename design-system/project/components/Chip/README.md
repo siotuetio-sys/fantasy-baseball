@@ -1,8 +1,7 @@
 # Chip
 
-Small rounded label for metadata: handedness, a position, a source.
+Small grey label for metadata: team, throwing hand, roster position.
 
-**Markup:** `span.chip`; add `.L` or `.R` for a pitcher's throwing hand. For a roster position use `span.posbadge`.
+**Markup:** `span.chip` (`.L` / `.R` for a pitcher's hand) or `span.posbadge`.
 
-- Chip: `chip` fill, 1px `border`, `radius-pill`, 11.5px `muted`. `.L` text `hand-l`, `.R` text `hand-r`.
-- Position badge: 10px, `radius-xs`.
+- `chip` fill with a `border` hairline, 11.5px `muted`; `.L` text `hand-l`, `.R` text `hand-r`. Position badge 10px, `radius-xs`.

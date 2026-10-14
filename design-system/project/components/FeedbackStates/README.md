@@ -2,7 +2,7 @@
 
 Loading, empty and error states for any card body.
 
-**Markup:** loading `div.loading` > `span.spin` + 「分析中…」; empty `div.empty` > `div.big` (one emoji) + a sentence that says what to do, optionally `div.cta` with a `Button`; error `div.err` with what failed and what to try.
+**Markup:** loading `div.loading` > `span.spin` + a playful 「…中…」 line; empty `div.empty` > `img` of `mascot-head.svg` + a sentence that says what to do + optional `div.cta` with a `Button`; error `div.err` with what broke and `button.errretry` 再揮一次.
 
-- Spinner 15px ring in `border` with an `accent` head, 0.7s.
-- Empty and loading text `muted`, centered. Error `err-text` on `bad-bg` with a `#dc354555` border, `radius-input`.
+- The app draws the empty-state head as a background on `.empty .big`; consumers can use the `img`.
+- Error: `err-text` on `bad-bg` with a dashed `bad` outline, `radius-tile`.

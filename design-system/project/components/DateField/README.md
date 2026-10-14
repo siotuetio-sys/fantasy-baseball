@@ -1,8 +1,7 @@
 # DateField
 
-Compact input or select with a small label above or beside it, used for dates, week numbers, team names and sort keys.
+Small labelled inputs and selects for dates, week numbers, team names and sort keys.
 
-**Markup:** `label.field` wrapping its text and an `input.datepick` (or `select.datepick`). For an inline label, lay the label out as a row instead.
+**Markup:** `label.field` wrapping its text and `input.datepick` / `select.datepick`. Add `.pill-field` for the app bar's date.
 
-- `panel`, 1px `border`, `radius-input`, 13px, padding 7px 10px; focus border `accent2`.
-- Label 11px `muted`.
+- `panel`, ink outline, `radius-input`; focus adds `shadow-focus`. Label 11.5px `muted`.

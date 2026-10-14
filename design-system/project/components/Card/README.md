@@ -1,11 +1,9 @@
 # Card
 
-The white container every tool lives in.
+The white, ink-outlined container every tool lives in.
 
-**Markup:** `div.card`. For a full-bleed table use `style="padding:0;overflow:hidden"`.
+**Markup:** `div.card`; for a full-bleed table use `style="padding:0;overflow:hidden"`.
 
-**Consumer provides:** a `SectionHeading`, controls, and content.
-
-- `panel`, 1px `border`, `radius-card`, `shadow-card`, padding `space-14`.
-- A heading row is `.row` with `justify-content:space-between; flex-wrap:wrap` — heading left, action or `Legend` right.
-- Don't nest cards; recess inner groups with `panel2` tiles or rows instead.
+- `panel`, 1.5px `line`, `radius-card`, padding 20/22 (16 on phone), no shadow.
+- Heading row: `.row` with `justify-content:space-between` — `SectionHeading` left, a `Button` or `Legend` right. Helper text under it in `small` `muted`.
+- Never nest cards.

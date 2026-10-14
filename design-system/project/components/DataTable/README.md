@@ -1,9 +1,7 @@
 # DataTable
 
-Stat table for leaderboards, transactions and H2H categories.
+Stat tables for leaderboards, transactions and H2H categories.
 
-**Markup:** `table` with `th` heads; numeric columns get `.num`; a section break is `tr.grouprow`; the user's own players are `tr.mine`. Wrap in a scroll container (`.tscroll`) or, for a phone card layout, add `.rtable` and a `data-l` label on each `td`.
+**Markup:** `table` with `th` heads; numeric columns `.num`; section breaks `tr.grouprow`; the user's players `tr.mine`. Wrap in a scroll box, or use `.rtable` with `data-l` labels for the phone card layout.
 
-- 13px cells, padding 9px 10px, 1px `border` rules; heads `th` style in `muted`; row hover `hover`.
-- Numbers right-aligned with tabular numerals. Better-than-opponent values can be tinted `good`, worse `bad`.
-- Below 680px a plain table keeps a 520px min width and scrolls; `.rtable` becomes one `panel2` card per row with secondary cells (`td.det`) behind an accordion.
+- 13px cells with `border` hairlines; heads `th` `muted`; hover and `tr.mine` on `pop-soft`. Numbers right-aligned, tabular; tint wins `good`, losses `bad`.
